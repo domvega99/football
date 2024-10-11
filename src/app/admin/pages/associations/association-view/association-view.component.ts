@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AssociationService } from '../associations.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AssociationAddEditComponent } from '../association-add-edit/association-add-edit.component';
 
 @Component({
   selector: 'app-association-view',
@@ -30,7 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSortModule, 
     MatPaginatorModule, 
     MatIconModule, 
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterLink
   ],
   templateUrl: './association-view.component.html',
   styleUrl: './association-view.component.sass'
@@ -59,6 +61,22 @@ export class AssociationViewComponent {
     if (this.paramsId) {
       this.getAssociationById(this.paramsId);
     }
+  }
+
+  openEditAssociationForm(data: any) {
+    const dialogRef = this.dialog.open(AssociationAddEditComponent, {
+      data,
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val && this.paramsId) {
+          this.getAssociationById(this.paramsId);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   getAssociationById(associationId: number) {

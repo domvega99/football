@@ -1,24 +1,32 @@
 .wrapper
+    height: 92vh
     .container
         padding: 10px
+        display: flex
+        flex-direction: column
+        gap: 10px
+        .card
+            .title
+                display: flex
+                align-items: center
+                gap: 10px
         .body
-            height: 70vh
             .header
                 display: flex
                 flex-direction: column
                 margin-top: 10px
-                h1
-                    font-weight: 200
                 .actions
                     display: flex
                     gap: 10px
+                    button
+                        height: 45px
                     .search
                         ::ng-deep .mat-mdc-text-field-wrapper 
-                            height: 50px !important
+                            height: 45px !important
                         ::ng-deep .mat-mdc-form-field-flex 
-                            margin-top: -3px !important
+                            margin-top: -5px !important
             .content
-                height: 80%
+                height: 62vh
                 border: 1px solid #E0E0E0
                 .table-container 
                     height: 90%
