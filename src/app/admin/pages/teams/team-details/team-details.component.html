@@ -1,21 +1,30 @@
 <div class="wrapper">
     <div class="container">
-        <ng-container *ngIf="teamData">
-            <div class="header">
-                <div class="header-left">
-                    <img mat-card-image [src]="imagePath + teamData.file_name" alt={{teamData.file_name}} width="100px">
-                    <div class="title">
-                        <h1>{{ teamData.team }}</h1>
-                        <p>{{ teamData.coach }}</p>
-                        <p>{{ teamData.place }}</p>
-                    </div>
-                </div>
-                <button mat-fab extended color="primary" [routerLink]="'/admin/teams'">
-                    <mat-icon>keyboard_arrow_left</mat-icon>
-                    Back
-                </button>
-            </div>
-        </ng-container>
+        <div class="back">
+            <button
+                mat-fab
+                extended
+                color="primary"
+                [routerLink]="'/admin/teams'"
+            >
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back
+            </button>
+        </div>
+        <div class="card">
+            <mat-card appearance="outlined" *ngIf="teamData">
+                <mat-card-header>
+                    <mat-card-title class="title"> 
+                        <img mat-card-image [src]="imagePath + teamData.file_name" alt={{teamData.file_name}} width="30px">
+                        {{ teamData.team }} 
+                    </mat-card-title>
+                    <mat-card-subtitle> {{ teamData.place }} </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    Coach: {{ teamData.coach }}
+                </mat-card-content>
+            </mat-card>
+        </div>
         <div class="body">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="left" [backgroundColor]="'warn'">
                 <mat-tab label="About">
