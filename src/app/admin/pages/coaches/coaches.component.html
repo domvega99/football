@@ -1,0 +1,65 @@
+<div class="wrapper">
+    <div class="header">
+        <h1 id="item1">All Coaches</h1>
+        <div class="search" id="item2">
+            <mat-form-field appearance="outline" class="search-content">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input class="search-input">
+                <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <button id="item3" mat-fab extended color="primary" (click)="openAddForm()">
+            <mat-icon>add</mat-icon> Add Coach
+        </button>
+    </div>
+    <div class="content">
+        <div class="table-container">
+            <section>
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="firstName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="middleName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.middleName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lastName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="teamId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+                        <td mat-cell *matCellDef="let row"> {{row.teamId}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="clubId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Club </th>
+                        <td mat-cell *matCellDef="let row"> {{row.clubId}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="action-content">
+                                <button class="view-button" mat-fab extended color="accent" (click)="openEditForm(row)">
+                                    <mat-icon>edit</mat-icon> Edit
+                                </button>
+                                <button class="view-button" mat-fab extended color="primary" [routerLink]="row.id">
+                                    <mat-icon>remove_red_eye</mat-icon> View
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6" align="center" style="padding: 20px;">No data record found.
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+        <div class="paginator">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20"
+                aria-label="Select page of leagues"></mat-paginator>
+        </div>
+    </div>
+</div>

@@ -83,7 +83,6 @@ export class AssociationViewComponent {
     this.associationService.getAssociationById(associationId).subscribe({
       next: (res: any) => {
         this.associationData = res;
-        console.log(res)
         this.dataSource = new MatTableDataSource(res.members);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

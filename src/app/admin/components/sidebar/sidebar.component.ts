@@ -91,12 +91,19 @@ export class SidebarComponent {
       group: 'Football' 
     },
     { 
+      label: 'Coaches', 
+      icon: 'group', 
+      routerLink: '/admin/coaches', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Management' 
+    },
+    { 
       label: 'Users', 
       icon: 'group', 
       routerLink: '/admin/users', 
       roles: ['Super Admin', 'Admin'], 
       group: 'Management' 
-    }
+    },
   ];
 
   getGroupedMenuItems() {

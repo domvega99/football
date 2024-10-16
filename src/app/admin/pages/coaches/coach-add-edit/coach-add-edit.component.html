@@ -1,0 +1,79 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Coach Details</div>
+    <form [formGroup]="coachForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First Name" formControlName="firstName">
+                    <mat-error
+                        *ngIf="coachForm.get('firstName')?.hasError('required') && coachForm.get('firstName')?.touched">
+                        First name is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="coachForm.get('firstName')?.hasError('minlength') && coachForm.get('firstName')?.touched">
+                        First name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput placeholder="Middle Name" formControlName="middleName">
+                    <mat-error
+                        *ngIf="coachForm.get('middleName')?.hasError('minlength') && coachForm.get('middleName')?.touched">
+                        Middle name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="lastName">
+                    <mat-error
+                        *ngIf="coachForm.get('lastName')?.hasError('required') && coachForm.get('lastName')?.touched">
+                        Last name is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="coachForm.get('lastName')?.hasError('minlength') && coachForm.get('lastName')?.touched">
+                        Last name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Birth Place</mat-label>
+                    <input matInput placeholder="Birth Place" formControlName="birthPlace">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>ZIP Code</mat-label>
+                    <input matInput placeholder="ZIP Code" formControlName="zipCode">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Team</mat-label>
+                    <mat-select formControlName="teamId">
+                        <mat-option [value]="1">Yes</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>
