@@ -17,6 +17,7 @@ import { PageAddEditComponent } from './pages/page/page-add-edit/page-add-edit.c
 import { AssociationsComponent } from './pages/associations/associations.component';
 import { AssociationViewComponent } from './pages/associations/association-view/association-view.component';
 import { CoachesComponent } from './pages/coaches/coaches.component';
+import { ClubsComponent } from './pages/clubs/clubs.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,7 @@ const routes: Routes = [
           { path: 'associations', component: AssociationsComponent },
           { path: 'associations/:id', component: AssociationViewComponent },
           { path: 'coaches', component: CoachesComponent },
+          { path: 'clubs', component: ClubsComponent },
         ]
     }
 ];

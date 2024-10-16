@@ -56,6 +56,20 @@ export class SidebarComponent {
       group: 'Main' 
     },
     { 
+      label: 'Associations', 
+      icon: 'new_releases', 
+      routerLink: '/admin/associations', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Football' 
+    },
+    { 
+      label: 'Clubs', 
+      icon: 'new_releases', 
+      routerLink: '/admin/clubs', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Football' 
+    },
+    { 
       label: 'Teams', 
       icon: 'flag', 
       routerLink: '/admin/teams', 
@@ -82,13 +96,6 @@ export class SidebarComponent {
       routerLink: '/admin/pages', 
       roles: ['Super Admin', 'Admin', 'Content Editor'], 
       group: 'Content' 
-    },
-    { 
-      label: 'Associations', 
-      icon: 'new_releases', 
-      routerLink: '/admin/associations', 
-      roles: ['Super Admin', 'Admin', 'Content Editor'], 
-      group: 'Football' 
     },
     { 
       label: 'Coaches', 

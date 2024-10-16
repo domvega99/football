@@ -7,14 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
-import { CoachService } from '../coaches.service';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ClubService } from '../clubs.service';
 
 @Component({
-  selector: 'app-coach-add-edit',
+  selector: 'app-club-add-edit',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
   imports: [
     MatButtonModule, 
     MatDialogModule, 
@@ -25,47 +23,50 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatDatepickerModule
   ],
-  templateUrl: './coach-add-edit.component.html',
-  styleUrl: './coach-add-edit.component.sass'
+  templateUrl: './club-add-edit.component.html',
+  styleUrl: './club-add-edit.component.sass'
 })
-export class CoachAddEditComponent {
+export class ClubAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
-  coachForm: FormGroup;
+  clubForm: FormGroup;
 
   constructor(
     private fb: FormBuilder, 
-    private coachService: CoachService, 
-    private dialogRef: MatDialogRef<CoachAddEditComponent>,
+    private clubService: ClubService, 
+    private dialogRef: MatDialogRef<ClubAddEditComponent>,
     private coreService: CoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.coachForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      middleName: ['', [Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      birthDate: [''],
-      birthPlace: [''],
+    this.clubForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      province: [''],
+      municipal: [''],
       address: [''],
       zipCode: [''],
-      phone: [''],
+      city: [''],
+      associationId: ['', Validators.required],
+      contact: [''],
       email: [''],
+      website: [''],
+      fbPage: [''],
+      slug: ['', [Validators.required]],
     })
   }
 
   ngOnInit(): void {
     if (this.data) {
-      this.coachForm.patchValue(this.data);
+      this.clubForm.patchValue(this.data);
     } 
   }
 
   onSubmit() {
-    if (this.coachForm.valid) {
-      this.coachForm.markAllAsTouched();
+    if (this.clubForm.valid) {
+      this.clubForm.markAllAsTouched();
       if (this.data) {
-        this.coachService.updateCoach(this.data.id, this.coachForm.value).subscribe({
+        this.clubService.updateClub(this.data.id, this.clubForm.value).subscribe({
           next: () => {
-            this.coreService.openSnackBar('Coach updated successfully')
+            this.coreService.openSnackBar('Club updated successfully')
             this.dialogRef.close(true);
           },
           error: (err: any) => {
@@ -73,10 +74,10 @@ export class CoachAddEditComponent {
           }
         })
       } else {
-        this.coachForm.markAllAsTouched();
-        this.coachService.addCoach(this.coachForm.value).subscribe({
+        this.clubForm.markAllAsTouched();
+        this.clubService.addClub(this.clubForm.value).subscribe({
           next: () => {
-            this.coreService.openSnackBar('Coach added successfully')
+            this.coreService.openSnackBar('Club added successfully')
             this.dialogRef.close(true);
           },
           error: (err: any) => {

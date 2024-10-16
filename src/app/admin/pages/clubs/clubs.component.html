@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="header">
-        <h1 id="item1">All Coaches</h1>
+        <h1 id="item1">All Clubs</h1>
         <div class="search" id="item2">
             <mat-form-field appearance="outline" class="search-content">
                 <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input class="search-input">
@@ -8,32 +8,24 @@
             </mat-form-field>
         </div>
         <button id="item3" mat-fab extended color="primary" (click)="openAddForm()">
-            <mat-icon>add</mat-icon> Add Coach
+            <mat-icon>add</mat-icon> Add Club
         </button>
     </div>
     <div class="content">
         <div class="table-container">
             <section>
                 <table mat-table [dataSource]="dataSource" matSort>
-                    <ng-container matColumnDef="firstName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-                        <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="middleName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Name </th>
-                        <td mat-cell *matCellDef="let row"> {{row.middleName}} </td>
+                    <ng-container matColumnDef="municipal">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Municipal </th>
+                        <td mat-cell *matCellDef="let row"> {{row.municipal}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="lastName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-                        <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="teamId">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
-                        <td mat-cell *matCellDef="let row"> {{row.teamId}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="clubId">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Club </th>
-                        <td mat-cell *matCellDef="let row"> {{row.clubId}} </td>
+                    <ng-container matColumnDef="associationId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Association </th>
+                        <td mat-cell *matCellDef="let row"> {{row.associationId}} </td>
                     </ng-container>
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef> Action </th>
