@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ClubService } from '../clubs.service';
+import { AssociationService } from '../../associations/associations.service';
 
 @Component({
   selector: 'app-club-add-edit',
@@ -30,10 +31,12 @@ export class ClubAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
   clubForm: FormGroup;
+  associationData: any[] | null = null;
 
   constructor(
     private fb: FormBuilder, 
     private clubService: ClubService, 
+    private associationService: AssociationService,
     private dialogRef: MatDialogRef<ClubAddEditComponent>,
     private coreService: CoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -50,7 +53,7 @@ export class ClubAddEditComponent {
       email: [''],
       website: [''],
       fbPage: [''],
-      slug: ['', [Validators.required]],
+      slug: [{ value: '', disabled: true }, [Validators.required]],
     })
   }
 
@@ -58,6 +61,24 @@ export class ClubAddEditComponent {
     if (this.data) {
       this.clubForm.patchValue(this.data);
     } 
+
+    this.clubForm.get('name')?.valueChanges.subscribe(value => {
+      const slug = value?.toLowerCase().replace(/ /g, '-');
+      this.clubForm.get('slug')?.setValue(slug, { emitEvent: false });
+    });
+
+    this.getAssociations();
+  }
+
+  getAssociations() {
+    this.associationService.getAssociations().subscribe({
+      next: (res) => {
+        this.associationData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   onSubmit() {

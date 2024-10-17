@@ -1,18 +1,18 @@
 <div class="wrapper">
-    <div mat-dialog-title class="title">Coach Details</div>
+    <div mat-dialog-title class="title">Club Details</div>
     <form [formGroup]="clubForm" (ngSubmit)="onSubmit()">
         <div mat-dialog-content class="content">
             <div class="row">
                 <mat-form-field appearance="outline" class="field">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Club Name</mat-label>
                     <input matInput placeholder="Name" formControlName="name">
                     <mat-error
                         *ngIf="clubForm.get('name')?.hasError('required') && clubForm.get('name')?.touched">
-                        Name is required
+                        Club name is required
                     </mat-error>
                     <mat-error
                         *ngIf="clubForm.get('name')?.hasError('minlength') && clubForm.get('name')?.touched">
-                        Name must be at least 3 characters long
+                        Club name must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
@@ -40,7 +40,11 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
                     <mat-label>Association</mat-label>
-                    <input matInput placeholder="Association" formControlName="associationId">
+                    <mat-select formControlName="associationId">
+                        <mat-option *ngFor="let association of associationData" [value]="association.id">
+                            {{ association.orgName }}
+                        </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="clubForm.get('associationId')?.hasError('required') && clubForm.get('associationId')?.touched">
                         Association is required
                     </mat-error>
