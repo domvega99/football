@@ -31,7 +31,9 @@ export class NewsComponent {
   getContent() {
     this._contentService.getContent().subscribe({
       next: (res) => {
-        this.dataSource = res;
+        this.dataSource = res.sort((a: any, b: any) => {
+          return new Date(b.created_on).getTime() - new Date(a.created_on).getTime();
+        });
         this.imagePath =`${this._configService.URL_CONTENT_IMAGE}`;
       },
       error: (err) => {
@@ -49,7 +51,6 @@ export class NewsComponent {
     this._titleService.setTitle(newTitle);
   }
   
-
   applyFilter(event: Event) {
   }
 }

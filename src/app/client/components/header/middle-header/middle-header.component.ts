@@ -64,10 +64,18 @@ export class MiddleHeaderComponent {
     this.pageService.getPages().subscribe({
       next: (res) => {
         this.pages = res.filter((page: any) => 
-          page.name === 'Wider Football' || page.name === 'Community'
+          page.name === 'Wider Football' || 
+          page.name === 'Community' || 
+          page.name === '1st District Football Clubs' ||
+          page.name === '2nd District Football Clubs' ||
+          page.name === '3rd District Football Clubs'
         );
         this.abouts = res.filter((page: any) => 
-          page.name !== 'Wider Football' && page.name !== 'Community'
+          page.name !== 'Wider Football' && 
+          page.name !== 'Community' &&
+          page.name !== '1st District Football Clubs' &&
+          page.name !== '2nd District Football Clubs' &&
+          page.name !== '3rd District Football Clubs'
         );
       },
       error: (err) => {
