@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <div class="container">
+        <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Team</mat-label>
+                <mat-select formControlName="teamA">
+                    <mat-option *ngFor="let team of teamData" [value]="team.id">
+                        <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}} width="20px">
+                        {{ team.team }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="teamForm.get('team')?.invalid">Please select a team</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="teamForm.invalid">
+                Save
+            </button>
+        </form>
+
+    </div>
+</div>
