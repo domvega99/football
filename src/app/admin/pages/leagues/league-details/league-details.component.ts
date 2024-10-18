@@ -13,6 +13,7 @@ import { LeagueService } from '../../../../services/league.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LeagueTeamMatchComponent } from './league-team-match/league-team-match.component';
 import { ScoreUpdateService } from '../../../../services/score-league.service';
+import { FriendlyMatchesComponent } from './friendly-matches/friendly-matches.component';
 
 export interface PeriodicElement {
   position: number;
@@ -35,7 +36,16 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-league-details',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, RouterLink, MatTableModule, CommonModule, MatTabsModule, LeagueTeamMatchComponent],
+  imports: [
+    MatButtonModule, 
+    MatIconModule, 
+    RouterLink, 
+    MatTableModule, 
+    CommonModule, 
+    MatTabsModule, 
+    LeagueTeamMatchComponent,
+    FriendlyMatchesComponent
+  ],
   templateUrl: './league-details.component.html',
   styleUrls: ['./league-details.component.sass']
 })
