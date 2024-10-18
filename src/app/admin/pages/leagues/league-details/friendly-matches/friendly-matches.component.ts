@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScoreUpdateService } from '../../../../../services/score-league.service';
 import { FriendlyMatchAddEditComponent } from './friendly-match-add-edit/friendly-match-add-edit.component';
+import { FriendlyMatchService } from '../../../../../services/friendly-match.service';
+import { FriendlyMatchTeamAComponent } from './friendly-match-team-a/friendly-match-team-a.component';
 
 @Component({
   selector: 'app-friendly-matches',
@@ -31,14 +33,14 @@ import { FriendlyMatchAddEditComponent } from './friendly-match-add-edit/friendl
 })
 export class FriendlyMatchesComponent {
   leagueId: number | null = null;
-  displayedColumns: string[] = ['match_date', 'match_time', 'location', 'for', 'result', 'against', 'status', 'action'];
+  displayedColumns: string[] = ['match_date', 'match_time', 'location', 'teamA', 'teamResult', 'teamB', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
   imagePath: string | null = null;
 
   constructor(
     private dialog: MatDialog, 
     private route: ActivatedRoute,
-    private matchesService: MatchService,
+    private friendlyMatchService: FriendlyMatchService,
     private scoreUpdateService: ScoreUpdateService,
     private _configService: ApiService,
   ) {}
@@ -69,19 +71,38 @@ export class FriendlyMatchesComponent {
 
   
   getFriendlyMatches(leagueId: number) {
-    this.matchesService.getMatches(leagueId).subscribe({
+    this.friendlyMatchService.getFriendlyMatchesByLeague(leagueId).subscribe({
       next: (res: any[]) => {
         res.forEach(match => {
           match.matchTime = new Date(`2000-01-01T${match.match_time}`);
         });
         res.sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime());
         this.dataSource = new MatTableDataSource(res);
+        console.log(res)
       },
       error: (err) => {
         console.log(err);
       }
     });
   }
+
+  addTeamA(id: number) {
+    const dialogRef = this.dialog.open(FriendlyMatchTeamAComponent, {
+      data: { friendlyMatchId: id }
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (this.leagueId) {
+          console.log('Dialog closed, refreshing matches...');
+          this.getFriendlyMatches(this.leagueId); 
+        }
+      },
+      error: (err) => {
+        console.log('Error during afterClosed:', err);
+      }
+    });
+  }
+
 
   // updateScore(element: any, index: number, id: number, team_id: number, points: number, result: string) {
   //   const dialogRef = this.dialog.open(TeamScoreComponent, {
@@ -108,26 +129,7 @@ export class FriendlyMatchesComponent {
   //   })
   // }
 
-  // updateTeam(element: any, index: number, id: number, team_id: number) {
-  //   const dialogRef = this.dialog.open(TeamSelectComponent, {
-  //       data: { 
-  //         score_id: id,
-  //         team_id: team_id,
-  //         leagueId: this.leagueId, 
-  //         matchId: element.id 
-  //       }
-  //   });
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       if (val && this.leagueId) {
-  //         this.getMatches(this.leagueId)
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   })
-  // }
+
 
   // addTeam(element: any, index: number) {
   //   const dialogRef = this.dialog.open(TeamSelectComponent, {

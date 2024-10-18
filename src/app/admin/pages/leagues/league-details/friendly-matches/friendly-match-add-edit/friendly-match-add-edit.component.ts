@@ -80,7 +80,7 @@ export class FriendlyMatchAddEditComponent {
         if (this.data.scores.length === 2) {
           this.friendlyMatchService.updateFriendlyMatch(this.data.id, formData).subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Match schedule updated successfully');
+              this._coreService.openSnackBar('Friendly match schedule updated successfully');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -94,7 +94,7 @@ export class FriendlyMatchAddEditComponent {
         this.teamForm.markAllAsTouched();
         this.friendlyMatchService.addFriendlyMatch(formData).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Match schedule added successfully')
+            this._coreService.openSnackBar('Friendly match schedule added successfully')
             this._dialogRef.close(true);
           },
           error: (err: any) => {

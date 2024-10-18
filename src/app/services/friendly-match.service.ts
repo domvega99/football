@@ -29,4 +29,8 @@ export class FriendlyMatchService {
   deleteFriendlyMatch(id: number): Observable<any> {
     return this._http.delete(environment.apiUrl+`/football/friendly-matches/${id}`)
   }
+
+  getFriendlyMatchesByLeague(leagueId: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/friendly-matches/league/${leagueId}`);
+  }
 }
