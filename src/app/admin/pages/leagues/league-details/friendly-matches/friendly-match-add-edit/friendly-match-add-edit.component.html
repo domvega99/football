@@ -1,0 +1,45 @@
+<div mat-dialog-title class="title">Schedule Match</div>
+<form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content class="content">
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Match Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="match_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="teamForm.get('match_date')?.hasError('required') && teamForm.get('match_date')?.touched">
+                    Match date is required
+                </mat-error>
+            </mat-form-field>
+            <div class="time-container">
+                <input class="time-content" type="time" placeholder="Match Time" formControlName="match_time">
+                <mat-error class="time-error" *ngIf="teamForm.get('match_time')?.hasError('required') && teamForm.get('match_time')?.touched">
+                    Match time is required
+                </mat-error>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="Location" formControlName="location">
+                <mat-error *ngIf="teamForm.get('location')?.hasError('required') && teamForm.get('location')?.touched">
+                    Location is required
+                </mat-error>
+            </mat-form-field>
+            <div *ngIf="data.id" class="status-content">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option value="Draft">Draft</mat-option>
+                        <mat-option value="Posted">Posted</mat-option>
+                        <mat-option value="Live">Live</mat-option>
+                        <mat-option value="Completed">Completed</mat-option>
+                        <mat-option value="Cancelled">Cancelled</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="actions">
+        <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">{{data.id ? 'Update' : 'Save'}}</button>
+    </div>
+</form>
