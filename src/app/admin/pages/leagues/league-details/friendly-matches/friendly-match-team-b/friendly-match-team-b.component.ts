@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-friendly-match-team-a',
+  selector: 'app-friendly-match-team-b',
   standalone: true,
   imports: [
     MatSelectModule,
@@ -22,10 +22,10 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     MatButtonModule
   ],
-  templateUrl: './friendly-match-team-a.component.html',
-  styleUrl: './friendly-match-team-a.component.sass'
+  templateUrl: './friendly-match-team-b.component.html',
+  styleUrl: './friendly-match-team-b.component.sass'
 })
-export class FriendlyMatchTeamAComponent {
+export class FriendlyMatchTeamBComponent {
   teamData: any[] | null = null;
   imagePath: string | null = null;
   teamForm: FormGroup;
@@ -39,7 +39,7 @@ export class FriendlyMatchTeamAComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.teamForm = this.fb.group({
-      teamAId: ['', [Validators.required]],
+      teamBId: ['', [Validators.required]],
     });
   }
 
@@ -69,10 +69,8 @@ export class FriendlyMatchTeamAComponent {
         error: (err: any) => {
           console.error(err);
           this.coreService.openSnackBar(err.error.message);
-          this.dialogRef.close(true);
         }
       });
     }
   }
-
 }

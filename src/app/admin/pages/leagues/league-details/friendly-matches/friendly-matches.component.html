@@ -25,15 +25,21 @@
                     <th class="location-cell" mat-header-cell *matHeaderCellDef> For (Team)</th>
                     <td class="location-cell" mat-cell *matCellDef="let element">
                         <button mat-icon-button color="primary" matTooltip="Change team for this match" [matTooltipPosition]="'after'"
-                            (click)="addTeamA(element.id)">
+                            (click)="addTeamA(element.id, element.teamAId)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        {{element.teamA}} 
+                        {{element.teamA.team}} 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="teamB">
                     <th class="location-cell" mat-header-cell *matHeaderCellDef> Against (Team)</th>
-                    <td class="location-cell" mat-cell *matCellDef="let element"> {{element.teamB}} </td>
+                    <td class="location-cell" mat-cell *matCellDef="let element"> 
+                        <button mat-icon-button color="primary" matTooltip="Change team for this match" [matTooltipPosition]="'after'"
+                            (click)="addTeamB(element.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        {{element.teamB.team}} 
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="teamResult">
                     <th class="location-cell" mat-header-cell *matHeaderCellDef> Result </th>
