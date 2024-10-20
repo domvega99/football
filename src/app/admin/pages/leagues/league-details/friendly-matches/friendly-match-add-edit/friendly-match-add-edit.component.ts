@@ -77,19 +77,15 @@ export class FriendlyMatchAddEditComponent {
         league_id: this.leagueId
       };
       if (this.data.id) {
-        if (this.data.scores.length === 2) {
-          this.friendlyMatchService.updateFriendlyMatch(this.data.id, formData).subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Friendly match schedule updated successfully');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            }
-          });
-        } else {
-          this._coreService.openSnackBar('Add team for this match first.');
-        }
+        this.friendlyMatchService.updateFriendlyMatch(this.data.id, formData).subscribe({
+          next: (val: any) => {
+            this._coreService.openSnackBar('Friendly match schedule updated successfully');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          }
+        });
       } else {
         this.teamForm.markAllAsTouched();
         this.friendlyMatchService.addFriendlyMatch(formData).subscribe({

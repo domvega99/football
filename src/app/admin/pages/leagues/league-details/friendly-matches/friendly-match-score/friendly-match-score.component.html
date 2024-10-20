@@ -1,18 +1,16 @@
 <div class="wrapper">
     <div class="container">
-        <div class="header">
-            <h3>Select Team</h3>
-        </div>
         <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">
-                <mat-label>Team</mat-label>
-                <mat-select formControlName="teamBId">
-                    <mat-option *ngFor="let team of teamData" [value]="team.id">
-                        <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}} width="20px">
-                        {{ team.team }}
-                    </mat-option>
+                <mat-label>Goal</mat-label>
+                <input matInput formControlName="teamScore" type="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Result</mat-label>
+                <mat-select formControlName="teamResult">
+                    <mat-option value="Win">Win</mat-option>
+                    <mat-option value="Draw">Draw</mat-option>
                 </mat-select>
-                <mat-error *ngIf="teamForm.get('team')?.invalid">Please select a team</mat-error>
             </mat-form-field>
             <div class="action-container">
                 <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
@@ -21,6 +19,5 @@
                 </button>
             </div>
         </form>
-
     </div>
 </div>
