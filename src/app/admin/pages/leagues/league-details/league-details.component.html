@@ -9,11 +9,6 @@
         </div>
         <div class="body">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [backgroundColor]="'warn'" mat-elevation-z4>
-                <mat-tab label="Friendly Matches">
-                    <div class="tab-content">
-                        <app-friendly-matches></app-friendly-matches>
-                    </div>
-                </mat-tab>
                 <mat-tab label="Matches">
                     <div class="tab-content">
                         <app-league-team-match></app-league-team-match>
@@ -92,6 +87,11 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Friendly Matches">
+                    <div class="tab-content">
+                        <app-friendly-matches></app-friendly-matches>
                     </div>
                 </mat-tab>
             </mat-tab-group>

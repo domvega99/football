@@ -1,5 +1,8 @@
 <div class="wrapper">
     <div class="container">
+        <div class="header">
+            <h3>Select Team</h3>
+        </div>
         <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">
                 <mat-label>Team</mat-label>
@@ -11,9 +14,12 @@
                 </mat-select>
                 <mat-error *ngIf="teamForm.get('team')?.invalid">Please select a team</mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="teamForm.invalid">
-                Save
-            </button>
+            <div class="action-container">
+                <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="teamForm.invalid">
+                    Save
+                </button>
+            </div>
         </form>
 
     </div>

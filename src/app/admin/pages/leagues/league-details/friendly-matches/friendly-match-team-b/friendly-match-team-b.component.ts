@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CoreService } from '../../../../../../core/core.service';
 import { DialogRef } from '@angular/cdk/dialog';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -20,7 +20,8 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule,
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   templateUrl: './friendly-match-team-b.component.html',
   styleUrl: './friendly-match-team-b.component.sass'
@@ -45,6 +46,7 @@ export class FriendlyMatchTeamBComponent {
 
   ngOnInit(): void {
     this.getTeams()
+    this.teamForm.patchValue(this.data);
   }
 
   getTeams() {

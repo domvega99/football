@@ -12,59 +12,62 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-friendly-match-team-a',
+  selector: 'app-friendly-match-score',
   standalone: true,
   imports: [
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatInputModule,
     CommonModule,
-    MatButtonModule,
-    MatDialogModule
+    MatButtonModule
   ],
-  templateUrl: './friendly-match-team-a.component.html',
-  styleUrl: './friendly-match-team-a.component.sass'
+  templateUrl: './friendly-match-score.component.html',
+  styleUrl: './friendly-match-score.component.sass'
 })
-export class FriendlyMatchTeamAComponent {
-  teamData: any[] | null = null;
+export class FriendlyMatchScoreComponent {
   imagePath: string | null = null;
   teamForm: FormGroup;
 
   constructor(
     private fb: FormBuilder, 
-    private teamService: TeamService,
     private friendlyMatchService: FriendlyMatchService,
     private coreService: CoreService,
     private dialogRef: DialogRef,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.teamForm = this.fb.group({
-      teamAId: ['', [Validators.required]],
+      teamScore: ['', [Validators.required]],
+      teamResult: [''],
     });
   }
 
   ngOnInit(): void {
-    this.getTeams()
-    this.teamForm.patchValue(this.data);
     console.log(this.data)
-  }
-
-  getTeams() {
-    this.teamService.getTeams().subscribe({
-      next: (res) => {
-        this.teamData = res;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.teamForm.patchValue(this.data);
   }
 
   onSubmit() {
     if (this.teamForm.valid) {
       this.teamForm.markAllAsTouched();
-      this.friendlyMatchService.updateFriendlyMatch(this.data.friendlyMatchId, this.teamForm.value).subscribe({
+      let formData: any = {};
+
+      if (this.data.scoreTeam === 'scoreA') {
+        formData.scoreA = this.teamForm.value.teamScore;
+      } else if (this.data.scoreTeam === 'scoreB') {
+        formData.scoreB = this.teamForm.value.teamScore;
+      }
+
+      if (this.teamForm.value.teamResult === 'Win') {
+        formData.teamResult = this.data.teamId;
+      } else if (this.teamForm.value.teamResult === 'Draw') {
+        formData.teamResult = 'Draw';
+      }
+
+      console.log(formData)
+
+      this.friendlyMatchService.updateFriendlyMatch(this.data.friendlyMatchId, formData).subscribe({
         next: (val: any) => {
           this.coreService.openSnackBar('Friendly match team added successfully');
           this.dialogRef.close(true);

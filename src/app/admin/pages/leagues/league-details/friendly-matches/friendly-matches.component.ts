@@ -15,6 +15,7 @@ import { FriendlyMatchAddEditComponent } from './friendly-match-add-edit/friendl
 import { FriendlyMatchService } from '../../../../../services/friendly-match.service';
 import { FriendlyMatchTeamAComponent } from './friendly-match-team-a/friendly-match-team-a.component';
 import { FriendlyMatchTeamBComponent } from './friendly-match-team-b/friendly-match-team-b.component';
+import { FriendlyMatchScoreComponent } from './friendly-match-score/friendly-match-score.component';
 
 @Component({
   selector: 'app-friendly-matches',
@@ -69,7 +70,6 @@ export class FriendlyMatchesComponent {
       }
     })
   }
-
   
   getFriendlyMatches(leagueId: number) {
     this.friendlyMatchService.getFriendlyMatchesByLeague(leagueId).subscribe({
@@ -89,7 +89,7 @@ export class FriendlyMatchesComponent {
 
   addTeamA(id: number, teamAId: number) {
     const dialogRef = this.dialog.open(FriendlyMatchTeamAComponent, {
-      data: { friendlyMatchId: id, teamAId: teamAId }
+      data: { friendlyMatchId: id, teamAId: teamAId}
     });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
@@ -104,9 +104,9 @@ export class FriendlyMatchesComponent {
     });
   }
 
-  addTeamB(id: number) {
+  addTeamB(id: number, teamBId: number) {
     const dialogRef = this.dialog.open(FriendlyMatchTeamBComponent, {
-      data: { friendlyMatchId: id }
+      data: { friendlyMatchId: id, teamBId: teamBId}
     });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
@@ -119,6 +119,40 @@ export class FriendlyMatchesComponent {
         console.log('Error during afterClosed:', err);
       }
     });
+  }
+
+  updateScore(id: number, scoreTeam: string, score: number, teamId: number) {
+    const dialogRef = this.dialog.open(FriendlyMatchScoreComponent, {
+      data: { friendlyMatchId: id, scoreTeam: scoreTeam, teamScore: score, teamId: teamId }
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (this.leagueId) {
+          console.log('Dialog closed, refreshing matches...');
+          this.getFriendlyMatches(this.leagueId); 
+        }
+      },
+      error: (err) => {
+        console.log('Error during afterClosed:', err);
+      }
+    });
+  }
+
+  openEditFormFriendlyMatch(data: any) {
+    const dialogRef = this.dialog.open(FriendlyMatchAddEditComponent, {
+      data: { ...data, leagueId: this.leagueId }
+    });
+
+    dialogRef.afterClosed().subscribe({
+        next: (val) => {
+          if (this.leagueId) {
+            this.getFriendlyMatches(this.leagueId); 
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
   }
 
 
