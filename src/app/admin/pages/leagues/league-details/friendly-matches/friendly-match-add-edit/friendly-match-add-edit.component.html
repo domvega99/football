@@ -3,6 +3,13 @@
     <div mat-dialog-content class="content">
         <div class="row">
             <mat-form-field appearance="outline">
+                <mat-label>Match Title</mat-label>
+                <input matInput placeholder="Match Title" formControlName="match_title">
+                <mat-error *ngIf="teamForm.get('match_title')?.hasError('required') && teamForm.get('match_title')?.touched">
+                    Match title is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
                 <mat-label>Match Date</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="match_date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

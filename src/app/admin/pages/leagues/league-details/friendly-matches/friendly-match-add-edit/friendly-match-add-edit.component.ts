@@ -55,6 +55,7 @@ export class FriendlyMatchAddEditComponent {
       match_time: '',
       location: '',
       status: '',
+      match_title: '',
     })
   }
 
@@ -64,6 +65,7 @@ export class FriendlyMatchAddEditComponent {
       match_time: ['', [Validators.required]],
       location: ['', [Validators.required]],
       status: '',
+      match_title: ['', [Validators.required]],
     });
     this.teamForm.patchValue(this.data);
     console.log(this.data)

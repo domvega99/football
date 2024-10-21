@@ -1,4 +1,127 @@
-<div *ngFor="let leagues of leagueMatches" class="container">
+<div class="wrapper">
+    <div class="container" *ngFor="let leagues of leagueMatches">
+        <div class="header">
+            <div class="title-container">
+                <h2>Matches</h2>
+            </div>
+        </div>
+        <div *ngIf="leagues.matches.length > 0; else NoLeagueMatches" class="matches">
+            <div *ngFor="let date of leagues.matches" class="date-container">
+                <p>{{ date.match_date | date:'EEEE dd MMMM, YYYY' }}</p>
+                <div *ngFor="let matches of date.matches" class="match-container">
+                    <ng-container *ngIf="matches.teamA && matches.teamB">
+                        <div class="location-container">
+                            <div class="location-content">{{ matches.location }} {{ '@' }} {{ '2000-01-01T' +
+                                matches.match_time | date:'h:mm a'
+                                }}</div>
+                            <div class="match-description">
+                                <div class="match-title-container">
+                                    <div class="match-title-content">
+                                        {{ matches.match_title | uppercase }}
+                                    </div>
+                                </div>
+                                <div class="match-status-content" *ngIf="matches.status == 'Live'">
+                                    {{ matches.status | uppercase }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="match-content">
+                            <div class="team-container">
+                                <div class="player-score-container">
+                                    <div class="team-content">
+                                        {{ matches.teamA.team }}
+                                    </div>
+                                    <img *ngIf="matches.teamA.file_name" [src]="imagePath + matches.teamA.file_name"
+                                        alt={{matches.teamA.file_name}}>
+                                </div>
+                            </div>
+                            <div class="score-container">
+                                {{ matches.scoreA }}
+                                :
+                                {{ matches.scoreB }}
+                            </div>
+                            <div class="team-container">
+                                <div class="player-score-container">
+                                    <img *ngIf="matches.teamB.file_name" [src]="imagePath + matches.teamB.file_name"
+                                        alt={{matches.teamB.file_name}}>
+                                    <div class="team-content">
+                                        {{ matches.teamB.team }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="matches.scores && matches.scores.length > 0">
+                        <div class="location-container">
+                            <div class="location-content">{{ matches.location }} {{ '@' }} {{ '2000-01-01T' +
+                                matches.match_time | date:'h:mm a'
+                                }}</div>
+                            <div class="match-description">
+                                <div class="match-title-container">
+                                    <div class="match-title-content">
+                                        {{ matches.league_title | uppercase }}
+                                    </div>
+                                </div>
+                                <div class="match-status-content" *ngIf="matches.status == 'Live'">
+                                    {{ matches.status | uppercase }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="match-content">
+                            <div class="team-container">
+                                <div class="player-score-container">
+                                    <div class="team-content">
+                                        {{ matches.scores[0].team.team }}
+                                    </div>
+                                    <img *ngIf="matches.scores[0].team.file_name"
+                                        [src]="imagePath + matches.scores[0].team.file_name"
+                                        alt={{matches.scores[0].team.file_name}}>
+                                </div>
+                                <div class="player-score-content" *ngIf="matches.scores[0].playerScores[0]">
+                                    {{ matches.scores[0].playerScores[0].player.first_name }}
+                                    {{ matches.scores[0].playerScores[0].player.last_name }}
+                                </div>
+                            </div>
+                            <div class="score-container">
+                                {{ matches.scores[0].points }}
+                                :
+                                {{ matches.scores[1].points }}
+                            </div>
+                            <div class="team-container">
+                                <div class="player-score-container">
+                                    <img *ngIf="matches.scores[1].team.file_name"
+                                        [src]="imagePath + matches.scores[1].team.file_name"
+                                        alt={{matches.scores[1].team.file_name}}>
+                                    <div class="team-content">
+                                        {{ matches.scores[1].team.team }}
+                                    </div>
+                                </div>
+                                <div class="player-score-content" *ngIf="matches.scores[1].playerScores[0]">
+                                    {{ matches.scores[1].playerScores[0].player.first_name }}
+                                    {{ matches.scores[1].playerScores[0].player.last_name }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="matches" [routerLink]="'fixtures'">
+                    <span>View More</span>
+                    <mat-icon>arrow_right_alt</mat-icon>
+                </div>
+            </div>
+        </div>
+        <ng-template #NoLeagueMatches>
+            <div class="error-container">
+                <div class="error-content">
+                    <h2>No Match Posted Yet</h2>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<!-- <div *ngFor="let leagues of leagueMatches" class="container">
     <div class="header">
         <div class="title-container">
             <h2>{{ leagues.title }} Matches</h2>
@@ -63,6 +186,6 @@
             </div>
         </ng-template>
     </div>
-</div>
+</div> -->
 
 
