@@ -17,7 +17,7 @@
                             <div class="match-description">
                                 <div class="match-title-container">
                                     <div class="match-title-content">
-                                        {{ matches.match_title | uppercase }}
+                                        {{ matches.match_title | uppercase }} - Friendly
                                     </div>
                                 </div>
                                 <div class="match-status-content" *ngIf="matches.status == 'Live'">
@@ -59,7 +59,7 @@
                             <div class="match-description">
                                 <div class="match-title-container">
                                     <div class="match-title-content">
-                                        {{ matches.league_title | uppercase }}
+                                        {{ matches.league_title | uppercase }} - League
                                     </div>
                                 </div>
                                 <div class="match-status-content" *ngIf="matches.status == 'Live'">
