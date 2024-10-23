@@ -10,8 +10,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { ClubService } from './clubs.service';
 import { ClubAddEditComponent } from './club-add-edit/club-add-edit.component';
+import { ClubService } from './clubs.service';
 
 @Component({
   selector: 'app-clubs',
@@ -27,7 +27,7 @@ import { ClubAddEditComponent } from './club-add-edit/club-add-edit.component';
     MatPaginatorModule, 
     MatIconModule, 
     MatSnackBarModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './clubs.component.html',
   styleUrl: './clubs.component.sass'

@@ -1,0 +1,21 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <button mat-fab extended color="primary" [routerLink]="'/admin/clubs'">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back
+            </button>
+        </div>
+        <div class="body">
+            <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" mat-elevation-z4>
+                <mat-tab label="Basic Info"> 
+                    <div class="tab-container">
+                        <app-club-details></app-club-details>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Squads"> Squads </mat-tab>
+                <mat-tab label="About"> About </mat-tab>
+            </mat-tab-group>
+        </div>  
+    </div>
+</div>
