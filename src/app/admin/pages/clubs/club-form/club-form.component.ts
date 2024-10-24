@@ -5,6 +5,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClubDetailsComponent } from "../club-details/club-details.component";
 import { MatButtonModule } from '@angular/material/button';
+import { OverviewComponent } from "../../../components/overview/overview.component";
+import { GalleryComponent } from "../../../components/gallery/gallery.component";
 
 @Component({
   selector: 'app-club-form',
@@ -16,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     RouterLink,
     ClubDetailsComponent,
+    OverviewComponent,
+    GalleryComponent
 ],
   templateUrl: './club-form.component.html',
   styleUrl: './club-form.component.sass'

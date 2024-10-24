@@ -167,7 +167,6 @@ export class OverviewComponent {
     this.contentForm.patchValue({ desktop_content: editorContent });
     if (this.contentForm.valid) {
       this.contentForm.markAllAsTouched();
-      console.log(this.contentForm.value)
       if (this.aboutData) {
         this.teamAboutService.updateTeamAbout(this.aboutData.id, this.contentForm.value).subscribe({
           next: (val: any) => {

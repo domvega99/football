@@ -51,7 +51,7 @@ export class ClubDetailsComponent {
     this.clubForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       province: [''],
-      file_name: [''],
+      fileName: [''],
       municipal: [''],
       address: [''],
       zipCode: [''],
@@ -86,6 +86,9 @@ export class ClubDetailsComponent {
     this.clubService.getClubById(clubId).subscribe({
       next: (res: any) => {
         this.clubForm.patchValue(res);
+        if (res.fileName) {
+          this.imagePath =`${this.configService.URL_IMAGE}${res.fileName}`;
+        }
       },
       error: (err: any) => {
         console.error(err);
@@ -123,7 +126,7 @@ export class ClubDetailsComponent {
       reader.onload = (e: any) => {
         this.imagePath = e.target.result;
         this.clubForm.patchValue({
-          file_name: randomFileName
+          fileName: randomFileName
         });
         this.cdr.markForCheck(); 
       };
@@ -137,12 +140,12 @@ export class ClubDetailsComponent {
 
   onUpload() {
     if (this.selectedImage) {
-      const fileName = this.clubForm.get('file_name')?.value;
+      const fileName = this.clubForm.get('fileName')?.value;
       this.teamService.uploadImage(this.selectedImage, fileName).subscribe({
         next: (res) => {
           this.imagePath = `${this.configService.URL_IMAGE}${res.imagePath}`;
           this.clubForm.patchValue({
-            file_name: res.imagePath 
+            fileName: res.imagePath 
           });
         },
         error: (err) => {
@@ -160,6 +163,7 @@ export class ClubDetailsComponent {
           next: () => {
             this.coreService.openSnackBar('Club updated successfully')
             this.router.navigate([`/admin/clubs/edit/${this.clubId}`])
+            this.onUpload(); 
           },
           error: (err: any) => {
             this.coreService.openSnackBar(err.error.message)
@@ -170,6 +174,7 @@ export class ClubDetailsComponent {
           next: () => {
             this.coreService.openSnackBar('Club added successfully')
             this.router.navigate(['/admin/clubs'])
+            this.onUpload(); 
           },
           error: (err: any) => {
             this.coreService.openSnackBar(err.error.message)

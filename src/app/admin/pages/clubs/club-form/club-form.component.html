@@ -14,8 +14,16 @@
                         <app-club-details></app-club-details>
                     </div>
                 </mat-tab>
-                <mat-tab label="Squads" *ngIf="clubId"> Squads </mat-tab>
-                <mat-tab label="About" *ngIf="clubId"> About </mat-tab>
+                <mat-tab label="About" *ngIf="clubId"> 
+                    <div class="tab-container">
+                        <app-overview></app-overview>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Gallery" *ngIf="clubId">
+                    <div class="tab-container">
+                        <app-gallery></app-gallery>
+                    </div>
+                </mat-tab>
             </mat-tab-group>
         </div>  
     </div>

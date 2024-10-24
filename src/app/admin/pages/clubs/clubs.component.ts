@@ -10,6 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 import { ClubService } from './clubs.service';
 
 @Component({
@@ -32,19 +33,22 @@ import { ClubService } from './clubs.service';
   styleUrl: './clubs.component.sass'
 })
 export class ClubsComponent {
-  displayedColumns: string[] = ['name', 'municipal', 'associationId', 'action'];
+  displayedColumns: string[] = ['logo', 'name', 'municipal', 'associationId', 'action'];
   dataSource!: MatTableDataSource<any>;
+  imagePath: string | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private clubService: ClubService,
+    private configService: ApiService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getClubs();
+    this.imagePath =`${this.configService.URL_IMAGE}`;
   }
 
   getClubs() {

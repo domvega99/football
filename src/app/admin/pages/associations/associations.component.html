@@ -35,9 +35,6 @@
                         <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let row">
                             <div class="action-content">
-                                <button class="view-button" mat-fab extended color="accent" (click)="openEditForm(row)">
-                                    <mat-icon>edit</mat-icon> Edit
-                                </button>
                                 <button class="view-button" mat-fab extended color="primary" [routerLink]="row.id">
                                     <mat-icon>remove_red_eye</mat-icon> View
                                 </button>
