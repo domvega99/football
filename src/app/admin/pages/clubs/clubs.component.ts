@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,8 +9,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
-import { ClubAddEditComponent } from './club-add-edit/club-add-edit.component';
+import { Router, RouterLink } from '@angular/router';
 import { ClubService } from './clubs.service';
 
 @Component({
@@ -40,42 +39,12 @@ export class ClubsComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private dialog: MatDialog, 
     private clubService: ClubService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getClubs();
-  }
-  
-  openAddForm() {
-    const dialogRef = this.dialog.open(ClubAddEditComponent);
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getClubs();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
-
-  openEditForm(data: any) {
-    const dialogRef = this.dialog.open(ClubAddEditComponent, {
-      data,
-    });
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getClubs();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
   }
 
   getClubs() {
@@ -89,6 +58,10 @@ export class ClubsComponent {
         console.log(err);
       }
     })
+  }
+
+  openEditContent(data: any) {
+    this.router.navigate(['/admin/clubs/edit', data.id]);
   }
 
   applyFilter(event: Event) {

@@ -7,9 +7,7 @@
                 <mat-icon matPrefix>search</mat-icon>
             </mat-form-field>
         </div>
-        <button id="item3" mat-fab extended color="primary" (click)="openAddForm()">
-            <mat-icon>add</mat-icon> Add Club
-        </button>
+        <button id="item3" mat-fab extended color="primary" routerLink="/admin/clubs/create"><mat-icon>add</mat-icon> Add Page</button>
     </div>
     <div class="content">
         <div class="table-container">
@@ -31,7 +29,7 @@
                         <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let row">
                             <div class="action-content">
-                                <button class="view-button" mat-fab extended color="accent" (click)="openEditForm(row)">
+                                <button class="view-button" mat-fab extended color="accent" (click)="openEditContent(row)">
                                     <mat-icon>edit</mat-icon> Edit
                                 </button>
                             </div>

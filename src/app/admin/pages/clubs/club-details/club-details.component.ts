@@ -7,11 +7,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoreService } from '../../../../core/core.service';
+import { ApiService } from '../../../../services/api.service';
+import { TeamService } from '../../../../services/team.service';
 import { AssociationService } from '../../associations/associations.service';
 import { ClubService } from '../clubs.service';
-import { TeamService } from '../../../../services/team.service';
-import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-club-details',
@@ -34,6 +35,7 @@ export class ClubDetailsComponent {
   imagePath: string | null = null;
   clubForm: FormGroup;
   associationData: any[] | null = null;
+  clubId: number | null = null;
 
   constructor(
     private fb: FormBuilder, 
@@ -42,31 +44,64 @@ export class ClubDetailsComponent {
     private associationService: AssociationService,
     private configService: ApiService,
     private coreService: CoreService,
+    private router: Router,
     private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
   ) {
     this.clubForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       province: [''],
+      file_name: [''],
       municipal: [''],
       address: [''],
       zipCode: [''],
-      city: [''],
       associationId: ['', Validators.required],
       contact: [''],
       email: [''],
       website: [''],
       fbPage: [''],
-      slug: [{ value: '', disabled: true }, [Validators.required]],
+      stat: ['', [Validators.required]],
+      slug: ['', [Validators.required]],
     })
   }
 
   ngOnInit(): void {
+    this.getAssociations()
     this.clubForm.get('name')?.valueChanges.subscribe(value => {
       const slug = value?.toLowerCase().replace(/ /g, '-');
       this.clubForm.get('slug')?.setValue(slug, { emitEvent: false });
     });
+
+    this.route.params.subscribe(params => {
+      this.clubId = +params['id'];
+      if (this.clubId) {
+        this.getClubById(this.clubId);
+      }
+    });
     
     this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
+  }
+
+  getClubById(clubId: number) {
+    this.clubService.getClubById(clubId).subscribe({
+      next: (res: any) => {
+        this.clubForm.patchValue(res);
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    });
+  }
+
+  getAssociations() {
+    this.associationService.getAssociations().subscribe({
+      next: (res) => {
+        this.associationData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   generateRandomString(length: number): string {
@@ -117,32 +152,30 @@ export class ClubDetailsComponent {
     }
   }
 
-
   onSubmit() {
-    // if (this.clubForm.valid) {
-    //   this.clubForm.markAllAsTouched();
-    //   if (this.data) {
-    //     this.clubService.updateClub(this.data.id, this.clubForm.value).subscribe({
-    //       next: () => {
-    //         this.coreService.openSnackBar('Club updated successfully')
-    //         this.dialogRef.close(true);
-    //       },
-    //       error: (err: any) => {
-    //         console.error(err);
-    //       }
-    //     })
-    //   } else {
-    //     this.clubForm.markAllAsTouched();
-    //     this.clubService.addClub(this.clubForm.value).subscribe({
-    //       next: () => {
-    //         this.coreService.openSnackBar('Club added successfully')
-    //         this.dialogRef.close(true);
-    //       },
-    //       error: (err: any) => {
-    //         console.error(err);
-    //       }
-    //     })
-    //   }
-    // }
+    if (this.clubForm.valid) {
+      this.clubForm.markAllAsTouched();
+      if (this.clubId) {
+        this.clubService.updateClub(this.clubId, this.clubForm.value).subscribe({
+          next: () => {
+            this.coreService.openSnackBar('Club updated successfully')
+            this.router.navigate([`/admin/clubs/edit/${this.clubId}`])
+          },
+          error: (err: any) => {
+            this.coreService.openSnackBar(err.error.message)
+          }
+        })
+      } else {
+        this.clubService.addClub(this.clubForm.value).subscribe({
+          next: () => {
+            this.coreService.openSnackBar('Club added successfully')
+            this.router.navigate(['/admin/clubs'])
+          },
+          error: (err: any) => {
+            this.coreService.openSnackBar(err.error.message)
+          }
+        })
+      }
+    }
   }
 }

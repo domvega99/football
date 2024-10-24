@@ -66,7 +66,16 @@
                 <mat-label>Facebook Page</mat-label>
                 <input matInput placeholder="Facebook Page" formControlName="fbPage">
             </mat-form-field>
-      
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="stat">
+                    <mat-option [value]="1">Active</mat-option>
+                    <mat-option [value]="0">Inactive</mat-option>
+                </mat-select>
+                <mat-error *ngIf="clubForm.get('stat')?.hasError('required') && clubForm.get('stat')?.touched">
+                    Club status is required
+                </mat-error>
+            </mat-form-field>
             <button mat-raised-button color="primary" type="submit">Save</button>
         </form>
     </div>

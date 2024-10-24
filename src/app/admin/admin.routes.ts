@@ -45,6 +45,7 @@ const routes: Routes = [
           { path: 'coaches', component: CoachesComponent },
           { path: 'clubs', component: ClubsComponent },
           { path: 'clubs/create', component: ClubFormComponent },
+          { path: 'clubs/edit/:id', component: ClubFormComponent },
         ]
     }
 ];
