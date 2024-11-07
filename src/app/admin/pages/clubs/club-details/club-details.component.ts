@@ -60,6 +60,8 @@ export class ClubDetailsComponent {
       email: [''],
       website: [''],
       fbPage: [''],
+      metaTitle: [''],
+      metaDescription: [''],
       stat: ['', [Validators.required]],
       slug: ['', [Validators.required]],
     })

@@ -76,7 +76,6 @@ export class GalleryComponent {
 
     this.galleryService.uploadImages(formData, this.teamId).subscribe({
       next: (res) => {
-        console.log('Upload successful:', res);
         if (this.teamId) {
           this.getTeamGallery(this.teamId);
         }

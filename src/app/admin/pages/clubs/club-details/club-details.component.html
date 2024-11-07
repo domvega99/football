@@ -16,13 +16,6 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="field">
-                <mat-label>Slug</mat-label>
-                <input matInput placeholder="Slug" formControlName="slug">
-                <mat-error *ngIf="clubForm.get('slug')?.hasError('required') && clubForm.get('slug')?.touched">
-                    Slug is required
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
                 <mat-label>Address</mat-label>
                 <input matInput placeholder="Address" formControlName="address">
             </mat-form-field>
@@ -59,11 +52,11 @@
                 <input matInput placeholder="Email" formControlName="email">
             </mat-form-field>
             <mat-form-field appearance="outline" class="field">
-                <mat-label>Website</mat-label>
+                <mat-label>Website Link</mat-label>
                 <input matInput placeholder="Website" formControlName="website">
             </mat-form-field>
             <mat-form-field appearance="outline" class="field">
-                <mat-label>Facebook Page</mat-label>
+                <mat-label>Facebook Page Link</mat-label>
                 <input matInput placeholder="Facebook Page" formControlName="fbPage">
             </mat-form-field>
             <mat-form-field appearance="outline">
@@ -75,6 +68,22 @@
                 <mat-error *ngIf="clubForm.get('stat')?.hasError('required') && clubForm.get('stat')?.touched">
                     Club status is required
                 </mat-error>
+            </mat-form-field>
+            <h3>Club Page</h3>
+            <mat-form-field appearance="outline" class="field">
+                <mat-label>Slug</mat-label>
+                <input matInput placeholder="Slug" formControlName="slug">
+                <mat-error *ngIf="clubForm.get('slug')?.hasError('required') && clubForm.get('slug')?.touched">
+                    Slug is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="field">
+                <mat-label>Meta Title</mat-label>
+                <input matInput placeholder="Meta Title" formControlName="metaTitle">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="field">
+                <mat-label>Meta Description</mat-label>
+                <input matInput placeholder="Meta Description" formControlName="metaDescription">
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">{{ clubId ? 'Update' : 'Save' }}</button>
         </form>
