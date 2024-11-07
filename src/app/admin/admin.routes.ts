@@ -19,6 +19,8 @@ import { AssociationViewComponent } from './pages/associations/association-view/
 import { CoachesComponent } from './pages/coaches/coaches.component';
 import { ClubsComponent } from './pages/clubs/clubs.component';
 import { ClubFormComponent } from './pages/clubs/club-form/club-form.component';
+import { PlayersComponent } from './pages/players/players.component';
+import { PlayerAddEditComponent } from './pages/players/player-add-edit/player-add-edit.component';
 
 const routes: Routes = [
     {
@@ -46,6 +48,9 @@ const routes: Routes = [
           { path: 'clubs', component: ClubsComponent },
           { path: 'clubs/create', component: ClubFormComponent },
           { path: 'clubs/edit/:id', component: ClubFormComponent },
+          { path: 'players', component: PlayersComponent },
+          { path: 'players/create', component: PlayerAddEditComponent },
+          { path: 'players/edit/:id', component: ClubFormComponent },
         ]
     }
 ];

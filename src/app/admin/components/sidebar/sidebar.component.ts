@@ -98,6 +98,13 @@ export class SidebarComponent {
       group: 'Content' 
     },
     { 
+      label: 'Players', 
+      icon: 'group', 
+      routerLink: '/admin/players', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Management' 
+    },
+    { 
       label: 'Coaches', 
       icon: 'group', 
       routerLink: '/admin/coaches', 
