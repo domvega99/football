@@ -44,8 +44,6 @@
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Position</mat-label>
                 <mat-select formControlName="position">
-                    <mat-option [value]="'Head Coach'">Head Coach</mat-option>
-                    <mat-option [value]="'Assistant Coach'">Assistant Coach</mat-option>
                     <mat-option [value]="'Goalkeepers'">Goalkeepers</mat-option>
                     <mat-option [value]="'Defenders'">Defenders</mat-option>
                     <mat-option [value]="'Midfielders'">Midfielders</mat-option>
@@ -108,39 +106,6 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Team</mat-label>
-                <input matInput placeholder="Email" formControlName="team_id">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>User</mat-label>
-                <input matInput placeholder="Email" formControlName="userId">
-            </mat-form-field>
-            
-            <!-- <mat-form-field appearance="outline" class="field">
-                <mat-label>Team</mat-label>
-                <mat-select formControlName="associationId">
-                    <mat-option *ngFor="let association of associationData" [value]="association.id">
-                        {{ association.orgName }}
-                    </mat-option>
-                </mat-select>
-                <mat-error
-                    *ngIf="playerForm.get('associationId')?.hasError('required') && playerForm.get('associationId')?.touched">
-                    Association is required
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Club</mat-label>
-                <mat-select formControlName="associationId">
-                    <mat-option *ngFor="let association of associationData" [value]="association.id">
-                        {{ association.orgName }}
-                    </mat-option>
-                </mat-select>
-                <mat-error
-                    *ngIf="playerForm.get('associationId')?.hasError('required') && playerForm.get('associationId')?.touched">
-                    Association is required
-                </mat-error>
-            </mat-form-field> -->
             
             <button mat-raised-button color="primary" type="submit">{{ playerId ? 'Update' : 'Save' }}</button>
         </form>

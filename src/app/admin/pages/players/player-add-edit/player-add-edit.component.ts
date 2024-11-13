@@ -81,6 +81,26 @@ export class PlayerAddEditComponent {
     this.getTeams();
     this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
     this.clubImage =`${this.configService.URL_IMAGE}`;
+    this.route.params.subscribe(params => {
+      this.playerId = +params['id'];
+      if (this.playerId) {
+        this.getPlayerById(this.playerId);
+      }
+    });
+  }
+
+  getPlayerById(playerId: number) {
+    this.squadService.getSquadById(playerId).subscribe({
+      next: (res: any) => {
+        this.playerForm.patchValue(res);
+        if (res.file_name) {
+          this.imagePath =`${this.configService.URL_SQUAD_IMAGE}${res.file_name}`;
+        }
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    });
   }
 
   getTeams() {
@@ -154,22 +174,20 @@ export class PlayerAddEditComponent {
   }
 
   onSubmit() {
-    this.playerForm.markAllAsTouched();
-    console.log(this.playerForm.value)
     if (this.playerForm.valid) {
-    //   this.playerForm.markAllAsTouched();
-    //   if (this.clubId) {
-    //     this.clubService.updateClub(this.clubId, this.playerForm.value).subscribe({
-    //       next: () => {
-    //         this.coreService.openSnackBar('Club updated successfully')
-    //         this.router.navigate([`/admin/clubs/edit/${this.clubId}`])
-    //         this.onUpload(); 
-    //       },
-    //       error: (err: any) => {
-    //         this.coreService.openSnackBar(err.error.message)
-    //       }
-    //     })
-    //   } else {
+      this.playerForm.markAllAsTouched();
+      if (this.playerId) {
+        this.squadService.updateSquad(this.playerId, this.playerForm.value).subscribe({
+          next: () => {
+            this.coreService.openSnackBar('Player updated successfully')
+            this.router.navigate(['/admin/players'])
+            this.onUpload(); 
+          },
+          error: (err: any) => {
+            this.coreService.openSnackBar(err.error.message)
+          }
+        })
+      } else {
         this.squadService.addSquad(this.playerForm.value).subscribe({
           next: () => {
             this.coreService.openSnackBar('Player added successfully')
@@ -180,7 +198,7 @@ export class PlayerAddEditComponent {
             this.coreService.openSnackBar(err.error.message)
           }
         })
-    //   }
+      }
     }
   }
 }

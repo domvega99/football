@@ -9,7 +9,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { CoreService } from '../../../core/core.service';
 import { ApiService } from '../../../services/api.service';
 import { SquadService } from '../../../services/squad.service';
@@ -48,6 +48,7 @@ export class PlayersComponent {
     private squadService: SquadService,
     private _coreService: CoreService,
     private _configService: ApiService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +67,10 @@ export class PlayersComponent {
         console.log(err);
       }
     })
+  }
+
+  openEditPlayer(data: any) {
+    this.router.navigate(['/admin/players/edit', data.id]);
   }
   
   openAddEditTeamForm() {

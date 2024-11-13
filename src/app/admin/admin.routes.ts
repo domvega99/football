@@ -50,7 +50,7 @@ const routes: Routes = [
           { path: 'clubs/edit/:id', component: ClubFormComponent },
           { path: 'players', component: PlayersComponent },
           { path: 'players/create', component: PlayerAddEditComponent },
-          { path: 'players/edit/:id', component: ClubFormComponent },
+          { path: 'players/edit/:id', component: PlayerAddEditComponent },
         ]
     }
 ];
