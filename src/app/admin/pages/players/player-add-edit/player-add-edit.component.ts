@@ -2,21 +2,24 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CoreService } from '../../../../core/core.service';
 import { ApiService } from '../../../../services/api.service';
+import { SquadService } from '../../../../services/squad.service';
 import { TeamService } from '../../../../services/team.service';
-import { AssociationService } from '../../associations/associations.service';
-import { ClubService } from '../clubs.service';
+import { ClubService } from '../../clubs/clubs.service';
 
 @Component({
-  selector: 'app-club-details',
+  selector: 'app-player-add-edit',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     MatButtonModule, 
     MatDialogModule, 
@@ -25,83 +28,76 @@ import { ClubService } from '../clubs.service';
     ReactiveFormsModule, 
     CommonModule, 
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    RouterLink,
+    MatIconModule
   ],
-  templateUrl: './club-details.component.html',
-  styleUrl: './club-details.component.sass'
+  templateUrl: './player-add-edit.component.html',
+  styleUrl: './player-add-edit.component.sass'
 })
-export class ClubDetailsComponent {
+export class PlayerAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
-  clubForm: FormGroup;
-  associationData: any[] | null = null;
-  clubId: number | null = null;
+  clubImage: string | null = null;
+  playerForm: FormGroup;
+  teamData: any[] | null = null;
+  clubData: any[] | null = null;
+  playerId: number | null = null;
 
   constructor(
     private fb: FormBuilder, 
     private clubService: ClubService, 
     private teamService: TeamService,
-    private associationService: AssociationService,
     private configService: ApiService,
     private coreService: CoreService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private squadService: SquadService,
     private route: ActivatedRoute,
   ) {
-    this.clubForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      province: [''],
-      fileName: [''],
-      municipal: [''],
+    this.playerForm = this.fb.group({
+      first_name: ['', [Validators.required, Validators.minLength(3)]],
+      middle_name: [''],
+      last_name: ['', [Validators.required, Validators.minLength(3)]],
+      birth_date: [''],
+      birth_place: [''],
       address: [''],
       zipCode: [''],
-      associationId: ['', Validators.required],
-      contact: [''],
+      phone: [''],
       email: [''],
-      website: [''],
-      fbPage: [''],
-      metaTitle: [''],
-      metaDescription: [''],
+      height: [0],
+      file_name: [''],
+      jersey_no: [0],
+      position: ['', [Validators.required]],
+      team_id: [0],
+      clubId: [0],
+      userId: [0],
       stat: ['', [Validators.required]],
-      slug: ['', [Validators.required]],
     })
   }
 
   ngOnInit(): void {
-    this.getAssociations()
-    this.clubForm.get('name')?.valueChanges.subscribe(value => {
-      const slug = value?.toLowerCase().replace(/ /g, '-');
-      this.clubForm.get('slug')?.setValue(slug, { emitEvent: false });
-    });
-
-    this.route.params.subscribe(params => {
-      this.clubId = +params['id'];
-      if (this.clubId) {
-        this.getClubById(this.clubId);
-      }
-    });
-    
+    this.getClubs();
+    this.getTeams();
     this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
+    this.clubImage =`${this.configService.URL_IMAGE}`;
   }
 
-  getClubById(clubId: number) {
-    this.clubService.getClubById(clubId).subscribe({
-      next: (res: any) => {
-        this.clubForm.patchValue(res);
-        if (res.fileName) {
-          this.imagePath =`${this.configService.URL_IMAGE}${res.fileName}`;
-        }
-      },
-      error: (err: any) => {
-        console.error(err);
-      }
-    });
-  }
-
-  getAssociations() {
-    this.associationService.getAssociations().subscribe({
+  getTeams() {
+    this.teamService.getTeams().subscribe({
       next: (res) => {
-        this.associationData = res;
+        this.teamData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getClubs() {
+    this.clubService.getClubs().subscribe({
+      next: (res) => {
+        this.clubData = res;
       },
       error: (err) => {
         console.log(err);
@@ -127,8 +123,8 @@ export class ClubDetailsComponent {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imagePath = e.target.result;
-        this.clubForm.patchValue({
-          fileName: randomFileName
+        this.playerForm.patchValue({
+          file_name: randomFileName
         });
         this.cdr.markForCheck(); 
       };
@@ -142,12 +138,12 @@ export class ClubDetailsComponent {
 
   onUpload() {
     if (this.selectedImage) {
-      const fileName = this.clubForm.get('fileName')?.value;
-      this.teamService.uploadImage(this.selectedImage, fileName).subscribe({
+      const fileName = this.playerForm.get('file_name')?.value;
+      this.squadService.uploadImage(this.selectedImage, fileName).subscribe({
         next: (res) => {
           this.imagePath = `${this.configService.URL_IMAGE}${res.imagePath}`;
-          this.clubForm.patchValue({
-            fileName: res.imagePath 
+          this.playerForm.patchValue({
+            file_name: res.imagePath 
           });
         },
         error: (err) => {
@@ -158,31 +154,33 @@ export class ClubDetailsComponent {
   }
 
   onSubmit() {
-    if (this.clubForm.valid) {
-      this.clubForm.markAllAsTouched();
-      if (this.clubId) {
-        this.clubService.updateClub(this.clubId, this.clubForm.value).subscribe({
+    this.playerForm.markAllAsTouched();
+    console.log(this.playerForm.value)
+    if (this.playerForm.valid) {
+    //   this.playerForm.markAllAsTouched();
+    //   if (this.clubId) {
+    //     this.clubService.updateClub(this.clubId, this.playerForm.value).subscribe({
+    //       next: () => {
+    //         this.coreService.openSnackBar('Club updated successfully')
+    //         this.router.navigate([`/admin/clubs/edit/${this.clubId}`])
+    //         this.onUpload(); 
+    //       },
+    //       error: (err: any) => {
+    //         this.coreService.openSnackBar(err.error.message)
+    //       }
+    //     })
+    //   } else {
+        this.squadService.addSquad(this.playerForm.value).subscribe({
           next: () => {
-            this.coreService.openSnackBar('Club updated successfully')
-            this.router.navigate([`/admin/clubs/edit/${this.clubId}`])
+            this.coreService.openSnackBar('Player added successfully')
+            this.router.navigate(['/admin/players'])
             this.onUpload(); 
           },
           error: (err: any) => {
             this.coreService.openSnackBar(err.error.message)
           }
         })
-      } else {
-        this.clubService.addClub(this.clubForm.value).subscribe({
-          next: () => {
-            this.coreService.openSnackBar('Club added successfully')
-            this.router.navigate(['/admin/clubs'])
-            this.onUpload(); 
-          },
-          error: (err: any) => {
-            this.coreService.openSnackBar(err.error.message)
-          }
-        })
-      }
+    //   }
     }
   }
 }

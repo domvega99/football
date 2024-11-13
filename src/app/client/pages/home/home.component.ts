@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("BFL - the Philippine's first grassroots and amateur football league.");
+    this.titleService.setTitle("BFL - The Philippines' first grassroots and amateur football league.");
     this.metaService.addTag({ name: 'description', content: "Bohol Football League representing the finest football clubs in the Philippine's for grassroots and amateur football. Keeping you up to date with match scores and club info." });
   }
 }
