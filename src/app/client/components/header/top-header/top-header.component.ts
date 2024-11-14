@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { TeamService } from '../../../../services/team.service';
-import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ClubService } from '../../../../admin/pages/clubs/clubs.service';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-top-header',
@@ -17,15 +17,15 @@ export class TopHeaderComponent {
   imagePath: string | null = null;
 
   constructor(
-    private _teamService: TeamService,
-    private _configService: ApiService,
+    private clubService: ClubService,
+    private configService: ApiService,
   ) {}
 
   getTeams() {
-    this._teamService.getTeams().subscribe({
+    this.clubService.getClubs().subscribe({
       next: (res) => {
         this.dataSource = res;
-        this.imagePath =`${this._configService.URL_IMAGE}`;
+        this.imagePath =`${this.configService.URL_IMAGE}`;
       },
       error: (err) => {
         console.log(err);

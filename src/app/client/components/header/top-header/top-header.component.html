@@ -3,7 +3,7 @@
         <span>CLUBS</span>
         <div class="menu" *ngFor="let item of dataSource">
             <div class="item">
-                <img mat-card-image [src]="imagePath + item.file_name" alt={{item.file_name}} width="30px" class="image" [routerLink]="'/clubs/' + item.slug">
+                <img mat-card-image [src]="imagePath + item.fileName" alt={{item.fileName}} width="30px" class="image" [routerLink]="'/clubs/' + item.slug">
             </div>
         </div>
     </div>
