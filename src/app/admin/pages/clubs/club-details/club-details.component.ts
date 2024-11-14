@@ -55,13 +55,13 @@ export class ClubDetailsComponent {
       municipal: [''],
       address: [''],
       zipCode: [''],
-      associationId: ['', Validators.required],
+      associationId: [0],
       contact: [''],
       email: [''],
       website: [''],
       fbPage: [''],
-      metaTitle: [''],
-      metaDescription: [''],
+      metaTitle: ['', [Validators.required]],
+      metaDescription: ['', [Validators.required]],
       stat: ['', [Validators.required]],
       slug: ['', [Validators.required]],
     })
@@ -175,7 +175,7 @@ export class ClubDetailsComponent {
         this.clubService.addClub(this.clubForm.value).subscribe({
           next: () => {
             this.coreService.openSnackBar('Club added successfully')
-            this.router.navigate(['/admin/clubs'])
+            this.router.navigate(['/admin/clubs'], { state: { reload: true } });
             this.onUpload(); 
           },
           error: (err: any) => {

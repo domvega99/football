@@ -9,7 +9,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { ClubService } from './clubs.service';
 
@@ -44,7 +44,13 @@ export class ClubsComponent {
     private clubService: ClubService,
     private configService: ApiService,
     private router: Router
-  ) {}
+  ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && event.url === '/admin/clubs') {
+        this.getClubs(); 
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getClubs();
@@ -54,6 +60,7 @@ export class ClubsComponent {
   getClubs() {
     this.clubService.getClubs().subscribe({
       next: (res) => {
+        console.log(res)
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

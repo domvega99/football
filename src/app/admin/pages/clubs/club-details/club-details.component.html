@@ -34,14 +34,11 @@
             <mat-form-field appearance="outline" class="field">
                 <mat-label>Association</mat-label>
                 <mat-select formControlName="associationId">
+                    <mat-option [value]="0">None</mat-option>
                     <mat-option *ngFor="let association of associationData" [value]="association.id">
                         {{ association.orgName }}
                     </mat-option>
                 </mat-select>
-                <mat-error
-                    *ngIf="clubForm.get('associationId')?.hasError('required') && clubForm.get('associationId')?.touched">
-                    Association is required
-                </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="field">
                 <mat-label>Contact</mat-label>
@@ -80,10 +77,16 @@
             <mat-form-field appearance="outline" class="field">
                 <mat-label>Meta Title</mat-label>
                 <input matInput placeholder="Meta Title" formControlName="metaTitle">
+                <mat-error *ngIf="clubForm.get('metaTitle')?.hasError('required') && clubForm.get('metaTitle')?.touched">
+                    Meta title is required
+                </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="field">
                 <mat-label>Meta Description</mat-label>
                 <input matInput placeholder="Meta Description" formControlName="metaDescription">
+                <mat-error *ngIf="clubForm.get('metaDescription')?.hasError('required') && clubForm.get('metaDescription')?.touched">
+                    Meta description is required
+                </mat-error>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">{{ clubId ? 'Update' : 'Save' }}</button>
         </form>
