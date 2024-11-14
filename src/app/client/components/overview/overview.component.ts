@@ -11,6 +11,7 @@ import { ContentsService } from '../../../services/contents.service';
 import { ApiService } from '../../../services/api.service';
 import { TeamService } from '../../../services/team.service';
 import { GalleryService } from '../../../services/gallery.service';
+import { ClubService } from '../../../admin/pages/clubs/clubs.service';
 
 @Component({
   selector: 'app-overview',
@@ -21,7 +22,7 @@ import { GalleryService } from '../../../services/gallery.service';
 })
 export class OverviewComponent {
 
-  teamId: number | null = null;
+  clubId: number | null = null;
   slug: string | null = null;
   aboutData: any | null = null;
   contentData: any[] | null = null;
@@ -30,7 +31,7 @@ export class OverviewComponent {
   imageGalleryPath: string | null = null;
   imageLogoPath: string | null = null;
   galleryData: any[] | null = null;
-  teamLogo: string | null = null;
+  clubLogo: string | null = null;
 
   constructor (
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class OverviewComponent {
     private contentService: ContentsService,
     private galleryService: GalleryService,
     private teamService: TeamService,
+    private clubService: ClubService,
     private _configService: ApiService,
     private sanitizer: DomSanitizer
   ) {}
@@ -50,18 +52,18 @@ ngOnInit(): void {
       this.slug = params['params'];
       if (this.slug) {
         this.getTeambySlug(this.slug);
-      } else if (this.teamId) {
-        this.loadTeamData(this.teamId);
+      } else if (this.clubId) {
+        this.loadTeamData(this.clubId);
       }
     });
   }
 
   getTeambySlug(slug: string) {
-    this.teamService.getTeambySlug(slug).subscribe({
+    this.clubService.getClubbySlug(slug).subscribe({
       next: (res) => {
-        this.teamId = res.id;
-        if (this.teamId) {
-          this.loadTeamData(this.teamId);
+        this.clubId = res.id;
+        if (this.clubId) {
+          this.loadTeamData(this.clubId);
         }
       },
       error: (err) => {
@@ -70,15 +72,15 @@ ngOnInit(): void {
     });
   }
 
-  loadTeamData(teamId: number) {
-    this.getTeamAboutByTeamId(teamId);
-    this.getContentByTeamId(teamId);
-    this.getTeamById(teamId);
-    this.getGalleryByTeamId(teamId);
+  loadTeamData(clubId: number) {
+    this.getTeamAboutByTeamId(clubId);
+    this.getContentByTeamId(clubId);
+    this.getClubById(clubId);
+    this.getGalleryByTeamId(clubId);
   }
 
-  getTeamAboutByTeamId(teamId: number) {
-    this.teamAboutService.getTeamAboutByTeamId(teamId).subscribe({
+  getTeamAboutByTeamId(clubId: number) {
+    this.teamAboutService.getTeamAboutByTeamId(clubId).subscribe({
       next: (res) => {
         this.aboutData = res;
         // const safeHtml: SafeHtml = this.sanitizer.bypassSecurityTrustHtml(res.desktop_content);
@@ -91,8 +93,8 @@ ngOnInit(): void {
     })
   }
 
-  getContentByTeamId(teamId: number) {
-    this.contentService.getContentByTeamId(teamId).subscribe({
+  getContentByTeamId(clubId: number) {
+    this.contentService.getContentByTeamId(clubId).subscribe({
       next: (res) => {
         this.contentData = res.filter((content: any) => content.status === 'Published');
       },
@@ -102,10 +104,10 @@ ngOnInit(): void {
     })
   }
 
-  getTeamById(teamId: number) {
-    this.teamService.getTeamById(teamId).subscribe({
+  getClubById(clubId: number) {
+    this.clubService.getClubById(clubId).subscribe({
       next: (res) => {
-        this.teamLogo = res.file_name
+        this.clubLogo = res.file_name
       },
       error: (err) => {
         console.log(err)
@@ -113,8 +115,8 @@ ngOnInit(): void {
     })
   }
 
-  getGalleryByTeamId(teamId: number) {
-    this.galleryService.getGalleryByTeamId(teamId).subscribe({
+  getGalleryByTeamId(clubId: number) {
+    this.galleryService.getGalleryByTeamId(clubId).subscribe({
       next: (res) => {
         this.galleryData = res
       },

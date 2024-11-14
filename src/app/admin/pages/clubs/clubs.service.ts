@@ -31,4 +31,12 @@ export class ClubService {
     return this.http.delete(environment.apiUrl+`/football/clubs/${id}`)
   }
 
+  getClubbySlug(slug: string): Observable<any> {
+    return this.http.get(environment.apiUrl + `/football/clubs/slug/${slug}`);
+  }
+
+  getSquadByClubId(id: number): Observable<any> {
+    return this.http.get(environment.apiUrl + `/football/clubs/${id}/squad`);
+  }
+
 }

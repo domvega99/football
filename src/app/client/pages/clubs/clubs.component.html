@@ -3,11 +3,10 @@
         <div class="container">
             <div class="header">
                 <div class="logo">
-                    <img mat-card-image [src]="imagePath + data.file_name" alt={{data.file_name}} width="50px">
+                    <img mat-card-image [src]="imagePath + data.fileName" alt={{data.fileName}} width="50px">
                 </div>
                 <div class="header-content">
-                    <h2 class="title">About {{ data.team }}</h2>
-                    <!-- <p>Coach: {{ data.coach }} | {{ data.place }}</p> -->
+                    <h2 class="title">About {{ data.name }}</h2>
                 </div>
             </div>
             <div class="content">
@@ -24,7 +23,8 @@
                     </mat-tab>
                     <mat-tab label="Fixtures">
                         <div class="body">
-                            <app-fixures></app-fixures>
+                            <!-- <app-fixures></app-fixures> -->
+                            Coming Soon
                         </div>
                     </mat-tab>
                     <mat-tab label="Results">
