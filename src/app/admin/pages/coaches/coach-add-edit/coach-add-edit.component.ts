@@ -10,6 +10,9 @@ import { CoreService } from '../../../../core/core.service';
 import { CoachService } from '../coaches.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { TeamService } from '../../../../services/team.service';
+import { ClubService } from '../../clubs/clubs.service';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-coach-add-edit',
@@ -32,10 +35,16 @@ export class CoachAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
   coachForm: FormGroup;
+  teamData: any[] | null = null;
+  clubData: any[] | null = null;
+  clubImage: string | null = null;
 
   constructor(
     private fb: FormBuilder, 
     private coachService: CoachService, 
+    private teamService: TeamService, 
+    private clubService: ClubService,
+    private configService: ApiService,
     private dialogRef: MatDialogRef<CoachAddEditComponent>,
     private coreService: CoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -48,15 +57,42 @@ export class CoachAddEditComponent {
       birthPlace: [''],
       address: [''],
       zipCode: [''],
+      teamId: [0],
+      clubId: [0],
       phone: [''],
       email: [''],
     })
   }
 
   ngOnInit(): void {
+    this.getClubs();
+    this.getTeams();
+    this.clubImage =`${this.configService.URL_IMAGE}`;
     if (this.data) {
       this.coachForm.patchValue(this.data);
     } 
+  }
+
+  getTeams() {
+    this.teamService.getTeams().subscribe({
+      next: (res) => {
+        this.teamData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getClubs() {
+    this.clubService.getClubs().subscribe({
+      next: (res) => {
+        this.clubData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   onSubmit() {

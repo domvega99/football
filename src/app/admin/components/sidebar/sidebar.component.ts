@@ -60,7 +60,7 @@ export class SidebarComponent {
       icon: 'new_releases', 
       routerLink: '/admin/associations', 
       roles: ['Super Admin', 'Admin', 'Content Editor'], 
-      group: 'Football' 
+      group: 'Management' 
     },
     { 
       label: 'Clubs', 

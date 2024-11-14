@@ -106,6 +106,17 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field appearance="outline" class="field">
+                <mat-label>Team</mat-label>
+                <mat-select formControlName="team_id">
+                    <mat-option [value]="0">None</mat-option>
+                    <mat-option *ngFor="let team of teamData" [value]="team.id">
+                        <div class="club-container">
+                            {{ team.team }}
+                        </div>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             
             <button mat-raised-button color="primary" type="submit">{{ playerId ? 'Update' : 'Save' }}</button>
         </form>

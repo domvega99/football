@@ -33,7 +33,7 @@ import { CoachAddEditComponent } from './coach-add-edit/coach-add-edit.component
   styleUrl: './coaches.component.sass'
 })
 export class CoachesComponent {
-  displayedColumns: string[] = ['firstName', 'middleName', 'lastName', 'teamId', 'clubId', 'action'];
+  displayedColumns: string[] = ['firstName', 'middleName', 'lastName', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

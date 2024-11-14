@@ -62,6 +62,29 @@
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="email">
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Club</mat-label>
+                    <mat-select formControlName="clubId">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let club of clubData" [value]="club.id">
+                            <div class="club-container">
+                                <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
+                                {{ club.name }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Team</mat-label>
+                    <mat-select formControlName="teamId">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let team of teamData" [value]="team.id">
+                            <div class="club-container">
+                                {{ team.team }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
         </div>
         <div mat-dialog-actions class="actions">
