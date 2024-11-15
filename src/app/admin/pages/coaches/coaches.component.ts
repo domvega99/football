@@ -9,9 +9,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
-import { CoachService } from './coaches.service';
 import { CoachAddEditComponent } from './coach-add-edit/coach-add-edit.component';
+import { CoachService } from './coaches.service';
 
 @Component({
   selector: 'app-coaches',
@@ -27,13 +26,12 @@ import { CoachAddEditComponent } from './coach-add-edit/coach-add-edit.component
     MatPaginatorModule, 
     MatIconModule, 
     MatSnackBarModule,
-    RouterLink
   ],
   templateUrl: './coaches.component.html',
   styleUrl: './coaches.component.sass'
 })
 export class CoachesComponent {
-  displayedColumns: string[] = ['firstName', 'middleName', 'lastName', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'role', 'club', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

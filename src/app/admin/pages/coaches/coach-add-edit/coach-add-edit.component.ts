@@ -57,6 +57,7 @@ export class CoachAddEditComponent {
       birthPlace: [''],
       address: [''],
       zipCode: [''],
+      role: ['', [Validators.required]],
       teamId: [0],
       clubId: [0],
       phone: [''],

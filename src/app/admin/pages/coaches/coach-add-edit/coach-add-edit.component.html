@@ -36,6 +36,16 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
+                    <mat-label>Role</mat-label>
+                    <mat-select formControlName="role">
+                        <mat-option [value]="'Head'">Head</mat-option>
+                        <mat-option [value]="'Assistant'">Assistant</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="coachForm.get('role')?.hasError('required') && coachForm.get('role')?.touched">
+                        Role is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
                     <mat-label>Birth Date</mat-label>
                     <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
