@@ -36,7 +36,7 @@ export class ClubService {
   }
 
   getSquadByClubId(id: number): Observable<any> {
-    return this.http.get(environment.apiUrl + `/football/clubs/${id}/squad`);
+    return this.http.get(environment.apiUrl + `/football/clubs/${id}/coach-squads`);
   }
 
 }

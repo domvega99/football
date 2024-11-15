@@ -95,6 +95,16 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="stat">
+                        <mat-option [value]="1">Active</mat-option>
+                        <mat-option [value]="0">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="coachForm.get('stat')?.hasError('required') && coachForm.get('stat')?.touched">
+                        Player status is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div mat-dialog-actions class="actions">

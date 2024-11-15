@@ -31,7 +31,7 @@ import { CoachService } from './coaches.service';
   styleUrl: './coaches.component.sass'
 })
 export class CoachesComponent {
-  displayedColumns: string[] = ['firstName', 'lastName', 'role', 'club', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'role', 'club', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

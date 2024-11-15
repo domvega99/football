@@ -44,6 +44,7 @@ export class SquadsComponent {
   imagePath: string | null = null;
   imageLogoPath: string | null = null;
   squadData: Player[] = [];
+  coachData: any[] = [];
   playersByPosition: { [key: string]: Player[] } = {}; 
   
   constructor(
@@ -90,6 +91,14 @@ export class SquadsComponent {
   getSquadByClubId(clubId: number) {
     this.clubService.getSquadByClubId(clubId).subscribe({
       next: (res: any) => {
+        console.log(res)
+        this.coachData = res.coach
+        .filter((coach: any) => coach.stat === 1) 
+          .sort((a: any, b: any) => {
+            if (a.role < b.role) return 1;
+            if (a.role > b.role) return -1;
+            return 0;
+        });
         this.squadData = res.squad.filter((player: Player) => player.stat === 1);
         this.playersByPosition = this.squadData.reduce((acc: any, player) => {
           if (!acc[player.position]) {

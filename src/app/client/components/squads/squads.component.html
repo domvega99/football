@@ -1,6 +1,34 @@
 <div class="squad-container">
+    <div *ngIf="coachData.length > 0">
+        <h1>Coaches</h1>
+    </div>
+    <div *ngFor="let coach of coachData">
+        <h2>{{ coach.role }}</h2>
+        <div class="player-cards">
+            <mat-card class="player-card">
+                <mat-card-content>
+                    <div *ngIf="coach.file_name; else noImageTemplate" class="player-images">
+                        <img [src]="imagePath + '/' + coach.file_name" alt="{{ coach.first_name }} {{ coach.last_name }}"
+                            class="player-image" (contextmenu)="disableRightClick($event)" draggable="false">
+                    </div>
+                    <ng-template #noImageTemplate>
+                        <div class="no-image">
+                            <img mat-card-image [src]="imageLogoPath + 'logo.png'" alt='logo' width="220px">
+                        </div>
+                    </ng-template>
+                    <div class="player-name">
+                        <h2 class="first-name">{{ coach.first_name }}</h2>
+                        <h1 class="last-name">{{ coach.last_name }}</h1>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="squadData.length > 0">
+        <h1>Players</h1>
+    </div>
     <div *ngFor="let position of getPositions()">
-        <h1>{{ position }}</h1>
+        <h2>{{ position }}</h2>
         <div class="player-cards">
             <mat-card *ngFor="let player of playersByPosition[position]" class="player-card">
                 <mat-card-content>
@@ -20,5 +48,8 @@
                 </mat-card-content>
             </mat-card>
         </div>
+    </div>
+    <div *ngIf="squadData.length == 0 && coachData.length == 0">
+        <h1>Coming Soon</h1>
     </div>
 </div>

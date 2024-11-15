@@ -62,6 +62,7 @@ export class CoachAddEditComponent {
       clubId: [0],
       phone: [''],
       email: [''],
+      stat: [1, [Validators.required]],
     })
   }
 
