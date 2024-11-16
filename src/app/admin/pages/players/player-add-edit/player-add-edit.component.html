@@ -13,111 +13,112 @@
                 <img *ngIf="imagePath" [src]="imagePath" alt="Uploaded Image" width="220px" />
                 <input type="file" (change)="onFileSelected($event)" />
             </div>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>First Name</mat-label>
-                <input matInput placeholder="First Name" formControlName="first_name">
-                <mat-error *ngIf="playerForm.get('first_name')?.hasError('required') && playerForm.get('first_name')?.touched">
-                    First name is required
-                </mat-error>
-                <mat-error *ngIf="playerForm.get('first_name')?.hasError('minlength') && playerForm.get('first_name')?.touched">
-                    First name must be at least 3 characters long
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Last Name" formControlName="last_name">
-                <mat-error *ngIf="playerForm.get('last_name')?.hasError('required') && playerForm.get('last_name')?.touched">
-                    Last name is required
-                </mat-error>
-                <mat-error *ngIf="playerForm.get('last_name')?.hasError('minlength') && playerForm.get('last_name')?.touched">
-                    Last name must be at least 3 characters long
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Middle Name</mat-label>
-                <input matInput placeholder="Middle Name" formControlName="middle_name">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Jersey Number</mat-label>
-                <input matInput placeholder="Jersey Number" formControlName="jersey_no">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Position</mat-label>
-                <mat-select formControlName="position">
-                    <mat-option [value]="'Goalkeepers'">Goalkeepers</mat-option>
-                    <mat-option [value]="'Defenders'">Defenders</mat-option>
-                    <mat-option [value]="'Midfielders'">Midfielders</mat-option>
-                    <mat-option [value]="'Forwards'">Forwards</mat-option>
-                </mat-select>
-                <mat-error *ngIf="playerForm.get('position')?.hasError('required') && playerForm.get('position')?.touched">
-                    Position is required
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Height</mat-label>
-                <input matInput placeholder="Height" formControlName="height">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Birth Date</mat-label>
-                <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birth_date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Birth Place</mat-label>
-                <input matInput placeholder="Birth Place" formControlName="birth_place">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Address</mat-label>
-                <input matInput placeholder="Address" formControlName="address">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>ZIP Code</mat-label>
-                <input matInput placeholder="ZIP Code" formControlName="zipCode">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Contact</mat-label>
-                <input matInput placeholder="Contact" formControlName="phone">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" formControlName="email">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="stat">
-                    <mat-option [value]="1">Active</mat-option>
-                    <mat-option [value]="0">Inactive</mat-option>
-                </mat-select>
-                <mat-error *ngIf="playerForm.get('stat')?.hasError('required') && playerForm.get('stat')?.touched">
-                    Player status is required
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Club</mat-label>
-                <mat-select formControlName="clubId">
-                    <mat-option [value]="0">None</mat-option>
-                    <mat-option *ngFor="let club of clubData" [value]="club.id">
-                        <div class="club-container">
-                            <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
-                            {{ club.name }}
-                        </div>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="field">
-                <mat-label>Team</mat-label>
-                <mat-select formControlName="team_id">
-                    <mat-option [value]="0">None</mat-option>
-                    <mat-option *ngFor="let team of teamData" [value]="team.id">
-                        <div class="club-container">
-                            {{ team.team }}
-                        </div>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
+            <div class="field-container">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First Name" formControlName="first_name">
+                    <mat-error *ngIf="playerForm.get('first_name')?.hasError('required') && playerForm.get('first_name')?.touched">
+                        First name is required
+                    </mat-error>
+                    <mat-error *ngIf="playerForm.get('first_name')?.hasError('minlength') && playerForm.get('first_name')?.touched">
+                        First name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="last_name">
+                    <mat-error *ngIf="playerForm.get('last_name')?.hasError('required') && playerForm.get('last_name')?.touched">
+                        Last name is required
+                    </mat-error>
+                    <mat-error *ngIf="playerForm.get('last_name')?.hasError('minlength') && playerForm.get('last_name')?.touched">
+                        Last name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput placeholder="Middle Name" formControlName="middle_name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Jersey Number</mat-label>
+                    <input matInput placeholder="Jersey Number" formControlName="jersey_no">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Position</mat-label>
+                    <mat-select formControlName="position">
+                        <mat-option [value]="'Goalkeepers'">Goalkeepers</mat-option>
+                        <mat-option [value]="'Defenders'">Defenders</mat-option>
+                        <mat-option [value]="'Midfielders'">Midfielders</mat-option>
+                        <mat-option [value]="'Forwards'">Forwards</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="playerForm.get('position')?.hasError('required') && playerForm.get('position')?.touched">
+                        Position is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Height (cm)</mat-label>
+                    <input matInput placeholder="Height (cm)" formControlName="height">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birth_date">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Birth Place</mat-label>
+                    <input matInput placeholder="Birth Place" formControlName="birth_place">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>ZIP Code</mat-label>
+                    <input matInput placeholder="ZIP Code" formControlName="zipCode">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Contact</mat-label>
+                    <input matInput placeholder="Contact" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="stat">
+                        <mat-option [value]="1">Active</mat-option>
+                        <mat-option [value]="0">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="playerForm.get('stat')?.hasError('required') && playerForm.get('stat')?.touched">
+                        Player status is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Club</mat-label>
+                    <mat-select formControlName="clubId">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let club of clubData" [value]="club.id">
+                            <div class="club-container">
+                                <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
+                                {{ club.name }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Team</mat-label>
+                    <mat-select formControlName="team_id">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let team of teamData" [value]="team.id">
+                            <div class="club-container">
+                                {{ team.team }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <button mat-raised-button color="primary" type="submit">{{ playerId ? 'Update' : 'Save' }}</button>
         </form>
     </div>
