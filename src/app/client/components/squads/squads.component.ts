@@ -50,12 +50,12 @@ export class SquadsComponent {
   constructor(
     private route: ActivatedRoute,
     private clubService: ClubService,
-    private _configService: ApiService,
+    private configService: ApiService,
   ) {}
 
   ngOnInit(): void {
-    this.imagePath = `${this._configService.URL_SQUAD_IMAGE}`;
-    this.imageLogoPath = `${this._configService.URL_LOGO_IMAGE}`;
+    this.imagePath = `${this.configService.URL_SQUAD_IMAGE}`;
+    this.imageLogoPath = `${this.configService.URL_LOGO_IMAGE}`;
     this.route.params.subscribe(params => {
       this.slug = params['params'];
       if (this.slug) {
