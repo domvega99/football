@@ -6,11 +6,10 @@
         <div class="teams">
             <mat-card class="card" *ngFor="let item of dataSource">
                 <mat-card-content class="card-content" [routerLink]="'/clubs/' + item.slug">
-                    <img mat-card-image [src]="imagePath + item.file_name" alt={{item.file_name}} width="50px">
+                    <img mat-card-image [src]="imagePath + item.fileName" alt={{item.fileName}} width="50px">
                     <div class="card-body">
-                        <mat-card-title class="title">{{ item.team }}</mat-card-title>
-                        <mat-card-subtitle class="subtitle">{{ item.coach }}</mat-card-subtitle>
-                        <mat-card-subtitle class="subtitle">{{ item.place }}</mat-card-subtitle>
+                        <mat-card-title class="title">{{ item.name }}</mat-card-title>
+                        <mat-card-subtitle class="subtitle">{{ item.municipal }}</mat-card-subtitle>
                     </div>
                 </mat-card-content>
             </mat-card>
