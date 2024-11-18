@@ -105,6 +105,9 @@
                                 {{ club.name }}
                             </div>
                         </mat-option>
+                        <mat-error *ngIf="playerForm.get('clubId')?.hasError('required') && playerForm.get('clubId')?.touched">
+                            Club is required
+                        </mat-error>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">

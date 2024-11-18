@@ -70,7 +70,7 @@ export class PlayerAddEditComponent {
       jersey_no: [0],
       position: ['', [Validators.required]],
       team_id: [0],
-      clubId: [0],
+      clubId: ['', [Validators.required]],
       userId: [0],
       stat: ['', [Validators.required]],
     })
