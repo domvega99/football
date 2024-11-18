@@ -4,12 +4,12 @@
             <quill-view-html [content]="content" class="ql-editor"></quill-view-html>
         </div>
         <ng-template #noContent>
-            <div class="about">
+            <div class="no-data-container">
                 No about posted yet.
             </div>
         </ng-template>
         <h1>Latest Club News</h1>
-        <div class="content-container" *ngIf="contentData; else noClubNews">
+        <div class="content-container" *ngIf="contentData.length > 0; else noClubNews">
             <div class="content" *ngFor="let content of contentData | slice:0:4" [routerLink]="'/news/' + content.id">
                 <div class="image" *ngIf="content.file_name; else noImage">
                     <img *ngIf="imagePath" [src]="imagePath + content.file_name" alt="Club News">
@@ -30,18 +30,18 @@
             </div>
         </div>
         <ng-template #noClubNews>
-            <div class="content-container">
+            <div class="no-data-container">
                 No club news posted yet.
             </div>
         </ng-template>
         <h1>Gallery</h1>
-        <div class="grid-wrapper" *ngIf="galleryData; else noGallery">
+        <div class="grid-wrapper" *ngIf="galleryData.length > 0; else noGallery">
             <div *ngFor="let image of galleryData">
                 <img mat-card-image [src]="imageGalleryPath + 'gallery/' + image.file_name" alt="{{image.file_name}}" width="220px">
             </div>
         </div>
         <ng-template #noGallery>
-            <div class="grid-wrapper">
+            <div class="no-data-container">
                 No images posted yet.
             </div>
         </ng-template>

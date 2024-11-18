@@ -3,15 +3,13 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { QuillModule } from 'ngx-quill';
-import { TeamAboutService } from '../../../services/team-about.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ContentsService } from '../../../services/contents.service';
-import { ApiService } from '../../../services/api.service';
-import { TeamService } from '../../../services/team.service';
-import { GalleryService } from '../../../services/gallery.service';
+import { QuillModule } from 'ngx-quill';
 import { ClubService } from '../../../admin/pages/clubs/clubs.service';
+import { ApiService } from '../../../services/api.service';
+import { ContentsService } from '../../../services/contents.service';
+import { GalleryService } from '../../../services/gallery.service';
+import { TeamAboutService } from '../../../services/team-about.service';
 
 @Component({
   selector: 'app-overview',
@@ -25,12 +23,12 @@ export class OverviewComponent {
   clubId: number | null = null;
   slug: string | null = null;
   aboutData: any | null = null;
-  contentData: any[] | null = null;
+  contentData: any[] = [];
   content: string | null = null;
   imagePath: string | null = null;
   imageGalleryPath: string | null = null;
   imageLogoPath: string | null = null;
-  galleryData: any[] | null = null;
+  galleryData: any[] = [];
   clubLogo: string | null = null;
 
   constructor (
@@ -38,10 +36,8 @@ export class OverviewComponent {
     private teamAboutService: TeamAboutService,
     private contentService: ContentsService,
     private galleryService: GalleryService,
-    private teamService: TeamService,
     private clubService: ClubService,
     private _configService: ApiService,
-    private sanitizer: DomSanitizer
   ) {}
 
 ngOnInit(): void {
@@ -83,7 +79,6 @@ ngOnInit(): void {
     this.teamAboutService.getTeamAboutByTeamId(clubId).subscribe({
       next: (res) => {
         this.aboutData = res;
-        // const safeHtml: SafeHtml = this.sanitizer.bypassSecurityTrustHtml(res.desktop_content);
         this.content = res.desktop_content;
       },
       error: (err) => {
@@ -125,5 +120,4 @@ ngOnInit(): void {
       }
     })
   }
-
 }

@@ -91,7 +91,6 @@ export class SquadsComponent {
   getSquadByClubId(clubId: number) {
     this.clubService.getSquadByClubId(clubId).subscribe({
       next: (res: any) => {
-        console.log(res)
         this.coachData = res.coach
         .filter((coach: any) => coach.stat === 1) 
           .sort((a: any, b: any) => {
