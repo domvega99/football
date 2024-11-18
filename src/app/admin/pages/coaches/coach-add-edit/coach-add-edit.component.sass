@@ -1,29 +1,24 @@
 .wrapper
-    width: 800px
-    .title
-        text-align: center
-        color: #3F51B5
-            
-    .row
-        width: 100%
-        display: flex
-        flex-wrap: wrap
-        justify-content: space-evenly
-        gap: 1
-        .field
-            width: 45%
+    margin-top: 10px
+    padding: 20px
+    .container
+        .header
+            margin-bottom: 5px
+            display: flex
+            align-items: baseline
+            gap: 20px
         .logo
+            margin-bottom: 10px
             display: flex
             flex-direction: column
-            gap: 5px
-            margin-bottom: 10px
-    .actions
-        display: flex
-        justify-content: space-between
-        margin: 0 20px 20px 20px
-        button
-            width: 50px
-
+        form
+            .field-container
+                display: flex
+                flex-wrap: wrap
+                justify-content: space-between
+                mat-form-field
+                    width: 49.5%
+                
 .club-container
     display: flex
     align-items: center

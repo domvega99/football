@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,7 +9,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CoachAddEditComponent } from './coach-add-edit/coach-add-edit.component';
+import { Router, RouterLink } from '@angular/router';
+import { CoreService } from '../../../core/core.service';
 import { CoachService } from './coaches.service';
 
 @Component({
@@ -26,6 +27,7 @@ import { CoachService } from './coaches.service';
     MatPaginatorModule, 
     MatIconModule, 
     MatSnackBarModule,
+    RouterLink
   ],
   templateUrl: './coaches.component.html',
   styleUrl: './coaches.component.sass'
@@ -38,42 +40,17 @@ export class CoachesComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private dialog: MatDialog, 
     private coachService: CoachService,
+    private coreService: CoreService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.getCoaches();
   }
-  
-  openAddForm() {
-    const dialogRef = this.dialog.open(CoachAddEditComponent);
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getCoaches();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
 
-  openEditForm(data: any) {
-    const dialogRef = this.dialog.open(CoachAddEditComponent, {
-      data,
-    });
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getCoaches();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  openEditCoach(data: any) {
+    this.router.navigate(['/admin/coaches/edit', data.id]);
   }
 
   getCoaches() {
@@ -95,5 +72,17 @@ export class CoachesComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteCoach(id: number) {
+    this.coachService.deleteCoach(id).subscribe({
+      next: (res) => {
+        this.coreService.openSnackBar('Coach deleted successfully')
+        this.getCoaches();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

@@ -1,18 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { CoreService } from '../../../../core/core.service';
-import { CoachService } from '../coaches.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CoreService } from '../../../../core/core.service';
+import { ApiService } from '../../../../services/api.service';
+import { SquadService } from '../../../../services/squad.service';
 import { TeamService } from '../../../../services/team.service';
 import { ClubService } from '../../clubs/clubs.service';
-import { ApiService } from '../../../../services/api.service';
+import { CoachService } from '../coaches.service';
 
 @Component({
   selector: 'app-coach-add-edit',
@@ -26,7 +29,9 @@ import { ApiService } from '../../../../services/api.service';
     ReactiveFormsModule, 
     CommonModule, 
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    RouterLink,
+    MatIconModule
   ],
   templateUrl: './coach-add-edit.component.html',
   styleUrl: './coach-add-edit.component.sass'
@@ -34,20 +39,23 @@ import { ApiService } from '../../../../services/api.service';
 export class CoachAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
+  clubImage: string | null = null;
   coachForm: FormGroup;
   teamData: any[] | null = null;
   clubData: any[] | null = null;
-  clubImage: string | null = null;
+  coachId: number | null = null;
 
   constructor(
     private fb: FormBuilder, 
-    private coachService: CoachService, 
-    private teamService: TeamService, 
-    private clubService: ClubService,
+    private clubService: ClubService, 
+    private teamService: TeamService,
     private configService: ApiService,
-    private dialogRef: MatDialogRef<CoachAddEditComponent>,
     private coreService: CoreService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private coachService: CoachService,
+    private squadService: SquadService,
+    private route: ActivatedRoute,
   ) {
     this.coachForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,9 +65,10 @@ export class CoachAddEditComponent {
       birthPlace: [''],
       address: [''],
       zipCode: [''],
+      fileName: [''],
       role: ['', [Validators.required]],
       teamId: [0],
-      clubId: [0],
+      clubId: ['', [Validators.required]],
       phone: [''],
       email: [''],
       stat: [1, [Validators.required]],
@@ -69,10 +78,28 @@ export class CoachAddEditComponent {
   ngOnInit(): void {
     this.getClubs();
     this.getTeams();
+    this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
     this.clubImage =`${this.configService.URL_IMAGE}`;
-    if (this.data) {
-      this.coachForm.patchValue(this.data);
-    } 
+    this.route.params.subscribe(params => {
+      this.coachId = +params['id'];
+      if (this.coachId) {
+        this.getCoachById(this.coachId);
+      }
+    });
+  }
+
+  getCoachById(coachId: number) {
+    this.coachService.getCoachById(coachId).subscribe({
+      next: (res: any) => {
+        this.coachForm.patchValue(res);
+        if (res.fileName) {
+          this.imagePath =`${this.configService.URL_SQUAD_IMAGE}${res.fileName}`;
+        }
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    });
   }
 
   getTeams() {
@@ -97,28 +124,77 @@ export class CoachAddEditComponent {
     })
   }
 
+  generateRandomString(length: number): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      const randomFileName = this.generateRandomString(10) + this.getFileExtension(file.name);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePath = e.target.result;
+        this.coachForm.patchValue({
+          fileName: randomFileName
+        });
+        this.cdr.markForCheck(); 
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  getFileExtension(fileName: string): string {
+    return fileName.substring(fileName.lastIndexOf('.'));
+  }
+
+  onUpload() {
+    if (this.selectedImage) {
+      const fileName = this.coachForm.get('fileName')?.value;
+      this.squadService.uploadImage(this.selectedImage, fileName).subscribe({
+        next: (res) => {
+          this.imagePath = `${this.configService.URL_IMAGE}${res.imagePath}`;
+          this.coachForm.patchValue({
+            fileName: res.imagePath 
+          });
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      })
+    }
+  }
+
   onSubmit() {
     if (this.coachForm.valid) {
       this.coachForm.markAllAsTouched();
-      if (this.data) {
-        this.coachService.updateCoach(this.data.id, this.coachForm.value).subscribe({
+      if (this.coachId) {
+        this.coachService.updateCoach(this.coachId, this.coachForm.value).subscribe({
           next: () => {
             this.coreService.openSnackBar('Coach updated successfully')
-            this.dialogRef.close(true);
+            this.router.navigate(['/admin/coaches'])
+            this.onUpload(); 
           },
           error: (err: any) => {
-            console.error(err);
+            this.coreService.openSnackBar(err.error.message)
           }
         })
       } else {
-        this.coachForm.markAllAsTouched();
         this.coachService.addCoach(this.coachForm.value).subscribe({
           next: () => {
             this.coreService.openSnackBar('Coach added successfully')
-            this.dialogRef.close(true);
+            this.router.navigate(['/admin/coaches'])
+            this.onUpload(); 
           },
           error: (err: any) => {
-            console.error(err);
+            this.coreService.openSnackBar(err.error.message)
           }
         })
       }

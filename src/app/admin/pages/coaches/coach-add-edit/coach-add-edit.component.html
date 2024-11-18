@@ -1,37 +1,43 @@
 <div class="wrapper">
-    <div mat-dialog-title class="title">Coach Details</div>
-    <form [formGroup]="coachForm" (ngSubmit)="onSubmit()">
-        <div mat-dialog-content class="content">
-            <div class="row">
+    <div class="container">
+        <div class="header">
+            <button mat-fab extended color="primary" [routerLink]="'/admin/coaches'">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back
+            </button>
+            <h1>Coach Details</h1>
+        </div>
+        <form [formGroup]="coachForm" (ngSubmit)="onSubmit()">
+            <mat-label>Picture</mat-label>
+            <div class="logo">
+                <img *ngIf="imagePath" [src]="imagePath" alt="Uploaded Image" width="220px" />
+                <input type="file" (change)="onFileSelected($event)" />
+            </div>
+            <div class="field-container">
                 <mat-form-field appearance="outline" class="field">
                     <mat-label>First Name</mat-label>
                     <input matInput placeholder="First Name" formControlName="firstName">
-                    <mat-error
-                        *ngIf="coachForm.get('firstName')?.hasError('required') && coachForm.get('firstName')?.touched">
+                    <mat-error *ngIf="coachForm.get('firstName')?.hasError('required') && coachForm.get('firstName')?.touched">
                         First name is required
                     </mat-error>
-                    <mat-error
-                        *ngIf="coachForm.get('firstName')?.hasError('minlength') && coachForm.get('firstName')?.touched">
+                    <mat-error *ngIf="coachForm.get('firstName')?.hasError('minlength') && coachForm.get('firstName')?.touched">
                         First name must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
                     <mat-label>Middle Name</mat-label>
                     <input matInput placeholder="Middle Name" formControlName="middleName">
-                    <mat-error
-                        *ngIf="coachForm.get('middleName')?.hasError('minlength') && coachForm.get('middleName')?.touched">
+                    <mat-error *ngIf="coachForm.get('middleName')?.hasError('minlength') && coachForm.get('middleName')?.touched">
                         Middle name must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
                     <mat-label>Last Name</mat-label>
                     <input matInput placeholder="Last Name" formControlName="lastName">
-                    <mat-error
-                        *ngIf="coachForm.get('lastName')?.hasError('required') && coachForm.get('lastName')?.touched">
+                    <mat-error *ngIf="coachForm.get('lastName')?.hasError('required') && coachForm.get('lastName')?.touched">
                         Last name is required
                     </mat-error>
-                    <mat-error
-                        *ngIf="coachForm.get('lastName')?.hasError('minlength') && coachForm.get('lastName')?.touched">
+                    <mat-error *ngIf="coachForm.get('lastName')?.hasError('minlength') && coachForm.get('lastName')?.touched">
                         Last name must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
@@ -75,13 +81,15 @@
                 <mat-form-field appearance="outline" class="field">
                     <mat-label>Club</mat-label>
                     <mat-select formControlName="clubId">
-                        <mat-option [value]="0">None</mat-option>
                         <mat-option *ngFor="let club of clubData" [value]="club.id">
                             <div class="club-container">
                                 <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
                                 {{ club.name }}
                             </div>
                         </mat-option>
+                        <mat-error *ngIf="coachForm.get('clubId')?.hasError('required') && coachForm.get('clubId')?.touched">
+                            Club is required
+                        </mat-error>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="field">
@@ -106,10 +114,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
-        <div mat-dialog-actions class="actions">
-            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-            <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
-        </div>
-    </form>
+            <button mat-raised-button color="primary" type="submit">{{ coachId ? 'Update' : 'Save' }}</button>
+        </form>
+    </div>
 </div>
