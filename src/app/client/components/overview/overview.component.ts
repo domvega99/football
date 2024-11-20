@@ -102,7 +102,7 @@ ngOnInit(): void {
   getClubById(clubId: number) {
     this.clubService.getClubById(clubId).subscribe({
       next: (res) => {
-        this.clubLogo = res.file_name
+        this.clubLogo = res.fileName
       },
       error: (err) => {
         console.log(err)
