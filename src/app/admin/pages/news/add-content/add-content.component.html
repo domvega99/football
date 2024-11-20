@@ -42,12 +42,12 @@
 
             <ng-container *ngIf="showTeamSelect">
               <mat-form-field appearance="outline">
-                <mat-label>Team</mat-label>
+                <mat-label>Club</mat-label>
                 <mat-select formControlName="team_id">
-                  <mat-option *ngFor="let team of teamData" [value]="team.id">{{ team.team }}</mat-option>
+                  <mat-option *ngFor="let club of clubData" [value]="club.id">{{ club.name }}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="contentForm.get('team_id')?.hasError('required') && contentForm.get('team_id')?.touched">
-                  Team is required
+                  Club is required
                 </mat-error>
               </mat-form-field>
             </ng-container>            

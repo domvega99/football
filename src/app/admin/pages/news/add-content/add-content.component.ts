@@ -1,18 +1,18 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule, AbstractControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { MatSelectModule } from '@angular/material/select';
-import { QuillModule } from 'ngx-quill';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 import { CoreService } from '../../../../core/core.service';
-import { ContentsService } from '../../../../services/contents.service';
-import { ApiService } from '../../../../services/api.service';
-import { TeamService } from '../../../../services/team.service';
 import { environment } from '../../../../environments/environment';
+import { ApiService } from '../../../../services/api.service';
+import { ContentsService } from '../../../../services/contents.service';
+import { ClubService } from '../../clubs/clubs.service';
 
 @Component({
   selector: 'app-add-content',
@@ -28,7 +28,6 @@ import { environment } from '../../../../environments/environment';
     FormsModule,
     MatIconModule,
     RouterLink
-
   ],
   templateUrl: './add-content.component.html',
   styleUrl: './add-content.component.sass'
@@ -36,7 +35,7 @@ import { environment } from '../../../../environments/environment';
 export class AddContentComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
-  teamData: any[] | null = null;
+  clubData: any[] | null = null;
   contentForm: FormGroup;
   contentId: number | null = null;
   showTeamSelect = false;
@@ -49,7 +48,7 @@ export class AddContentComponent {
     private _configService: ApiService,
     private _coreService: CoreService,
     private _router: Router,
-    private teamService: TeamService,
+    private clubService: ClubService,
     private cdr: ChangeDetectorRef,
   ) {
     this.contentForm = this._fb.group({
@@ -106,9 +105,9 @@ export class AddContentComponent {
   }
 
   getTeams() {
-    this.teamService.getTeams().subscribe({
+    this.clubService.getClubs().subscribe({
       next: (res) => {
-        this.teamData = res;
+        this.clubData = res;
       },
       error: (err) => {
         console.log(err);
