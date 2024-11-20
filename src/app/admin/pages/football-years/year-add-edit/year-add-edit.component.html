@@ -1,0 +1,34 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <button mat-fab extended color="primary" [routerLink]="'/admin/years'">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back
+            </button>
+            <h1>Year Details</h1>
+        </div>
+        <form [formGroup]="yearForm" (ngSubmit)="onSubmit()">
+            <div class="field-container">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Year</mat-label>
+                    <input matInput placeholder="Year" formControlName="year">
+                    <mat-error *ngIf="yearForm.get('year')?.hasError('required') && yearForm.get('year')?.touched">
+                        Year is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Stat</mat-label>
+                    <mat-select formControlName="stat">
+                        <mat-option [value]="1">Active</mat-option>
+                        <mat-option [value]="0">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="yearForm.get('stat')?.hasError('required') && yearForm.get('stat')?.touched">
+                        Status is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit">{{ yearId ? 'Update' : 'Save' }}</button>
+        </form>
+    </div>
+</div>
