@@ -22,6 +22,8 @@ import { ClubFormComponent } from './pages/clubs/club-form/club-form.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { PlayerAddEditComponent } from './pages/players/player-add-edit/player-add-edit.component';
 import { CoachAddEditComponent } from './pages/coaches/coach-add-edit/coach-add-edit.component';
+import { TiersComponent } from './pages/tiers/tiers.component';
+import { TierAddEditComponent } from './pages/tiers/tier-add-edit/tier-add-edit.component';
 
 const routes: Routes = [
     {
@@ -54,6 +56,9 @@ const routes: Routes = [
           { path: 'players', component: PlayersComponent },
           { path: 'players/create', component: PlayerAddEditComponent },
           { path: 'players/edit/:id', component: PlayerAddEditComponent },
+          { path: 'tiers', component: TiersComponent },
+          { path: 'tiers/create', component: TierAddEditComponent },
+          { path: 'tiers/edit/:id', component: TierAddEditComponent },
         ]
     }
 ];

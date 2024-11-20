@@ -77,6 +77,13 @@ export class SidebarComponent {
       group: 'Football' 
     },
     { 
+      label: 'Tiers', 
+      icon: 'flag', 
+      routerLink: '/admin/tiers', 
+      roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
+      group: 'Football' 
+    },
+    { 
       label: 'Leagues', 
       icon: 'golf_course', 
       routerLink: '/admin/leagues', 
