@@ -84,9 +84,16 @@ export class SidebarComponent {
       group: 'Football' 
     },
     { 
-      label: 'Years', 
+      label: 'Football Years', 
       icon: 'flag', 
       routerLink: '/admin/years', 
+      roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
+      group: 'Football' 
+    },
+    { 
+      label: 'Team Groups', 
+      icon: 'flag', 
+      routerLink: '/admin/team-groups', 
       roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
       group: 'Football' 
     },

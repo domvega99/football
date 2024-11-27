@@ -26,6 +26,8 @@ import { TiersComponent } from './pages/tiers/tiers.component';
 import { TierAddEditComponent } from './pages/tiers/tier-add-edit/tier-add-edit.component';
 import { FootballYearsComponent } from './pages/football-years/football-years.component';
 import { YearAddEditComponent } from './pages/football-years/year-add-edit/year-add-edit.component';
+import { TeamGroupsComponent } from './pages/team-groups/team-groups.component';
+import { TeamGroupAddEditComponent } from './pages/team-groups/team-group-add-edit/team-group-add-edit.component';
 
 const routes: Routes = [
     {
@@ -64,6 +66,9 @@ const routes: Routes = [
           { path: 'years', component: FootballYearsComponent },
           { path: 'years/create', component: YearAddEditComponent },
           { path: 'years/edit/:id', component: YearAddEditComponent },
+          { path: 'team-groups', component: TeamGroupsComponent },
+          { path: 'team-groups/create', component: TeamGroupAddEditComponent },
+          { path: 'team-groups/edit/:id', component: TeamGroupAddEditComponent },
         ]
     }
 ];

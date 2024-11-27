@@ -1,0 +1,34 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="header">
+            <button mat-fab extended color="primary" [routerLink]="'/admin/tiers'">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back
+            </button>
+            <h1>Team Group Details</h1>
+        </div>
+        <form [formGroup]="teamGroupForm" (ngSubmit)="onSubmit()">
+            <div class="field-container">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" formControlName="groupName">
+                    <mat-error
+                        *ngIf="teamGroupForm.get('groupName')?.hasError('required') && teamGroupForm.get('groupName')?.touched">
+                        Group name is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="stat">
+                        <mat-option [value]="1">Active</mat-option>
+                        <mat-option [value]="0">Inactive</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamGroupForm.get('stat')?.hasError('required') && teamGroupForm.get('stat')?.touched">
+                        Status is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit">{{ teamGroupId ? 'Update' : 'Save' }}</button>
+        </form>
+    </div>
+</div>
