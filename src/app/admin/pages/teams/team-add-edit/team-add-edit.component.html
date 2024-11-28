@@ -3,46 +3,30 @@
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
         <div mat-dialog-content class="content">
             <div class="row">
-                <div class="logo">
-                    <img *ngIf="imagePath" [src]="imagePath" alt="Uploaded Image" width="300px">
-                    <span>Logo</span>
-                    <input type="file" (change)="onFileSelected($event)">
-                </div>
-                <mat-form-field appearance="outline">
-                    <mat-label>Team</mat-label>
-                    <input matInput placeholder="Team" formControlName="team">
-                    <mat-error *ngIf="teamForm.get('team')?.hasError('required') && teamForm.get('team')?.touched">
-                        Team is required
-                    </mat-error>
-                    <mat-error *ngIf="teamForm.get('team')?.hasError('minlength') && teamForm.get('team')?.touched">
-                        Team must be at least 3 characters long
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Slug</mat-label>
-                    <input matInput placeholder="Slug" formControlName="slug">
-                    <mat-error *ngIf="teamForm.get('slug')?.hasError('required') && teamForm.get('slug')?.touched">
-                        Slug is required
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Club</mat-label>
+                    <mat-select formControlName="clubId">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let club of clubData" [value]="club.id">
+                            <div class="club-container">
+                                <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
+                                {{ club.name }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('clubId')?.hasError('required') && teamForm.get('clubId')?.touched">
+                        Club is required
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Coach</mat-label>
-                    <input matInput placeholder="Coach" formControlName="coach">
-                    <mat-error *ngIf="teamForm.get('coach')?.hasError('required') && teamForm.get('coach')?.touched">
-                        Coach is required
-                    </mat-error>
-                    <mat-error *ngIf="teamForm.get('coach')?.hasError('minlength') && teamForm.get('coach')?.touched">
-                        Coach must be at least 3 characters long
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Place</mat-label>
-                    <input matInput placeholder="Place" formControlName="place">
-                    <mat-error *ngIf="teamForm.get('place')?.hasError('required') && teamForm.get('place')?.touched">
-                        Place is required
-                    </mat-error>
-                    <mat-error *ngIf="teamForm.get('place')?.hasError('minlength') && teamForm.get('place')?.touched">
-                        Place must be at least 3 characters long
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Team Group</mat-label>
+                    <mat-select formControlName="groupId">
+                        <mat-option *ngFor="let group of groupData" [value]="group.id">
+                            {{ group.groupName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('groupId')?.hasError('required') && teamForm.get('groupId')?.touched">
+                        Team group is required
                     </mat-error>
                 </mat-form-field>
             </div>

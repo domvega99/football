@@ -8,135 +8,115 @@ import { TeamService } from '../../../../services/team.service';
 import { CoreService } from '../../../../core/core.service';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../../services/api.service';
+import { MatSelectModule } from '@angular/material/select';
+import { ClubService } from '../../clubs/clubs.service';
+import { TeamGroupsService } from '../../../../services/team-groups.service';
 
 @Component({
   selector: 'app-team-add-edit',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    MatButtonModule, 
+    MatDialogModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    ReactiveFormsModule, 
+    CommonModule,
+    MatSelectModule
+  ],
   templateUrl: './team-add-edit.component.html',
   styleUrl: './team-add-edit.component.sass'
 })
 export class TeamAddEditComponent implements OnInit {
   selectedImage: File | null = null;
   imagePath: string | null = null;
+  clubData: any[] | null = null;
+  groupData: any[] | null = null;
+  clubImage: string | null = null;
   teamForm: FormGroup;
 
   constructor(
-    private _fb: FormBuilder, 
-    private _teamService: TeamService, 
-    private _dialogRef: MatDialogRef<TeamAddEditComponent>,
-    private _coreService: CoreService,
-    private _configService: ApiService,
+    private fb: FormBuilder, 
+    private teamService: TeamService, 
+    private clubService: ClubService, 
+    private groupService: TeamGroupsService, 
+    private dialogRef: MatDialogRef<TeamAddEditComponent>,
+    private coreService: CoreService,
+    private configService: ApiService,
     private cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.teamForm = this._fb.group({
-      file_name: '',
-      team: '',
-      slug: '',
-      coach: '',
-      place: '',
+    this.teamForm = this.fb.group({
+      clubId: '',
+      groupId: '',
     })
   }
 
-  generateRandomString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      result += characters.charAt(randomIndex);
-    }
-    return result;
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedImage = file;
-      const randomFileName = this.generateRandomString(10) + this.getFileExtension(file.name);
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePath = e.target.result;
-        this.teamForm.patchValue({
-          file_name: randomFileName
-        });
-        this.cdr.markForCheck(); 
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  getFileExtension(fileName: string): string {
-    return fileName.substring(fileName.lastIndexOf('.'));
-  }
-
-  onUpload() {
-    if (this.selectedImage) {
-      const fileName = this.teamForm.get('file_name')?.value;
-      this._teamService.uploadImage(this.selectedImage, fileName).subscribe({
-        next: (res) => {
-          this.imagePath = `${this._configService.URL_IMAGE}${res.imagePath}`;
-          this.teamForm.patchValue({
-            file_name: res.imagePath 
-          });
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      })
-    }
-  }
-
   ngOnInit(): void {
-    this.teamForm = this._fb.group({
-      file_name: '',
-      team: ['', [Validators.required, Validators.minLength(3)]],
-      slug: ['', [Validators.required]],
-      coach: ['', [Validators.required, Validators.minLength(3)]],
-      place: ['', [Validators.required, Validators.minLength(3)]]
+    this.getClubs();
+    this.getGroups();
+    this.teamForm = this.fb.group({
+      clubId: ['', [Validators.required]],
+      groupId: ['', [Validators.required]],
     });
-
-    this.teamForm.get('team')?.valueChanges.subscribe(value => {
-      const slug = value?.toLowerCase().replace(/ /g, '-');
-      this.teamForm.get('slug')?.setValue(slug, { emitEvent: false });
-    });
+    this.clubImage =`${this.configService.URL_IMAGE}`;
     
     if (this.data) {
       this.teamForm.patchValue(this.data);
       if (this.data.file_name) {
-        this.imagePath =`${this._configService.URL_IMAGE}${this.data.file_name}`;
+        this.imagePath =`${this.configService.URL_IMAGE}${this.data.file_name}`;
       } else {
-        this.imagePath = `${this._configService.URL_IMAGE}no_image.jpg`;
+        this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
       }
     } else {
-      this.imagePath = `${this._configService.URL_IMAGE}no_image.jpg`;
+      this.imagePath = `${this.configService.URL_IMAGE}no_image.jpg`;
     }
+  }
+
+  getClubs() {
+    this.clubService.getClubs().subscribe({
+      next: (res) => {
+        this.clubData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getGroups() {
+    this.groupService.getTeamGroups().subscribe({
+      next: (res) => {
+        this.groupData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   onSubmit() {
     if (this.teamForm.valid) {
       this.teamForm.markAllAsTouched();
       if (this.data) {
-        this._teamService.updateTeam(this.data.id, this.teamForm.value).subscribe({
+        this.teamService.updateTeam(this.data.id, this.teamForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Team updated successfully')
-            this.onUpload(); 
-            this._dialogRef.close(true);
+            this.coreService.openSnackBar('Team updated successfully')
+            this.dialogRef.close(true);
           },
           error: (err: any) => {
-            this._coreService.openSnackBar(err.error.message)
+            this.coreService.openSnackBar(err.error.message)
           }
         })
       } else {
         this.teamForm.markAllAsTouched();
-        this._teamService.addTeam(this.teamForm.value).subscribe({
+        this.teamService.addTeam(this.teamForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Team added successfully')
-            this.onUpload()
-            this._dialogRef.close(true);
+            this.coreService.openSnackBar('Team added successfully')
+            this.dialogRef.close(true);
           },
           error: (err: any) => {
-            this._coreService.openSnackBar(err.error.message)
+            this.coreService.openSnackBar(err.error.message)
           }
         })
       }
