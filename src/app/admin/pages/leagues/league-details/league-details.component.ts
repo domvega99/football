@@ -14,6 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { LeagueTeamMatchComponent } from './league-team-match/league-team-match.component';
 import { ScoreUpdateService } from '../../../../services/score-league.service';
 import { FriendlyMatchesComponent } from './friendly-matches/friendly-matches.component';
+import { LeagueTeamsComponent } from '../league-teams/league-teams.component';
 
 export interface PeriodicElement {
   position: number;
@@ -44,7 +45,8 @@ export interface PeriodicElement {
     CommonModule, 
     MatTabsModule, 
     LeagueTeamMatchComponent,
-    FriendlyMatchesComponent
+    FriendlyMatchesComponent,
+    LeagueTeamsComponent,
   ],
   templateUrl: './league-details.component.html',
   styleUrls: ['./league-details.component.sass']

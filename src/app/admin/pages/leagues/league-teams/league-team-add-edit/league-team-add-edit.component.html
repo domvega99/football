@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Team Details</div>
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Club</mat-label>
+                    <mat-select formControlName="clubId">
+                        <mat-option *ngFor="let club of clubData" [value]="club.id">
+                            <div class="club-container">
+                                <img *ngIf="club.fileName" [src]="clubImage + club.fileName" alt={{club.fileName}} width="30px">
+                                {{ club.name }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('clubId')?.hasError('required') && teamForm.get('clubId')?.touched">
+                        Club is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Team Group</mat-label>
+                    <mat-select formControlName="groupId">
+                        <mat-option *ngFor="let group of groupData" [value]="group.id">
+                            {{ group.groupName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('groupId')?.hasError('required') && teamForm.get('groupId')?.touched">
+                        Team group is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data.id ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>

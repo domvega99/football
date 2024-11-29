@@ -9,6 +9,11 @@
         </div>
         <div class="body">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [backgroundColor]="'warn'" mat-elevation-z4>
+                <mat-tab label="Teams">
+                    <div class="tab-content">
+                        <app-league-teams></app-league-teams>
+                    </div>
+                </mat-tab>
                 <mat-tab label="Matches">
                     <div class="tab-content">
                         <app-league-team-match></app-league-team-match>
