@@ -97,6 +97,7 @@ export class LeagueDetailsComponent {
   getLeagueTeams(leagueId: number) {
     this.leagueTeamService.getLeagueTeams(leagueId).subscribe({
       next: (res) => {
+        console.log(res)
         const activeTeams = res.filter((team: PeriodicElement) => team.stat !== 0);
         const inactiveTeams = res.filter((team: PeriodicElement) => team.stat === 0);
   

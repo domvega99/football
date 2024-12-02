@@ -8,13 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { ApiService } from '../../../../../services/api.service';
 import { MatButtonModule } from '@angular/material/button';
-
-interface Team {
-  id: number;  
-  team: string; 
-  stat: number;
-  file_name?: string;
-}
+import { LeagueService } from '../../../../../services/league.service';
 
 @Component({
   selector: 'app-league-team-dialog',
@@ -25,12 +19,13 @@ interface Team {
 })
 export class LeagueTeamDialogComponent implements OnInit {
 
-  teams: Team[] = [];
+  teams: any[] = [];
   leagueId: number | null = null;
   imagePath: string | null = null;
 
   constructor(
     private teamService: TeamService,
+    private leagueService: LeagueService,
     private leagueTeamService: LeagueTeamService,
     public dialogRef: MatDialogRef<LeagueTeamDialogComponent>,
     private _configService: ApiService,
@@ -41,13 +36,15 @@ export class LeagueTeamDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.imagePath =`${this._configService.URL_IMAGE}`;
-    this.getTeams();
+    if (this.leagueId) {
+      this.getTeams(this.leagueId);
+    }
   }
 
-  getTeams() {
-    this.teamService.getTeams().subscribe({
-      next: (res: Team[]) => {
-        this.teams = res.map((team: Team) => ({
+  getTeams(leagueId: number) {
+    this.leagueService.fetchLeagueTeams(leagueId).subscribe({
+      next: (res: any) => {
+        this.teams = res.leagueTeams.map((team: any) => ({
           ...team,
           stat: 1
         }));
@@ -58,7 +55,7 @@ export class LeagueTeamDialogComponent implements OnInit {
     });
   }
 
-  onToggleChange(team: Team, event: any) {
+  onToggleChange(team: any, event: any) {
     team.stat = event.checked ? 1 : 0;
   }
 

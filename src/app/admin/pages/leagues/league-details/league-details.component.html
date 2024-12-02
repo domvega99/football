@@ -35,9 +35,9 @@
                                 <th mat-header-cell *matHeaderCellDef> Team </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="team-content">
-                                        <img *ngIf="element.team.file_name" [src]="imagePath + element.team.file_name"
-                                            alt={{element.team.file_name}} width="50px">
-                                        {{element.team.team}}
+                                        <img *ngIf="element.team?.club?.fileName" [src]="imagePath + element.team?.club?.fileName"
+                                            alt={{element.team?.club?.fileName}} width="50px">
+                                        {{element.team?.club?.name}}
                                     </div>
                                 </td>
                             </ng-container>
