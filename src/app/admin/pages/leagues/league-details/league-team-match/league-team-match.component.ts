@@ -52,7 +52,6 @@ export class LeagueTeamMatchComponent {
   getMatches(leagueId: number) {
     this.matchesService.getMatches(leagueId).subscribe({
       next: (res: any[]) => {
-        console.log(res)
         res.forEach(match => {
           match.matchTime = new Date(`2000-01-01T${match.match_time}`);
         });
