@@ -13,6 +13,19 @@
                         League title must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Year</mat-label>
+                    <mat-select formControlName="yearId">
+                        <mat-option *ngFor="let year of yearData" [value]="year.id">
+                            <div class="club-container">
+                                {{ year.year }}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="leagueForm.get('yearId')?.hasError('required') && leagueForm.get('yearId')?.touched">
+                        Year is required
+                    </mat-error>
+                </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status">

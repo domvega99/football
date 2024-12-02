@@ -1,15 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TeamService } from '../../../../services/team.service';
-import { CoreService } from '../../../../core/core.service';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../services/api.service';
-import { LeagueService } from '../../../../services/league.service';
 import { MatSelectModule } from '@angular/material/select';
+import { CoreService } from '../../../../core/core.service';
+import { FootballYearService } from '../../../../services/football-year.service';
+import { LeagueService } from '../../../../services/league.service';
 
 @Component({
   selector: 'app-team-add-edit',
@@ -22,29 +21,44 @@ export class LeagueAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
   leagueForm: FormGroup;
+  yearData: any[] | null = null;
 
   constructor(
     private _fb: FormBuilder, 
     private leagueService: LeagueService, 
     private _dialogRef: MatDialogRef<LeagueAddEditComponent>,
     private _coreService: CoreService,
-    private _configService: ApiService,
+    private yearService: FootballYearService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.leagueForm = this._fb.group({
       title: '',
       status: '',
+      yearId: ''
     })
   }
 
   ngOnInit(): void {
+    this.getYears()
     this.leagueForm = this._fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       status: ['', [Validators.required,]],
+      yearId: ['', [Validators.required,]],
     });
     if (this.data) {
       this.leagueForm.patchValue(this.data);
     } 
+  }
+
+  getYears() {
+    this.yearService.getFootballYears().subscribe({
+      next: (res) => {
+        this.yearData = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   onSubmit() {
@@ -72,7 +86,6 @@ export class LeagueAddEditComponent {
           }
         })
       }
-      
     }
   }
 }
