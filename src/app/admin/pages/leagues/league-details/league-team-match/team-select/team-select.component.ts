@@ -15,6 +15,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatchService } from '../../../../../../services/match.service';
 import { MatSelectModule } from '@angular/material/select';
 import { ScoreService } from '../../../../../../services/score.service';
+import { LeagueService } from '../../../../../../services/league.service';
 
 @Component({
   selector: 'team-select',
@@ -47,6 +48,7 @@ export class TeamSelectComponent {
     private _coreService: CoreService,
     private _configService: ApiService,
     private teamService: TeamService,
+    private leagueService: LeagueService,
     private scoreService: ScoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -64,13 +66,15 @@ export class TeamSelectComponent {
     });
     this.teamForm.patchValue(this.data);
     this.imagePath =`${this._configService.URL_IMAGE}`;
-    this.getTeams()
+    if (this.leagueId) {
+      this.getTeams(this.leagueId)
+    }
   }
 
-  getTeams() {
-    this.teamService.getTeams().subscribe({
+  getTeams(leagueId: number) {
+    this.leagueService.fetchLeagueTeams(leagueId).subscribe({
       next: (res) => {
-        this.teams = res;
+        this.teams = res.leagueTeams;
       },
       error: (err) => {
         console.log(err);

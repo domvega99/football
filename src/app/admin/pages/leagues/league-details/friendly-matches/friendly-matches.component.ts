@@ -79,7 +79,6 @@ export class FriendlyMatchesComponent {
         });
         res.sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime());
         this.dataSource = new MatTableDataSource(res);
-        console.log(res)
       },
       error: (err) => {
         console.log(err);
