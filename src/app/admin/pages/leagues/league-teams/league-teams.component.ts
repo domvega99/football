@@ -5,16 +5,16 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { CoreService } from '../../../../core/core.service';
 import { ApiService } from '../../../../services/api.service';
+import { LeagueService } from '../../../../services/league.service';
 import { TeamService } from '../../../../services/team.service';
 import { LeagueTeamAddEditComponent } from './league-team-add-edit/league-team-add-edit.component';
-import { ActivatedRoute } from '@angular/router';
-import { LeagueService } from '../../../../services/league.service';
 
 @Component({
   selector: 'app-league-teams',
@@ -40,7 +40,6 @@ export class LeagueTeamsComponent {
   dataSource!: MatTableDataSource<any>;
   imagePath: string | null = null;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
@@ -84,7 +83,6 @@ export class LeagueTeamsComponent {
       next: (res) => {
         this.dataSource = new MatTableDataSource(res.leagueTeams);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
         console.log(err);
