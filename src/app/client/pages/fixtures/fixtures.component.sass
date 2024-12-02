@@ -2,234 +2,158 @@
     width: 100%
     min-height: 100vh
     margin-top: 136px
-    .header
-        display: flex
-        justify-content: center
-        width: 100%
-        background: linear-gradient(to right, #170BB0,#6C13E0, #FE0103 )
-        color: #FFFFFF
-        h1
-            margin: 2% 10%
-            letter-spacing: 5px
-            font-weight: 600
-            font-size: 32px
     .container
-        display: flex
-        justify-content: center
-        padding-top: 20px
-        width: 100%
+        .header
+            display: flex
+            justify-content: center
+            width: 100%
+            background: linear-gradient(to right, #170BB0, #6C13E0, #FE0103)
+            color: #FFFFFF
+            h1
+                margin: 2% 10%
+                letter-spacing: 5px
+                font-weight: 600
+                font-size: 32px
         .body
             width: 80%
-            .date-container
-                .fixture-header
-                    width: 100%
-                    display: flex
-                    justify-content: space-between
-            .match-container
-                color: black
-                display: flex
-                flex-direction: column
-                align-items: center
-                gap: 20px
-                padding: 5px
-                border-bottom: 1px solid #e6e3e3
-                &:hover
-                    background: linear-gradient(to right, #170BB0,#6C13E0, #FE0103 )
-                    color: #fff
-                    cursor: pointer
-                .match-content
-                    display: flex
-                    align-items: center
-                    justify-content: space-between
-                    gap: 10px
-                    width: 100%
-                    .team-fixtures
+            margin: 0 auto
+            .fixture-container
+                width: 100%
+                .date-container
+                    .fixture-header
                         display: flex
+                        justify-content: space-between
+                    .match-container
+                        color: black
+                        display: flex
+                        flex-direction: column
                         align-items: center
                         gap: 20px
-                        width: 60%
-                        .team-container-a
-                            display: flex
-                            align-items: center
-                            justify-content: flex-end
-                            gap: 20px
-                            width: 40%
-                            .team-content
-                                font-size: 16px
-                            img
-                                width: 10%
-                                height: 10%
-                        .team-container-b
-                            display: flex
-                            align-items: center
-                            justify-content: flex-start
-                            gap: 20px
-                            width: 40%
-                            .team-content
-                                font-size: 16px
-                            img
-                                width: 10%
-                                height: 10%
-                        .time-container
-                            width: 10%
-                            padding: 5px 0
-                            border: solid 1px #c1c1c2
-                            border-radius: 10px
-                            display: flex
-                            justify-content: space-evenly
-                            font-size: 16px
-                            font-weight: 600
-                    .location-content
-                        display: flex
-                        align-items: center
-                        text-align: center
-                        font-size: 16px
-                        border-radius: 50px
-                        padding: 2px 10px
-                        margin-top: 5px
-                        font-weight: 400
-                    .match
-                        color: white
-                        display: flex
-                        align-items: center
-                        justify-content: center
-                        gap: 10px
-                        padding-inline: 10px
-                        cursor: pointer
-                        color: #000
-                        border-radius: 5px
+                        padding: 5px
+                        border-bottom: 1px solid #e6e3e3
                         &:hover
-                            background-color: #EFEFEF
+                            background: linear-gradient(to right, #170BB0,#6C13E0, #FE0103 )
+                            color: #fff
+                            cursor: pointer
+                        .match-content
+                            display: flex
+                            align-items: center
+                            justify-content: space-between
+                            gap: 10px
+                            width: 100%
+                            .team-fixtures
+                                display: flex
+                                align-items: center
+                                gap: 20px
+                                width: 60%
+                                .team-container-a
+                                    display: flex
+                                    align-items: center
+                                    justify-content: flex-end
+                                    gap: 20px
+                                    width: 40%
+                                    .team-content
+                                        font-size: 16px
+                                    img
+                                        width: 10%
+                                        height: 10%
+                                .team-container-b
+                                    display: flex
+                                    align-items: center
+                                    justify-content: flex-start
+                                    gap: 20px
+                                    width: 40%
+                                    .team-content
+                                        font-size: 16px
+                                    img
+                                        width: 10%
+                                        height: 10%
+                                .time-container
+                                    width: 10%
+                                    padding: 5px 0
+                                    border: solid 1px #c1c1c2
+                                    border-radius: 10px
+                                    display: flex
+                                    justify-content: space-evenly
+                                    font-size: 16px
+                                    font-weight: 600
+                            .match-status-content
+                                font-size: 14px
+                                margin-left: 10px
+                                display: flex
+                                align-items: center
+                                gap: 10px
+                                color: #FFFFFF
+                                font-weight: 500
+                                background-color: #30F78C
+                                padding: 2px 10px
+                                border-radius: 50px
+                            .location-content
+                                display: flex
+                                align-items: center
+                                text-align: center
+                                font-size: 16px
+                                border-radius: 50px
+                                padding: 2px 10px
+                                margin-top: 5px
+                                font-weight: 400
+                            .match
+                                color: white
+                                display: flex
+                                align-items: center
+                                justify-content: center
+                                gap: 10px
+                                padding-inline: 10px
+                                cursor: pointer
+                                color: #000
+                                border-radius: 5px
+                                &:hover
+                                    background-color: #EFEFEF
+
 
 @media screen and (max-width: 900px)
     .wrapper
         margin-top: 77px
         .container
             .body
-                width: 100%
-                .date-container
-                    .fixture-header
-                        width: 100%
-                        display: flex
-                        flex-direction: column  
-                        justify-content: center
-                        align-items: center
-                .match-container
-                    .match-content
-                        display: flex
-                        align-items: center
-                        flex-direction: column
-                        width: 100%
-                        .team-fixtures
-                            width: 100%
-                            .team-container-a
-                                width: 30%
+                width: 90%
+                margin: 0 auto
+                .fixture-container
+                    .date-container
+                        .match-container
+                            .match-content
                                 display: flex
+                                align-items: center
                                 flex-direction: column
-                                justify-content: center
-                                align-items: center
-                                .team-content
-                                    text-align: center
+                                width: 100%
+                                .team-fixtures
                                     width: 100%
-                                img
-                                    width: 30%
-                            .time-container
-                                width: 30%
-                            .team-container-b
-                                width: 30%
-                                display: flex
-                                flex-direction: column-reverse
-                                justify-content: center
-                                align-items: center
-                                .team-content
-                                    text-align: center
-                                    width: 100%
-                                img
-                                    width: 30%
-
-// @media screen and (max-width: 1200px)
-//     .wrapper
-//         .header
-//             display: flex
-//             justify-content: center
-//             width: 100%
-//             background: linear-gradient(to right, #170BB0,#6C13E0, #FE0103 )
-//             color: #FFFFFF
-//             h1
-//                 margin: 2% 10%
-//                 letter-spacing: 5px
-//                 font-weight: 600
-//                 font-size: 32px
-//         .container
-//             display: flex
-//             justify-content: center
-//             width: 100%
-//             .body
-//                 width: 100%
-//                 margin-inline: 20px
-//                 .date-container
-//                     .fixture-header
-//                         width: 100%
-//                         display: flex
-//                         justify-content: space-between
-//                 .match-container
-//                     width: 100%
-//                     color: black
-//                     display: flex
-//                     flex-direction: column
-//                     align-items: center
-//                     gap: 20px
-//                     padding-bottom: 10px
-//                     border-bottom: 1px solid #e6e3e3
-//                     .match-content
-//                         width: 100%
-//                         display: flex
-//                         align-items: baseline
-//                         justify-content: space-between
-//                         gap: 10px
-//                         .team-fixtures
-//                             display: flex
-//                             align-items: center
-//                             .team-container-a
-//                                 display: flex
-//                                 align-items: center
-//                                 gap: 20px
-//                                 width: 100%
-//                                 .team-content
-//                                     font-size: 16px
-//                                 img
-//                                     width: 30%
-//                                     height: 30%
-//                             .team-container-b
-//                                 display: flex
-//                                 align-items: center
-//                                 gap: 20px
-//                                 width: 100%
-//                                 .team-content
-//                                     font-size: 16px
-//                                 img
-//                                     width: 30%
-//                                     height: 30%
-//                             .time-container
-//                                 width: 40%
-//                                 padding: 5px 0
-//                                 border: solid 1px #c1c1c2
-//                                 border-radius: 10px
-//                                 display: flex
-//                                 justify-content: space-evenly
-//                         .location-content
-//                             display: none
-//                         .match
-//                             color: white
-//                             display: flex
-//                             align-items: center
-//                             justify-content: center
-//                             gap: 10px
-//                             padding-inline: 10px
-//                             cursor: pointer
-//                             color: #000
-//                             span
-//                                 display: none
+                                    .team-container-a
+                                        width: 30%
+                                        display: flex
+                                        flex-direction: column
+                                        justify-content: center
+                                        align-items: center
+                                        .team-content
+                                            text-align: center
+                                            width: 100%
+                                        img
+                                            width: 30%
+                                    .time-container
+                                        width: 30%
+                                    .team-container-b
+                                        width: 30%
+                                        display: flex
+                                        flex-direction: column-reverse
+                                        justify-content: center
+                                        align-items: center
+                                        .team-content
+                                            text-align: center
+                                            width: 100%
+                                        img
+                                            width: 30%
+                        
+   
 
 
 

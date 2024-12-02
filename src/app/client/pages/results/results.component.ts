@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { LeagueService } from '../../../services/league.service';
-import { ApiService } from '../../../services/api.service';
-import { MatIconModule } from '@angular/material/icon';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog} from '@angular/material/dialog';
-import { Title } from '@angular/platform-browser'
-import { Router, RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
+import { ApiService } from '../../../services/api.service';
+import { LeagueService } from '../../../services/league.service';
 
 @Component({
   selector: 'app-results',
@@ -15,7 +13,6 @@ import { Router, RouterLink } from '@angular/router';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink,
   ],
   templateUrl: './results.component.html',
   styleUrl: './results.component.sass'
@@ -34,17 +31,6 @@ export class ResultsComponent {
     this.imagePath = `${this.configService.URL_IMAGE}`;
     this.getLeagueTeams();
   }
-
-  // getLeagueTeams() {
-  //   this.leagueService.getLeagueMatches().subscribe({
-  //     next: (res) => {
-  //       this.leagueMatches = res;
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   })
-  // }
 
   getLeagueTeams() {
     this.leagueService.getLeagueMatches().subscribe({
@@ -68,7 +54,6 @@ export class ResultsComponent {
       }
     });
   }
-
 
   setTitle(newTitle: string) {
     this._titleService.setTitle(newTitle);

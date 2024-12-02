@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { LeagueService } from '../../../services/league.service';
-import { QuickviewComponent } from './quickview/quickview.component';
 
 @Component({
   selector: 'app-fixtures',
@@ -16,8 +14,6 @@ import { QuickviewComponent } from './quickview/quickview.component';
     CommonModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink,
-    QuickviewComponent
   ],
   templateUrl: './fixtures.component.html',
   styleUrl: './fixtures.component.sass'
@@ -29,7 +25,6 @@ export class FixturesComponent implements OnInit{
   constructor(
     private leagueService: LeagueService,
     private configService: ApiService,
-    private _dialog: MatDialog,
     private _titleService: Title,
     private router: Router
   )
@@ -69,20 +64,6 @@ export class FixturesComponent implements OnInit{
   setTitle(newTitle: string) {
     this._titleService.setTitle(newTitle);
   }
-
-  // quickview(){
-  //   const dialogRef = this._dialog.open(QuickviewComponent);
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       if (val) {
-  //         // this.getLeagueMatches()();
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   })
-  // }
 
   onFixtureClick(matches: any) {
     this.router.navigate(['/quickview'], {
