@@ -14,6 +14,7 @@ import { ApiService } from '../../../../services/api.service';
 import { TeamService } from '../../../../services/team.service';
 import { LeagueTeamAddEditComponent } from './league-team-add-edit/league-team-add-edit.component';
 import { ActivatedRoute } from '@angular/router';
+import { LeagueService } from '../../../../services/league.service';
 
 @Component({
   selector: 'app-league-teams',
@@ -46,15 +47,17 @@ export class LeagueTeamsComponent {
     private dialog: MatDialog, 
     private route: ActivatedRoute,
     private teamService: TeamService,
+    private leagueService: LeagueService,
     private coreService: CoreService,
     private configService: ApiService,
   ) {}
 
   ngOnInit(): void {
-    this.getTeams();
+    
     this.imagePath =`${this.configService.URL_IMAGE}`;
     this.route.params.subscribe(params => {
       this.leagueId = +params['id'];  
+      this.getTeams(this.leagueId);
     });
   }
   
@@ -65,7 +68,9 @@ export class LeagueTeamsComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getTeams();
+          if (this.leagueId) {
+            this.getTeams(this.leagueId);
+          }
         }
       },
       error: (err) => {
@@ -74,10 +79,10 @@ export class LeagueTeamsComponent {
     })
   }
 
-  getTeams() {
-    this.teamService.getTeams().subscribe({
+  getTeams(leagueId: number) {
+    this.leagueService.fetchLeagueTeams(leagueId).subscribe({
       next: (res) => {
-        this.dataSource = new MatTableDataSource(res);
+        this.dataSource = new MatTableDataSource(res.leagueTeams);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       },
@@ -94,7 +99,9 @@ export class LeagueTeamsComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getTeams();
+          if (this.leagueId) {
+            this.getTeams(this.leagueId);
+          }
         }
       },
       error: (err) => {

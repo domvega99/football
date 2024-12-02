@@ -18,11 +18,11 @@
                     </ng-container>
                     <ng-container matColumnDef="clubId">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Club </th>
-                        <td mat-cell *matCellDef="let row"> {{row.club.name}} </td>
+                        <td mat-cell *matCellDef="let row"> {{ row.club?.name }} </td>
                     </ng-container>
                     <ng-container matColumnDef="groupId">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Group </th>
-                        <td mat-cell *matCellDef="let row"> {{row.group.groupName}} </td>
+                        <td mat-cell *matCellDef="let row"> {{ row.group?.groupName }} </td>
                     </ng-container>
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef> Action </th>

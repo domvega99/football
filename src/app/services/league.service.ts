@@ -67,6 +67,10 @@ export class LeagueService {
     return this._http.get(environment.apiUrl+`/football/leagues/website/league-match`);
   }
 
+  fetchLeagueTeams(id: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/leagues/${id}/teams`);
+  }
+
   deleteLeague(id: number): Observable<any> {
     return this._http.delete(environment.apiUrl+`/football/leagues/${id}`)
   }
