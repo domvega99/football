@@ -30,9 +30,9 @@
                                     (click)="updateTeam(element, 0, element.scores[0].id, element.scores[0].team_id)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <img *ngIf="element.scores[0].team.file_name" [src]="imagePath + element.scores[0].team.file_name"
-                                    alt={{element.scores[0].team.file_name}} width="20px">
-                                {{ element.scores[0].team.team }}
+                                <img *ngIf="element.scores[0].team.club?.fileName" [src]="imagePath + element.scores[0].team.club?.fileName"
+                                    alt={{element.scores[0].team.club?.fileName}} width="20px">
+                                {{ element.scores[0].team.club?.name }}
                             </div> 
                         </ng-container>
                         <ng-container *ngIf="!element.scores?.[0]">
@@ -100,9 +100,9 @@
                     <td mat-cell *matCellDef="let element">
                         <ng-container *ngIf="element.scores?.[1]">
                             <div class="team-content">
-                                <img *ngIf="element.scores[1].team.file_name" [src]="imagePath + element.scores[1].team.file_name"
-                                    alt={{element.scores[1].team.file_name}} width="20px">
-                                {{ element.scores[1].team.team }}
+                                <img *ngIf="element.scores[1].team.club?.fileName" [src]="imagePath + element.scores[1].team.club?.fileName"
+                                    alt={{element.scores[1].team.club?.fileName}} width="20px">
+                                {{ element.scores[1].team.club?.name }}
                                 <button mat-icon-button color="primary" matTooltip="Change team for this match" [matTooltipPosition]="'after'"
                                     (click)="updateTeam(element, 1, element.scores[1].id, element.scores[1].team_id)">
                                     <mat-icon>edit</mat-icon>
