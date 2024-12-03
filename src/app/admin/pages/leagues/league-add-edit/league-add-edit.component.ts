@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
 import { FootballYearService } from '../../../../services/football-year.service';
 import { LeagueService } from '../../../../services/league.service';
+import { TierService } from '../../../../services/tier.service';
 
 @Component({
   selector: 'app-team-add-edit',
@@ -21,6 +22,7 @@ export class LeagueAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
   leagueForm: FormGroup;
+  tierData: any[] | null = null;
   yearData: any[] | null = null;
 
   constructor(
@@ -28,26 +30,36 @@ export class LeagueAddEditComponent {
     private leagueService: LeagueService, 
     private _dialogRef: MatDialogRef<LeagueAddEditComponent>,
     private _coreService: CoreService,
+    private tierService: TierService,
     private yearService: FootballYearService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.leagueForm = this._fb.group({
-      title: '',
-      status: '',
-      yearId: ''
-    })
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      status: ['', [Validators.required,]],
+      tierId: ['', [Validators.required,]],
+      startYear: ['', [Validators.required,]],
+      endYear: ['', [Validators.required,]],
+    });
   }
 
   ngOnInit(): void {
+    this.getTiers()
     this.getYears()
-    this.leagueForm = this._fb.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      status: ['', [Validators.required,]],
-      yearId: ['', [Validators.required,]],
-    });
     if (this.data) {
       this.leagueForm.patchValue(this.data);
     } 
+  }
+
+  getTiers() {
+    this.tierService.getTiers().subscribe({
+      next: (res) => {
+        this.tierData = res
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   getYears() {
