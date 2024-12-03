@@ -47,7 +47,7 @@ export class LeagueTeamAddEditComponent {
   ) {
     this.teamForm = this.fb.group({
       clubId: ['', [Validators.required]],
-      groupId: ['', [Validators.required]],
+      groupId: [''],
       stat: ['', [Validators.required]],
       leagueId: this.data.leagueId,
     });
