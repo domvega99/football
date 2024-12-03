@@ -8,11 +8,11 @@
                     <input matInput placeholder="Organization Name" formControlName="orgName">
                     <mat-error
                         *ngIf="associationForm.get('orgName')?.hasError('required') && associationForm.get('orgName')?.touched">
-                        League title is required
+                        Organization name is required
                     </mat-error>
                     <mat-error
                         *ngIf="associationForm.get('orgName')?.hasError('minlength') && associationForm.get('orgName')?.touched">
-                        League title must be at least 3 characters long
+                        Organization name must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
