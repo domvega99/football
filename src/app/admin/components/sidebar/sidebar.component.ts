@@ -64,7 +64,7 @@ export class SidebarComponent {
     },
     { 
       label: 'Clubs', 
-      icon: 'new_releases', 
+      icon: 'flag', 
       routerLink: '/admin/clubs', 
       roles: ['Super Admin', 'Admin', 'Content Editor'], 
       group: 'Football' 
@@ -92,7 +92,7 @@ export class SidebarComponent {
     },
     { 
       label: 'Leagues', 
-      icon: 'golf_course', 
+      icon: 'flag', 
       routerLink: '/admin/leagues', 
       roles: ['Super Admin', 'Admin'], 
       group: 'Football' 
