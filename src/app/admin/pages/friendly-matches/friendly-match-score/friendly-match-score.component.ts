@@ -1,15 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import { FriendlyMatchService } from '../../../../../../services/friendly-match.service';
-import { TeamService } from '../../../../../../services/team.service';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { CoreService } from '../../../../../../core/core.service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { FriendlyMatchService } from '../../../../services/friendly-match.service';
+import { CoreService } from '../../../../core/core.service';
 
 @Component({
   selector: 'app-friendly-match-score',

@@ -28,6 +28,7 @@ import { FootballYearsComponent } from './pages/football-years/football-years.co
 import { YearAddEditComponent } from './pages/football-years/year-add-edit/year-add-edit.component';
 import { TeamGroupsComponent } from './pages/team-groups/team-groups.component';
 import { TeamGroupAddEditComponent } from './pages/team-groups/team-group-add-edit/team-group-add-edit.component';
+import { FriendlyMatchesComponent } from './pages/friendly-matches/friendly-matches.component';
 
 const routes: Routes = [
     {
@@ -67,6 +68,7 @@ const routes: Routes = [
           { path: 'team-groups', component: TeamGroupsComponent },
           { path: 'team-groups/create', component: TeamGroupAddEditComponent },
           { path: 'team-groups/edit/:id', component: TeamGroupAddEditComponent },
+          { path: 'friendly-matches', component: FriendlyMatchesComponent },
         ]
     }
 ];

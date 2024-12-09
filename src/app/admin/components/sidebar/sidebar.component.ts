@@ -98,6 +98,13 @@ export class SidebarComponent {
       group: 'Football' 
     },
     { 
+      label: 'Friendly Matches', 
+      icon: 'flag', 
+      routerLink: '/admin/friendly-matches', 
+      roles: ['Super Admin', 'Admin'], 
+      group: 'Football' 
+    },
+    { 
       label: 'Contents', 
       icon: 'new_releases', 
       routerLink: '/admin/contents', 

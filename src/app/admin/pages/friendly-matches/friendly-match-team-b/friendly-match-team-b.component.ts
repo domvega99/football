@@ -1,18 +1,18 @@
 import { Component, Inject } from '@angular/core';
-import { FriendlyMatchService } from '../../../../../../services/friendly-match.service';
-import { TeamService } from '../../../../../../services/team.service';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { CoreService } from '../../../../../../core/core.service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { TeamService } from '../../../../services/team.service';
+import { FriendlyMatchService } from '../../../../services/friendly-match.service';
+import { CoreService } from '../../../../core/core.service';
 
 @Component({
-  selector: 'app-friendly-match-team-a',
+  selector: 'app-friendly-match-team-b',
   standalone: true,
   imports: [
     MatSelectModule,
@@ -23,10 +23,10 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatDialogModule
   ],
-  templateUrl: './friendly-match-team-a.component.html',
-  styleUrl: './friendly-match-team-a.component.sass'
+  templateUrl: './friendly-match-team-b.component.html',
+  styleUrl: './friendly-match-team-b.component.sass'
 })
-export class FriendlyMatchTeamAComponent {
+export class FriendlyMatchTeamBComponent {
   teamData: any[] | null = null;
   imagePath: string | null = null;
   teamForm: FormGroup;
@@ -40,14 +40,13 @@ export class FriendlyMatchTeamAComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.teamForm = this.fb.group({
-      teamAId: ['', [Validators.required]],
+      teamBId: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
     this.getTeams()
     this.teamForm.patchValue(this.data);
-    console.log(this.data)
   }
 
   getTeams() {
@@ -76,5 +75,4 @@ export class FriendlyMatchTeamAComponent {
       });
     }
   }
-
 }

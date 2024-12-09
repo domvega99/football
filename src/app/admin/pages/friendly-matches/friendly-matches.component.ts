@@ -1,21 +1,20 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatchService } from '../../../../../services/match.service';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../../services/api.service';
-import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ScoreUpdateService } from '../../../../../services/score-league.service';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
+import { FriendlyMatchService } from '../../../services/friendly-match.service';
+import { ScoreUpdateService } from '../../../services/score-league.service';
 import { FriendlyMatchAddEditComponent } from './friendly-match-add-edit/friendly-match-add-edit.component';
-import { FriendlyMatchService } from '../../../../../services/friendly-match.service';
+import { FriendlyMatchScoreComponent } from './friendly-match-score/friendly-match-score.component';
 import { FriendlyMatchTeamAComponent } from './friendly-match-team-a/friendly-match-team-a.component';
 import { FriendlyMatchTeamBComponent } from './friendly-match-team-b/friendly-match-team-b.component';
-import { FriendlyMatchScoreComponent } from './friendly-match-score/friendly-match-score.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-friendly-matches',
@@ -25,7 +24,9 @@ import { FriendlyMatchScoreComponent } from './friendly-match-score/friendly-mat
     MatTableModule, 
     CommonModule, 
     MatIconModule, 
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     DatePipe,
@@ -154,70 +155,11 @@ export class FriendlyMatchesComponent {
       })
   }
 
-
-  // updateScore(element: any, index: number, id: number, team_id: number, points: number, result: string) {
-  //   const dialogRef = this.dialog.open(TeamScoreComponent, {
-  //       disableClose: true,
-  //       data: { 
-  //         score_id: id,
-  //         team_id: team_id,
-  //         leagueId: this.leagueId, 
-  //         matchId: element.id,
-  //         points: points,
-  //         result: result
-  //       }
-  //   });
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       if (val && this.leagueId) {
-  //         this.getMatches(this.leagueId)
-  //         this.scoreUpdateService.notifyScoreUpdated();
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   })
-  // }
-
-
-
-  // addTeam(element: any, index: number) {
-  //   const dialogRef = this.dialog.open(TeamSelectComponent, {
-  //       data: { 
-  //         leagueId: this.leagueId, 
-  //         matchId: element.id 
-  //       }
-  //   });
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       if (val && this.leagueId) {
-  //         this.getMatches(this.leagueId)
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //     }
-  //   })
-  // }
-  
-
-  
-
-  // openEditFormMatch(data: any) {
-  //   const dialogRef = this.dialog.open(TeamMatchAddEditComponent, {
-  //     data,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe({
-  //       next: (val) => {
-  //         if (val && this.leagueId) {
-  //           this.getMatches(this.leagueId)
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.log(err);
-  //       }
-  //     })
-  // }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

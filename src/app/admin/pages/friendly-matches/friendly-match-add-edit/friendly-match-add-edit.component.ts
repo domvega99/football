@@ -1,20 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TeamService } from '../../../../../../services/team.service';
-import { CoreService } from '../../../../../../core/core.service';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../../../services/api.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { ChangeDetectionStrategy } from '@angular/core';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatchService } from '../../../../../../services/match.service';
 import { MatSelectModule } from '@angular/material/select';
-import { FriendlyMatchService } from '../../../../../../services/friendly-match.service';
+import { CoreService } from '../../../../core/core.service';
+import { ApiService } from '../../../../services/api.service';
+import { FriendlyMatchService } from '../../../../services/friendly-match.service';
 
 @Component({
   selector: 'app-friendly-match-add-edit',
@@ -76,8 +72,8 @@ export class FriendlyMatchAddEditComponent {
       this.teamForm.markAllAsTouched();
       const formData = {
         ...this.teamForm.value,
-        league_id: this.leagueId
       };
+      console.log(formData)
       if (this.data.id) {
         this.friendlyMatchService.updateFriendlyMatch(this.data.id, formData).subscribe({
           next: (val: any) => {

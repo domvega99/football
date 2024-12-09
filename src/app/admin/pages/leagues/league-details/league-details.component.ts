@@ -7,9 +7,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LeagueService } from '../../../../services/league.service';
-import { FriendlyMatchesComponent } from './friendly-matches/friendly-matches.component';
-import { LeagueStandingsComponent } from './league-standings/league-standings.component';
 import { LeagueTeamsComponent } from '../league-teams/league-teams.component';
+import { LeagueStandingsComponent } from './league-standings/league-standings.component';
 import { LeagueTeamMatchComponent } from './league-team-match/league-team-match.component';
 
 @Component({
@@ -22,7 +21,6 @@ import { LeagueTeamMatchComponent } from './league-team-match/league-team-match.
     MatTableModule, 
     CommonModule, 
     MatTabsModule, 
-    FriendlyMatchesComponent,
     LeagueStandingsComponent,
     LeagueTeamsComponent,
     LeagueTeamMatchComponent

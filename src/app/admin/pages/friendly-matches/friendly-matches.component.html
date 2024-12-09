@@ -1,8 +1,15 @@
 <div class="wrapper">
     <div class="container">
         <div class="header">
-            <button mat-fab extended color="primary" (click)="openEditAdd()">
-                <mat-icon>add</mat-icon> Add Match
+            <h1 id="item1">All Friendly Matches</h1>
+            <div class="search" id="item2">
+                <mat-form-field appearance="outline" class="search-content">
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input class="search-input">
+                    <mat-icon matPrefix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            <button id="item3" mat-fab extended color="primary" (click)="openEditAdd()">
+                <mat-icon>add</mat-icon> Add Friendly Match
             </button>
         </div>
         <div class="body">
