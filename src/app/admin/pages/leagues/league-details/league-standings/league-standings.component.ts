@@ -29,6 +29,7 @@ export class LeagueStandingsComponent {
   displayedColumns: string[] = ['position', 'team_id', 'played', 'won', 'drawn', 'lost', 'goals_for', 'goals_against', 'goals_difference', 'points', 'stat'];
   leagueId: number | null = null;
   dataSource!: MatTableDataSource<any>;
+  leagueGroupData: any[] = [];
   imagePath: string | null = null;
   title: string | null = null;
   
@@ -42,6 +43,7 @@ export class LeagueStandingsComponent {
 
   ngOnInit(): void {
     this.imagePath = `${this._configService.URL_IMAGE}`;
+    console.log(this.imagePath)
     this.route.params.subscribe(params => {
       this.leagueId = +params['id'];  
       this.getLeagueTeams(this.leagueId);
@@ -54,33 +56,44 @@ export class LeagueStandingsComponent {
   }
 
   getLeagueTeams(leagueId: number) {
-    this.leagueTeamService.getLeagueTeams(leagueId).subscribe({
+    this.leagueTeamService.getLeagueTeamsbyGroup(leagueId).subscribe({
       next: (res) => {
-        const activeTeams = res.filter((team: any) => team.stat !== 0);
-        const inactiveTeams = res.filter((team: any) => team.stat === 0);
-  
-        activeTeams.sort((a: any, b: any) => {
-          if (b.points !== a.points) {
-            return b.points - a.points; 
-          } else if (b.goals_for !== a.goals_for) {
-            return b.goals_for - a.goals_for; 
-          } else {
-            return b.goals_difference - a.goals_difference; 
-          }
-        });
-  
-        const sortedTeams = [...activeTeams, ...inactiveTeams];
-        sortedTeams.forEach((element: any, index: number) => {
-          element.position = index + 1;
-        });
-  
-        this.dataSource = new MatTableDataSource(sortedTeams);
+        this.leagueGroupData = res;
       },
       error: (err) => {
         console.log(err);
       }
     });
   }
+
+  // getLeagueTeams(leagueId: number) {
+  //   this.leagueTeamService.getLeagueTeams(leagueId).subscribe({
+  //     next: (res) => {
+  //       const activeTeams = res.filter((team: any) => team.stat !== 0);
+  //       const inactiveTeams = res.filter((team: any) => team.stat === 0);
+  
+  //       activeTeams.sort((a: any, b: any) => {
+  //         if (b.points !== a.points) {
+  //           return b.points - a.points; 
+  //         } else if (b.goals_for !== a.goals_for) {
+  //           return b.goals_for - a.goals_for; 
+  //         } else {
+  //           return b.goals_difference - a.goals_difference; 
+  //         }
+  //       });
+  
+  //       const sortedTeams = [...activeTeams, ...inactiveTeams];
+  //       sortedTeams.forEach((element: any, index: number) => {
+  //         element.position = index + 1;
+  //       });
+  
+  //       this.dataSource = new MatTableDataSource(sortedTeams);
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     }
+  //   });
+  // }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueTeamDialogComponent, {

@@ -22,6 +22,10 @@ export class LeagueTeamService {
     return this._http.get(environment.apiUrl+`/football/league-teams/${leagueId}`);
   }
 
+  getLeagueTeamsbyGroup(leagueId: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/league-teams/groups/${leagueId}`);
+  }
+
 //   deleteLeague(id: number): Observable<any> {
 //     return this._http.delete(`http://localhost:3000/football/leagues/${id}`)
 //   }
