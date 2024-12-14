@@ -16,7 +16,12 @@ interface MenuItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterModule, MatListModule, MatIconModule, CommonModule],
+  imports: [ 
+    RouterModule,
+    MatListModule,
+    MatIconModule,
+    CommonModule
+  ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.sass']
 })
@@ -27,7 +32,7 @@ export class SidebarComponent {
   user: any;
   groupedMenuItems: { [key: string]: MenuItem[] } = {};
   
-  groupOrder: string[] = ['Main', 'Football', 'Content', 'Management'];
+  groupOrder: string[] = ['Main', 'Competition', 'Football', 'Management', 'Content'];
 
   constructor(
     private authService: AuthService
@@ -48,6 +53,7 @@ export class SidebarComponent {
   }
 
   menuItems: MenuItem[] = [
+    // Main
     { 
       label: 'Dashboard', 
       icon: 'dashboard', 
@@ -55,68 +61,57 @@ export class SidebarComponent {
       roles: ['Super Admin', 'Admin', 'Content Editor', 'Team'], 
       group: 'Main' 
     },
-    { 
-      label: 'Associations', 
-      icon: 'new_releases', 
-      routerLink: '/admin/associations', 
-      roles: ['Super Admin', 'Admin', 'Content Editor'], 
-      group: 'Management' 
-    },
+    // Football
     { 
       label: 'Clubs', 
-      icon: 'flag', 
+      icon: 'sports_soccer', 
       routerLink: '/admin/clubs', 
       roles: ['Super Admin', 'Admin', 'Content Editor'], 
       group: 'Football' 
     },
     { 
       label: 'Tiers', 
-      icon: 'flag', 
+      icon: 'sports_soccer', 
       routerLink: '/admin/tiers', 
       roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
       group: 'Football' 
     },
     { 
       label: 'Football Years', 
-      icon: 'flag', 
+      icon: 'sports_soccer', 
       routerLink: '/admin/years', 
       roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
       group: 'Football' 
     },
-    { 
-      label: 'Team Groups', 
-      icon: 'flag', 
-      routerLink: '/admin/team-groups', 
-      roles: ['Super Admin', 'Admin', 'Team', 'Content Editor'], 
-      group: 'Football' 
-    },
+    // Competition
     { 
       label: 'Leagues', 
-      icon: 'flag', 
+      icon: 'sports_score', 
       routerLink: '/admin/leagues', 
       roles: ['Super Admin', 'Admin'], 
-      group: 'Football' 
+      group: 'Competition' 
+    },
+    { 
+      label: 'Cups', 
+      icon: 'sports_score', 
+      routerLink: '/admin/leagues', 
+      roles: ['Super Admin', 'Admin'], 
+      group: 'Competition' 
     },
     { 
       label: 'Friendly Matches', 
-      icon: 'flag', 
+      icon: 'sports_score', 
       routerLink: '/admin/friendly-matches', 
       roles: ['Super Admin', 'Admin'], 
-      group: 'Football' 
+      group: 'Competition' 
     },
+    // Management
     { 
-      label: 'Contents', 
-      icon: 'new_releases', 
-      routerLink: '/admin/contents', 
+      label: 'Associations', 
+      icon: 'spoke', 
+      routerLink: '/admin/associations', 
       roles: ['Super Admin', 'Admin', 'Content Editor'], 
-      group: 'Content' 
-    },
-    { 
-      label: 'Pages', 
-      icon: 'new_releases', 
-      routerLink: '/admin/pages', 
-      roles: ['Super Admin', 'Admin', 'Content Editor'], 
-      group: 'Content' 
+      group: 'Management' 
     },
     { 
       label: 'Players', 
@@ -138,6 +133,21 @@ export class SidebarComponent {
       routerLink: '/admin/users', 
       roles: ['Super Admin', 'Admin'], 
       group: 'Management' 
+    },
+    // Content
+    { 
+      label: 'Contents', 
+      icon: 'new_releases', 
+      routerLink: '/admin/contents', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Content' 
+    },
+    { 
+      label: 'Pages', 
+      icon: 'new_releases', 
+      routerLink: '/admin/pages', 
+      roles: ['Super Admin', 'Admin', 'Content Editor'], 
+      group: 'Content' 
     },
   ];
 
