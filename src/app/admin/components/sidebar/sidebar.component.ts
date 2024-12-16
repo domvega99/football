@@ -94,7 +94,7 @@ export class SidebarComponent {
     { 
       label: 'Cups', 
       icon: 'sports_score', 
-      routerLink: '/admin/leagues', 
+      routerLink: '/admin/cups', 
       roles: ['Super Admin', 'Admin'], 
       group: 'Competition' 
     },
