@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LeagueService } from '../../../services/league.service';
 import { ApiService } from '../../../services/api.service';
 import { MatCardModule } from '@angular/material/card';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-club-locators',
@@ -36,9 +37,11 @@ export class ClubLocatorsComponent {
 
   constructor(
     private clubLocatorService: ClubLocatorService,
+    private titleService: Title,
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle("BFL - Clubs");
     this.getClubLocators();
   }
 

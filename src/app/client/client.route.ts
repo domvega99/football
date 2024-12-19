@@ -53,10 +53,10 @@ export const routes: Routes = [
             path:'news/:id',
             component: NewsDetailsComponent
           },
-          {
-            path: 'clubs',
-            component: TeamsComponent
-          },
+          // {
+          //   path: 'clubs',
+          //   component: TeamsComponent
+          // },
           {
             path: 'clubs/:params',
             component: ClubsComponent
@@ -78,7 +78,7 @@ export const routes: Routes = [
             component: TablesComponent
           },
           {
-            path: 'club-locator',
+            path: 'clubs',
             component: ClubLocatorsComponent
           },
           {
