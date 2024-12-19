@@ -30,7 +30,7 @@ export class FixturesComponent implements OnInit{
   )
   {}
   ngOnInit(): void {
-    this.setTitle('Fixtures');
+    this.setTitle('BFL - Fixtures');
     this.imagePath = `${this.configService.URL_IMAGE}`;
     this.getLeagueTeams();
   }

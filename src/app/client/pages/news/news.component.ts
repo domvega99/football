@@ -43,7 +43,7 @@ export class NewsComponent {
   }
 
   ngOnInit(): void {
-    this.setTitle('News');
+    this.setTitle('BFL - News');
     this.getContent();
   }
 

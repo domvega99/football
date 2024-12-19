@@ -4,6 +4,7 @@ import { ApiService } from '../../../services/api.service';
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tables',
@@ -21,9 +22,11 @@ export class TablesComponent {
   constructor(
     private leagueService: LeagueService,
     private _configService: ApiService,
+    private titleService: Title,
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle("BFL - Standings");
     this.imagePath = `${this._configService.URL_IMAGE}`;
     this.getLeagueTeams();
   }

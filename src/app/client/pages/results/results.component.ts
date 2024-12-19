@@ -27,7 +27,7 @@ export class ResultsComponent {
   )
   {}
   ngOnInit(): void {
-    this.setTitle('Results');
+    this.setTitle('BFL - Results');
     this.imagePath = `${this.configService.URL_IMAGE}`;
     this.getLeagueTeams();
   }
