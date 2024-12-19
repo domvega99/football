@@ -1,0 +1,68 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Associate Member Details</div>
+    <form [formGroup]="associateMemberForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>First Name</mat-label>
+                    <input matInput placeholder="First Name" formControlName="firstName">
+                    <mat-error
+                        *ngIf="associateMemberForm.get('firstName')?.hasError('required') && associateMemberForm.get('firstName')?.touched">
+                        First name is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="associateMemberForm.get('firstName')?.hasError('minlength') && associateMemberForm.get('firstName')?.touched">
+                        First name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput placeholder="Middle Name" formControlName="middleName">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput placeholder="Last Name" formControlName="lastName">
+                    <mat-error
+                        *ngIf="associateMemberForm.get('lastName')?.hasError('required') && associateMemberForm.get('lastName')?.touched">
+                        Last name is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="associateMemberForm.get('lastName')?.hasError('minlength') && associateMemberForm.get('lastName')?.touched">
+                        Last name must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Birth Place</mat-label>
+                    <input matInput placeholder="Birth Place" formControlName="birthPlace">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>ZIP Code</mat-label>
+                    <input matInput placeholder="ZIP Code" formControlName="zipcode">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field" >
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="mail">
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data.id ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>

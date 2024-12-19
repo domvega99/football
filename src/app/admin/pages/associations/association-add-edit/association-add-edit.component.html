@@ -1,0 +1,48 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Association Details</div>
+    <form [formGroup]="associationForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Organization Name</mat-label>
+                    <input matInput placeholder="Organization Name" formControlName="orgName">
+                    <mat-error
+                        *ngIf="associationForm.get('orgName')?.hasError('required') && associationForm.get('orgName')?.touched">
+                        League title is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="associationForm.get('orgName')?.hasError('minlength') && associationForm.get('orgName')?.touched">
+                        League title must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Head Organization</mat-label>
+                    <mat-select formControlName="headOrg">
+                        <mat-option [value]="1">Yes</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="address">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" formControlName="city">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Province</mat-label>
+                    <input matInput placeholder="Province" formControlName="province">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>ZIP Code</mat-label>
+                    <input matInput placeholder="ZIP Code" formControlName="zipCode">
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>
