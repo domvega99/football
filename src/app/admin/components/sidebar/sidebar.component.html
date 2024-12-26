@@ -1,5 +1,58 @@
 <div class="wrapper">
     <div class="header">
+      <h3 class="title">Hello, {{ user.given_name }}</h3>
+      <p class="email">{{ user.email }}</p>
+    </div>
+    <div class="content">
+        <mat-nav-list *ngFor="let group of groupOrder">
+            <h3>{{ group }}</h3>
+            <ng-container *ngIf="groupedMenuItems[group]">
+              <ng-container *ngFor="let item of groupedMenuItems[group]">
+                <ng-container *ngIf="role && item.roles.includes(role)">
+                  <mat-list-item [routerLink]="item.routerLink"
+                                 routerLinkActive="active" 
+                                 [routerLinkActiveOptions]="{ exact: true }">
+                    <mat-icon matListItemIcon [style.color]="'#FFFFFF'">{{ item.icon }}</mat-icon>
+                    <a matListItemTitle [style.color]="'#FFFFFF'">{{ item.label }}</a>
+                  </mat-list-item>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+        </mat-nav-list>
+        <h3>Authentication</h3>
+        <mat-list-item (click)="logout($event)">
+            <mat-icon matListItemIcon [style.color]="'#FFFFFF'">logout</mat-icon>
+            <a matListItemTitle>Logout</a>
+        </mat-list-item>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="wrapper">
+    <div class="header">
         <h3 class="title">Hello, {{ user.given_name }}</h3>
         <p class="email">{{ user.email }}</p>
     </div>
@@ -18,4 +71,4 @@
             </mat-list-item>
         </mat-nav-list>
     </div>
-</div>
+</div> -->
