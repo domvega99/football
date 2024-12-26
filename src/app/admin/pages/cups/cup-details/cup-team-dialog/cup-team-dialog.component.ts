@@ -70,7 +70,7 @@ export class CupTeamDialogComponent {
   onSubmit() {
     const selectedTeams = this.teams
       .filter(team => team.stat === 1)
-      .map(team => ({ team_id: team.id, stat: team.stat, league_id: this.cupId }));
+      .map(team => ({ team_id: team.id, stat: team.stat, cup_id: this.cupId }));
 
     this.cupTeamService.addCupTeam(selectedTeams).subscribe({
       next: (response) => {

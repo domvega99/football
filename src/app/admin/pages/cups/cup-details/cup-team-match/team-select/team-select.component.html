@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Teams</div>
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline" class="select-team">
+                    <mat-label>Select Team</mat-label>
+                    <mat-select formControlName="team_id">
+                        <mat-option *ngFor="let team of teams" [value]="team.id">
+                            <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}} width="20px">
+                            {{ team.team }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('team_id')?.hasError('required') && teamForm.get('team_id')?.touched">
+                        Team selection is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data.id ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>

@@ -15,6 +15,8 @@ import { TeamDetailsComponent } from './pages/teams/team-details/team-details.co
 import { PageComponent } from './pages/page/page.component';
 import { PageAddEditComponent } from './pages/page/page-add-edit/page-add-edit.component';
 import { ClubLocatorComponent } from './pages/club-locator/club-locator.component';
+import { CupsComponent } from './pages/cups/cups.component';
+import { CupDetailsComponent } from './pages/cups/cup-details/cup-details.component';
 
 const routes: Routes = [
     {
@@ -37,6 +39,8 @@ const routes: Routes = [
           { path: 'page/create', component: PageAddEditComponent },
           { path: 'page/edit/:id', component: PageAddEditComponent },
           { path: 'club-locators', component: ClubLocatorComponent },
+          { path: 'cups', component: CupsComponent },
+          { path: 'cups/:id', component: CupDetailsComponent },
         ]
     }
 ];

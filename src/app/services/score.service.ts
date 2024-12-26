@@ -14,8 +14,16 @@ export class ScoreService {
     return this._http.post(environment.apiUrl+`/football/scores/league/${leagueId}`, data);
   }
 
+  addCupScore(data: any, cupId: number): Observable<any> {
+    return this._http.post(environment.apiUrl+`/football/scores/cup/${cupId}`, data);
+  }
+
   updateScore(id: number, data: any, leagueId: number): Observable<any> {
     return this._http.patch(environment.apiUrl+`/football/scores/${id}/league/${leagueId}`, data);
+  }
+
+  updateCupScore(id: number, data: any, cupId: number): Observable<any> {
+    return this._http.patch(environment.apiUrl+`/football/scores/${id}/cup/${cupId}`, data);
   }
 
 //   getTeams(): Observable<any> {

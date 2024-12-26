@@ -98,13 +98,13 @@ export class SidebarComponent {
       roles: ['Super Admin', 'Admin'], 
       group: 'Competition' 
     },
-    // { 
-    //   label: 'Cups', 
-    //   icon: 'sports_score', 
-    //   routerLink: '/admin/cups', 
-    //   roles: ['Super Admin', 'Admin'], 
-    //   group: 'Competition' 
-    // },
+    { 
+      label: 'Cups', 
+      icon: 'sports_score', 
+      routerLink: '/admin/cups', 
+      roles: ['Super Admin', 'Admin'], 
+      group: 'Competition' 
+    },
     // { 
     //   label: 'Friendly Matches', 
     //   icon: 'sports_score', 

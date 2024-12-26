@@ -22,6 +22,10 @@ export class MatchService {
     return this._http.get(environment.apiUrl+`/football/matches/${id}`);
   }
 
+  getCupMatches(id: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/matches/cup/${id}`);
+  }
+
 //   deleteTeam(id: number): Observable<any> {
 //     return this._http.delete(environment.apiUrl+`/football/teams/${id}`)
 //   }
