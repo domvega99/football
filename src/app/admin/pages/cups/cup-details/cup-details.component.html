@@ -9,12 +9,7 @@
         </div>
         <div class="body">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [backgroundColor]="'warn'" mat-elevation-z4>
-                <mat-tab label="Matches">
-                    <div class="tab-content">
-                        <app-cup-team-match></app-cup-team-match>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Standings">
+                <mat-tab label="Teams">
                     <div class="tab-content">
                         <div class="header-league-teams">
                             <button mat-fab extended color="primary" (click)="openDialog()">
@@ -89,8 +84,12 @@
                         </table>
                     </div>
                 </mat-tab>
+                <mat-tab label="Matches">
+                    <div class="tab-content">
+                        <app-cup-team-match></app-cup-team-match>
+                    </div>
+                </mat-tab>
             </mat-tab-group>
-            
         </div>
     </div>
 </div>

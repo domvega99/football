@@ -1,31 +1,40 @@
 <div class="wrapper">
-    <h1>Add Teams</h1>
-    <div *ngIf="teams.length > 0; else noTeams">
-        <mat-list class="list">
-            <mat-selection-list class="list-items">
-                Teams
-                <div>
-                    Active
+    <div class="container">
+        <div class="header">
+            <h1>Teams</h1>
+        </div>
+        <div class="body">
+            <div class="table-content">
+                <div class="table-body">
+                    <mat-form-field appearance="outline" class="search-content">
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input class="search-input">
+                        <mat-icon matPrefix>search</mat-icon>
+                    </mat-form-field>
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="team">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+                            <td mat-cell *matCellDef="let row"> {{row.team}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                            <td mat-cell *matCellDef="let row"> 
+                                <button mat-flat-button color="warn" (click)="openCupGroup(row.id)">
+                                    Select Group
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="20" align="center" style="padding: 20px;">No data record found.
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </mat-selection-list>
-        </mat-list>
-        <mat-list class="list">
-            <mat-selection-list *ngFor="let team of teams" class="list-items">
-                <div class="team-content">
-                    <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}}
-                        width="30px">
-                    {{ team.team }}
+                <div class="paginator">
+                    <mat-paginator [pageSize]="5" aria-label="Select page of data"></mat-paginator>
                 </div>
-                <div>
-                    <mat-slide-toggle [(ngModel)]="team.stat" (change)="onToggleChange(team, $event)"></mat-slide-toggle>
-                </div>
-            </mat-selection-list>
-        </mat-list>
-        <div class="action-content">
-            <button mat-flat-button color="primary" (click)="onSubmit()">Submit Teams</button>
+            </div>
         </div>
     </div>
-    <ng-template #noTeams>
-        <p>No teams available.</p>
-    </ng-template>
 </div>

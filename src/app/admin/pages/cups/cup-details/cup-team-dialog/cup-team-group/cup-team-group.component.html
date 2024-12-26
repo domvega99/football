@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <h1>{{ team?.team }}</h1>
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline" class="select-team">
+                    <mat-label>Select Group</mat-label>
+                    <mat-select formControlName="cup_group_id">
+                        <mat-option *ngFor="let group of cupGroups" [value]="group.id">
+                            {{ group.groupName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="teamForm.get('cup_group_id')?.hasError('required') && teamForm.get('cup_group_id')?.touched">
+                        Group selection is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div mat-dialog-actions class="actions">
+                <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+                <button mat-raised-button color="primary" type="submit">Add Team</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
