@@ -7,9 +7,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../../../services/api.service';
-import { CupTeamService } from '../../../../../services/cup-team.service';
 import { ScoreUpdateService } from '../../../../../services/score-league.service';
 import { CupTeamDialogComponent } from '../cup-team-dialog/cup-team-dialog.component';
+import { CupTeamService } from '../../../../../services/cup-team.service';
 
 @Component({
   selector: 'app-cup-team-standing',
@@ -28,6 +28,7 @@ export class CupTeamStandingComponent {
   displayedColumns: string[] = ['position', 'team_id', 'played', 'won', 'drawn', 'lost', 'goals_for', 'goals_against', 'goals_difference', 'points', 'stat'];
   cupId: number | null = null;
   dataSource!: MatTableDataSource<any>;
+  cupGroupData: any[] = [];
   imagePath: string | null = null;
   
   constructor(
@@ -51,30 +52,13 @@ export class CupTeamStandingComponent {
     });
   }
 
-  getCupTeams(cupId: number) {
-    this.cupTeamService.getCupTeams(cupId).subscribe({
+  getCupTeams(cupId: number): void {
+    this.cupTeamService.getCupsByGroup(cupId).subscribe({
       next: (res) => {
-        const activeTeams = res.filter((team: any) => team.stat !== 0);
-        const inactiveTeams = res.filter((team: any) => team.stat === 0);
-  
-        activeTeams.sort((a: any, b: any) => {
-          if (b.points !== a.points) {
-            return b.points - a.points; 
-          } else if (b.goals_for !== a.goals_for) {
-            return b.goals_for - a.goals_for; 
-          } else {
-            return b.goals_difference - a.goals_difference; 
-          }
-        });
-  
-        const sortedTeams = [...activeTeams, ...inactiveTeams];
-        sortedTeams.forEach((element: any, index: number) => {
-          element.position = index + 1;
-        });
-  
-        this.dataSource = new MatTableDataSource(sortedTeams);
+        console.log(res)
+        this.cupGroupData = res;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log(err);
       }
     });

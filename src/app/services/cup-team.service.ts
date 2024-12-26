@@ -21,4 +21,8 @@ export class CupTeamService {
   getCupTeams(cupId: number): Observable<any> {
     return this._http.get(environment.apiUrl+`/football/cup-teams/${cupId}`);
   }
+
+  getCupsByGroup(cupId: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/cup-teams/cup/${cupId}`);
+  }
 }
