@@ -6,15 +6,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../../../../services/api.service';
-import { MatchService } from '../../../../../services/match.service';
-import { ScoreUpdateService } from '../../../../../services/score-league.service';
-import { TeamScoreComponent } from './team-score/team-score.component';
-import { TeamSelectComponent } from './team-select/team-select.component';
-import { CupMatchAddEditComponent } from './cup-match-add-edit/cup-match-add-edit.component';
+import { MatchService } from '../../../../services/match.service';
+import { ScoreUpdateService } from '../../../../services/score-league.service';
+import { ApiService } from '../../../../services/api.service';
+import { TeamScoreComponent } from '../cup-details/cup-team-match/team-score/team-score.component';
+import { TeamSelectComponent } from '../cup-details/cup-team-match/team-select/team-select.component';
+import { CupMatchAddEditComponent } from '../cup-details/cup-team-match/cup-match-add-edit/cup-match-add-edit.component';
+import { KnockoutMatchAddEditComponent } from './knockout-match-add-edit/knockout-match-add-edit.component';
+import { KnockoutScoreAddEditComponent } from './knockout-score-add-edit/knockout-score-add-edit.component';
 
 @Component({
-  selector: 'app-cup-team-match',
+  selector: 'app-cup-knockouts',
   standalone: true,
   imports: [
     MatButtonModule, 
@@ -23,16 +25,14 @@ import { CupMatchAddEditComponent } from './cup-match-add-edit/cup-match-add-edi
     MatIconModule, 
     MatTooltipModule
   ],
-  providers: [
-    DatePipe,
-  ],
-  templateUrl: './cup-team-match.component.html',
-  styleUrl: './cup-team-match.component.sass'
+  templateUrl: './cup-knockouts.component.html',
+  styleUrl: './cup-knockouts.component.sass'
 })
-export class CupTeamMatchComponent {
+export class CupKnockoutsComponent {
   cupId: number | null = null;
   displayedColumns: string[] = ['match_date', 'match_time', 'location', 'for', 'result', 'against', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
+  groupedData: { knockout: string; matches: any[] }[] = [];
   imagePath: string | null = null;
 
   constructor(
@@ -54,23 +54,34 @@ export class CupTeamMatchComponent {
   getCupMatches(cupId: number) {
     this.matchesService.getCupMatches(cupId).subscribe({
       next: (res: any[]) => {
-        res = res.filter(match => !match.knockout);
-        res.forEach(match => {
-          match.matchTime = new Date(`2000-01-01T${match.match_time}`);
-        });
+        const filteredMatches = res.filter(match => match.knockout != null && match.knockout !== '');
   
-        res.sort((a, b) => new Date(a.match_date).getTime() - new Date(b.match_date).getTime());
-        this.dataSource = new MatTableDataSource(res);
+        const groupedMatches = filteredMatches.reduce((acc, match) => {
+          const group = match.knockout;
+          if (!acc[group]) {
+            acc[group] = [];
+          }
+          match.matchTime = new Date(`2000-01-01T${match.match_time}`);
+          acc[group].push(match);
+          return acc;
+        }, {} as Record<string, any[]>);
+  
+        this.groupedData = Object.entries(groupedMatches).map(([knockout, matches]) => ({
+          knockout,
+          matches: (matches as any[]).sort((a, b) => 
+            new Date(a.match_date).getTime() - new Date(b.match_date).getTime()
+          )
+        }));
+        console.log(this.groupedData)
       },
       error: (err) => {
         console.log(err);
       }
     });
   }
-  
 
   updateScore(element: any, index: number, id: number, team_id: number, points: number, result: string) {
-    const dialogRef = this.dialog.open(TeamScoreComponent, {
+    const dialogRef = this.dialog.open(KnockoutScoreAddEditComponent, {
       disableClose: true,
       data: { 
         score_id: id,
@@ -135,7 +146,7 @@ export class CupTeamMatchComponent {
   }
 
   openEditAddMatch() {
-    const dialogRef = this.dialog.open(CupMatchAddEditComponent, {
+    const dialogRef = this.dialog.open(KnockoutMatchAddEditComponent, {
       data: { cupId: this.cupId }
     });
     dialogRef.afterClosed().subscribe({
@@ -151,7 +162,7 @@ export class CupTeamMatchComponent {
   }
 
   openEditFormMatch(data: any) {
-    const dialogRef = this.dialog.open(CupMatchAddEditComponent, {
+    const dialogRef = this.dialog.open(KnockoutMatchAddEditComponent, {
       data,
     });
 

@@ -26,6 +26,10 @@ export class ScoreService {
     return this._http.patch(environment.apiUrl+`/football/scores/${id}/cup/${cupId}`, data);
   }
 
+  updateKnockoutScore(id: number, data: any): Observable<any> {
+    return this._http.patch(environment.apiUrl+`/football/scores/knockouts/${id}`, data);
+  }
+
 //   getTeams(): Observable<any> {
 //     return this._http.get(environment.apiUrl+`/football/teams`);
 //   }

@@ -1,0 +1,45 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">
+        <img *ngIf="teamId?.file_name" [src]="imagePath + teamId?.file_name" alt={{teamId?.file_name}} width="30px">
+        {{ teamId?.team }}
+    </div>
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Goal</mat-label>
+                    <input matInput formControlName="points" type="number">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Result</mat-label>
+                    <mat-select formControlName="result">
+                        <mat-option value="Win">Win</mat-option>
+                        <mat-option value="Loss">Loss</mat-option>
+                        <mat-option value="Draw">Draw</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-fab extended type="button" (click)="openAddPlayerScore()"> <mat-icon>add</mat-icon> Player Goals</button>
+                <div class="players-container" *ngFor="let row of playerScores">
+                    <!-- <img [src]="imagePathSquad + row.player.file_name" alt={{row.player.file_name}}
+                        width="50px"> -->
+                    <div class="player-name">
+                        <p>{{ row.player.jersey_no }}, {{ row.player.first_name }} {{ row.player.last_name }}</p>
+                    </div>
+                    <div class="time-container">
+                        {{ row.minutes }} : {{ row.seconds }}
+                    </div>
+                    <button mat-icon-button type="button" color="primary" (click)="openEditPlayerScoreForm(row)"> 
+                        <mat-icon>edit</mat-icon>
+                    </button>      
+                    <button mat-icon-button color="warn" type="button" (click)="deletePlayerScore(row.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data.id ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>

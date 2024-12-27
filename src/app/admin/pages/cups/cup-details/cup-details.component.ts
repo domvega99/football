@@ -8,6 +8,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CupService } from '../../../../services/cup.service';
 import { CupTeamMatchComponent } from './cup-team-match/cup-team-match.component';
 import { CupTeamStandingComponent } from './cup-team-standing/cup-team-standing.component';
+import { CupKnockoutsComponent } from '../cup-knockouts/cup-knockouts.component';
 
 
 @Component({
@@ -21,7 +22,8 @@ import { CupTeamStandingComponent } from './cup-team-standing/cup-team-standing.
     CommonModule,
     MatTabsModule,
     CupTeamMatchComponent,
-    CupTeamStandingComponent
+    CupTeamStandingComponent,
+    CupKnockoutsComponent
 ],
   templateUrl: './cup-details.component.html',
   styleUrl: './cup-details.component.sass'
