@@ -7,9 +7,10 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../../../services/api.service';
+import { CupTeamService } from '../../../../../services/cup-team.service';
 import { ScoreUpdateService } from '../../../../../services/score-league.service';
 import { CupTeamDialogComponent } from '../cup-team-dialog/cup-team-dialog.component';
-import { CupTeamService } from '../../../../../services/cup-team.service';
+import { CupTeamGroupEditComponent } from '../cup-team-dialog/cup-team-group-edit/cup-team-group-edit.component';
 
 @Component({
   selector: 'app-cup-team-standing',
@@ -25,7 +26,7 @@ import { CupTeamService } from '../../../../../services/cup-team.service';
   styleUrl: './cup-team-standing.component.sass'
 })
 export class CupTeamStandingComponent {
-  displayedColumns: string[] = ['position', 'team_id', 'played', 'won', 'drawn', 'lost', 'goals_for', 'goals_against', 'goals_difference', 'points', 'stat'];
+  displayedColumns: string[] = ['position', 'team_id', 'played', 'won', 'drawn', 'lost', 'goals_for', 'goals_against', 'goals_difference', 'points', 'stat', 'action'];
   cupId: number | null = null;
   dataSource!: MatTableDataSource<any>;
   cupGroupData: any[] = [];
@@ -55,7 +56,6 @@ export class CupTeamStandingComponent {
   getCupTeams(cupId: number): void {
     this.cupTeamService.getCupsByGroup(cupId).subscribe({
       next: (res) => {
-        console.log(res)
         this.cupGroupData = res;
       },
       error: (err: any) => {
@@ -79,5 +79,22 @@ export class CupTeamStandingComponent {
         console.log(err);
       }
     });
+  }
+
+  openEditTeamGroup(data: any) {
+    const dialogRef = this.dialog.open(CupTeamGroupEditComponent, {
+      data,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val && this.cupId) {
+          this.getCupTeams(this.cupId)
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }
