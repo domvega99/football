@@ -1,6 +1,10 @@
 <div class="wrapper">
     <h1>Add Teams</h1>
-    <div *ngIf="teams.length > 0; else noTeams">
+    <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="searchTerm" (input)="filterTeams()" placeholder="Search Teams">
+    </mat-form-field>
+
+    <div *ngIf="filteredTeams.length > 0; else noTeams">
         <mat-list class="list">
             <mat-selection-list class="list-items">
                 Teams
@@ -9,11 +13,11 @@
                 </div>
             </mat-selection-list>
         </mat-list>
+
         <mat-list class="list">
-            <mat-selection-list *ngFor="let team of teams" class="list-items">
+            <mat-selection-list *ngFor="let team of filteredTeams" class="list-items">
                 <div class="team-content">
-                    <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}}
-                        width="30px">
+                    <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}} width="30px">
                     {{ team.team }}
                 </div>
                 <div>
@@ -21,10 +25,12 @@
                 </div>
             </mat-selection-list>
         </mat-list>
+
         <div class="action-content">
             <button mat-flat-button color="primary" (click)="onSubmit()">Submit Teams</button>
         </div>
     </div>
+
     <ng-template #noTeams>
         <p>No teams available.</p>
     </ng-template>

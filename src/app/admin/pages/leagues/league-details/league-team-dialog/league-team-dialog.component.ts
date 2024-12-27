@@ -8,6 +8,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { ApiService } from '../../../../../services/api.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 interface Team {
   id: number;  
@@ -19,13 +21,23 @@ interface Team {
 @Component({
   selector: 'app-league-team-dialog',
   standalone: true,
-  imports: [CommonModule, MatSlideToggleModule, FormsModule, MatListModule, MatButtonModule],
+  imports: [
+    CommonModule, 
+    MatSlideToggleModule, 
+    FormsModule, 
+    MatListModule, 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
   templateUrl: './league-team-dialog.component.html',
   styleUrls: ['./league-team-dialog.component.sass']
 })
 export class LeagueTeamDialogComponent implements OnInit {
 
   teams: Team[] = [];
+  filteredTeams: Team[] = [];
+  searchTerm: string = '';
   leagueId: number | null = null;
   imagePath: string | null = null;
 
@@ -40,7 +52,7 @@ export class LeagueTeamDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imagePath =`${this._configService.URL_IMAGE}`;
+    this.imagePath = `${this._configService.URL_IMAGE}`;
     this.getTeams();
   }
 
@@ -49,13 +61,20 @@ export class LeagueTeamDialogComponent implements OnInit {
       next: (res: Team[]) => {
         this.teams = res.map((team: Team) => ({
           ...team,
-          stat: 1
+          stat: 0
         }));
+        this.filteredTeams = [...this.teams];  
       },
       error: (err) => {
         console.log(err);
       }
     });
+  }
+
+  filterTeams() {
+    this.filteredTeams = this.teams.filter(team =>
+      team.team.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   onToggleChange(team: Team, event: any) {
@@ -68,7 +87,7 @@ export class LeagueTeamDialogComponent implements OnInit {
       .map(team => ({ team_id: team.id, stat: team.stat, league_id: this.leagueId }));
 
     this.leagueTeamService.addLeagueTeam(selectedTeams).subscribe({
-      next: (response) => {
+      next: () => {
         this.dialogRef.close(true);
       },
       error: (error) => {
@@ -76,5 +95,4 @@ export class LeagueTeamDialogComponent implements OnInit {
       }
     });
   }
-
 }
