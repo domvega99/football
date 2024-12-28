@@ -13,7 +13,7 @@ import { PlayerScoreService } from '../../../../../../services/player-score.serv
 import { ScoreService } from '../../../../../../services/score.service';
 import { SquadService } from '../../../../../../services/squad.service';
 import { TeamService } from '../../../../../../services/team.service';
-import { PlayerScoreAddComponent } from '../../player-score-add/player-score-add.component';
+import { PlayerScoreAddComponent } from '../../../../leagues/league-details/player-score-add/player-score-add.component';
 
 @Component({
   selector: 'app-team-score-cup',

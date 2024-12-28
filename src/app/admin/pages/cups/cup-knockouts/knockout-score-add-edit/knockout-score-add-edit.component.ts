@@ -9,12 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../../core/core.service';
 import { ApiService } from '../../../../../services/api.service';
-import { TeamService } from '../../../../../services/team.service';
-import { SquadService } from '../../../../../services/squad.service';
-import { PlayerScoreService } from '../../../../../services/player-score.service';
-import { ScoreService } from '../../../../../services/score.service';
-import { PlayerScoreAddComponent } from '../../cup-details/player-score-add/player-score-add.component';
 import { KnocoutScoreService } from '../../../../../services/knockout-score.service';
+import { PlayerScoreService } from '../../../../../services/player-score.service';
+import { SquadService } from '../../../../../services/squad.service';
+import { TeamService } from '../../../../../services/team.service';
+import { PlayerScoreAddComponent } from '../../../leagues/league-details/player-score-add/player-score-add.component';
 
 @Component({
   selector: 'app-knockout-score-add-edit',
