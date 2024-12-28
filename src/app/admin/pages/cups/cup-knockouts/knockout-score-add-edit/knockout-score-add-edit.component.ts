@@ -14,6 +14,7 @@ import { SquadService } from '../../../../../services/squad.service';
 import { PlayerScoreService } from '../../../../../services/player-score.service';
 import { ScoreService } from '../../../../../services/score.service';
 import { PlayerScoreAddComponent } from '../../cup-details/player-score-add/player-score-add.component';
+import { KnocoutScoreService } from '../../../../../services/knockout-score.service';
 
 @Component({
   selector: 'app-knockout-score-add-edit',
@@ -53,7 +54,7 @@ export class KnockoutScoreAddEditComponent {
     private squadService: SquadService,
     private dialog: MatDialog, 
     private playerScoreService: PlayerScoreService,
-    private scoreService: ScoreService,
+    private knockoutScoreService: KnocoutScoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.matchId = data.matchId;
@@ -195,7 +196,7 @@ export class KnockoutScoreAddEditComponent {
         match_id: this.matchId
       };
       if (this.data.score_id) {
-        this.scoreService.updateKnockoutScore(this.data.score_id, formData).subscribe({
+        this.knockoutScoreService.updateKnockoutScore(this.data.score_id, formData).subscribe({
           next: (val: any) => {
             this.coreService.openSnackBar('Team score updated successfully');
             this.dialogRef.close(true);

@@ -9,22 +9,21 @@
         </div>
         <div class="body">
             <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [backgroundColor]="'warn'" mat-elevation-z4>
+                <mat-tab label="Group Teams">
+                    <div class="tab-content">
+                        <app-cup-team-standing></app-cup-team-standing>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Group Stage Matches">
+                    <div class="tab-content">
+                        <app-cup-team-match></app-cup-team-match>
+                    </div>
+                </mat-tab>
                 <mat-tab label="Knockout Matches">
                     <div class="tab-content">
                         <app-cup-knockouts></app-cup-knockouts>
                     </div>
                 </mat-tab>
-                <mat-tab label="Group Stage">
-                    <div class="tab-content">
-                        <app-cup-team-standing></app-cup-team-standing>
-                    </div>
-                </mat-tab>
-                <mat-tab label="Matches">
-                    <div class="tab-content">
-                        <app-cup-team-match></app-cup-team-match>
-                    </div>
-                </mat-tab>
-                
             </mat-tab-group>
         </div>
     </div>

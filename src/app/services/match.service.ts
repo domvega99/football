@@ -26,14 +26,7 @@ export class MatchService {
     return this._http.get(environment.apiUrl+`/football/matches/cup/${id}`);
   }
 
-//   deleteTeam(id: number): Observable<any> {
-//     return this._http.delete(environment.apiUrl+`/football/teams/${id}`)
-//   }
-
-//   uploadImage(image: File) {
-//     const formData = new FormData();
-//     formData.append('image', image);
-
-//     return this._http.post<any>(environment.apiUrl+`/upload/image`, formData);
-//   }
+  getKnockoutCupMatches(id: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/matches/knockout-cup/${id}`);
+  }
 }

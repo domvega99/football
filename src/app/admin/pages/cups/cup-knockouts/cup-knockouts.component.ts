@@ -14,6 +14,7 @@ import { TeamSelectComponent } from '../cup-details/cup-team-match/team-select/t
 import { CupMatchAddEditComponent } from '../cup-details/cup-team-match/cup-match-add-edit/cup-match-add-edit.component';
 import { KnockoutMatchAddEditComponent } from './knockout-match-add-edit/knockout-match-add-edit.component';
 import { KnockoutScoreAddEditComponent } from './knockout-score-add-edit/knockout-score-add-edit.component';
+import { KnockoutTeamAddEditComponent } from './knockout-team-add-edit/knockout-team-add-edit.component';
 
 @Component({
   selector: 'app-cup-knockouts',
@@ -52,7 +53,7 @@ export class CupKnockoutsComponent {
   }
 
   getCupMatches(cupId: number) {
-    this.matchesService.getCupMatches(cupId).subscribe({
+    this.matchesService.getKnockoutCupMatches(cupId).subscribe({
       next: (res: any[]) => {
         const filteredMatches = res.filter(match => match.knockout != null && match.knockout !== '');
   
@@ -72,7 +73,6 @@ export class CupKnockoutsComponent {
             new Date(a.match_date).getTime() - new Date(b.match_date).getTime()
           )
         }));
-        console.log(this.groupedData)
       },
       error: (err) => {
         console.log(err);
@@ -127,7 +127,7 @@ export class CupKnockoutsComponent {
   }
 
   addTeam(element: any, index: number) {
-    const dialogRef = this.dialog.open(TeamSelectComponent, {
+    const dialogRef = this.dialog.open(KnockoutTeamAddEditComponent, {
       data: { 
         cupId: this.cupId, 
         matchId: element.id 
