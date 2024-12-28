@@ -17,6 +17,7 @@ import { PageAddEditComponent } from './pages/page/page-add-edit/page-add-edit.c
 import { ClubLocatorComponent } from './pages/club-locator/club-locator.component';
 import { CupsComponent } from './pages/cups/cups.component';
 import { CupDetailsComponent } from './pages/cups/cup-details/cup-details.component';
+import { ExhibitionsComponent } from './pages/exhibitions/exhibitions.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,7 @@ const routes: Routes = [
           { path: 'club-locators', component: ClubLocatorComponent },
           { path: 'cups', component: CupsComponent },
           { path: 'cups/:id', component: CupDetailsComponent },
+          { path: 'exhibitions', component: ExhibitionsComponent },
         ]
     }
 ];

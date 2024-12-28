@@ -105,6 +105,13 @@ export class SidebarComponent {
       roles: ['Super Admin', 'Admin'], 
       group: 'Competition' 
     },
+    { 
+      label: 'Exhibition', 
+      icon: 'sports_score', 
+      routerLink: '/admin/exhibitions', 
+      roles: ['Super Admin', 'Admin'], 
+      group: 'Competition' 
+    },
     // { 
     //   label: 'Friendly Matches', 
     //   icon: 'sports_score', 

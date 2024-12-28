@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <div mat-dialog-title class="title">Exhibition Information</div>
+    <form [formGroup]="cupForm" (ngSubmit)="onSubmit()">
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title">
+                    <mat-error *ngIf="cupForm.get('title')?.hasError('required') && cupForm.get('title')?.touched">
+                        Exhibition title is required
+                    </mat-error>
+                    <mat-error *ngIf="cupForm.get('title')?.hasError('minlength') && cupForm.get('title')?.touched">
+                        Exhibition title must be at least 3 characters long
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option value="Draft">Draft</mat-option>
+                        <mat-option value="Posted">Posted</mat-option>
+                        <mat-option value="Cancelled">Cancelled</mat-option>
+                        <mat-option value="Completed">Completed</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="cupForm.get('status')?.hasError('required') && cupForm.get('status')?.touched">
+                        Exhibition status is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div mat-dialog-actions class="actions">
+            <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}}</button>
+        </div>
+    </form>
+</div>

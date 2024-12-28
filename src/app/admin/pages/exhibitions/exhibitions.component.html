@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <div class="header">
+        <h1 id="item1">All Exhibition</h1>
+        <div class="search" id="item2">
+            <mat-form-field appearance="outline" class="search-content">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input class="search-input">
+                <mat-icon matPrefix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <button id="item3" mat-fab extended color="primary" (click)="openAddExhibition()">
+            <mat-icon>add</mat-icon> Add Exhibition
+        </button>
+    </div>
+    <div class="content">
+        <div class="table-container">
+            <section>
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+                        <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="created_on">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                        <td mat-cell *matCellDef="let row"> {{row.created_on | date:'MMMM dd, YYYY'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                        <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let row">
+                            <div class="action-content">
+                                <button class="view-button" mat-fab extended color="accent" (click)="openEditExhibition(row)">
+                                    <mat-icon>edit</mat-icon> Edit
+                                </button>
+                                <button class="view-button" mat-fab extended color="primary" [routerLink]="'/admin/cups/' + row.id">
+                                    <mat-icon>remove_red_eye</mat-icon> View
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4" align="center" style="padding: 20px;">No team record found.
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+        <div class="paginator">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20"
+                aria-label="Select page of leagues"></mat-paginator>
+        </div>
+    </div>
+</div>
