@@ -1,15 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { TeamService } from '../../../../../services/team.service';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { LeagueTeamService } from '../../../../../services/league-team.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatListModule } from '@angular/material/list';
 import { ApiService } from '../../../../../services/api.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 interface Team {
   id: number;  
@@ -23,23 +26,29 @@ interface Team {
   standalone: true,
   imports: [
     CommonModule, 
+    MatTableModule,
     MatSlideToggleModule, 
     FormsModule, 
-    MatListModule, 
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule,
+    MatIconModule
   ],
   templateUrl: './league-team-dialog.component.html',
   styleUrls: ['./league-team-dialog.component.sass']
 })
 export class LeagueTeamDialogComponent implements OnInit {
 
-  teams: Team[] = [];
-  filteredTeams: Team[] = [];
+  displayedColumns: string[] = ['team', 'action'];
+  dataSource!: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   searchTerm: string = '';
   leagueId: number | null = null;
   imagePath: string | null = null;
+
 
   constructor(
     private teamService: TeamService,
@@ -56,25 +65,25 @@ export class LeagueTeamDialogComponent implements OnInit {
     this.getTeams();
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
   getTeams() {
     this.teamService.getTeams().subscribe({
-      next: (res: Team[]) => {
-        this.teams = res.map((team: Team) => ({
-          ...team,
-          stat: 0
-        }));
-        this.filteredTeams = [...this.teams];  
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
         console.log(err);
       }
-    });
-  }
-
-  filterTeams() {
-    this.filteredTeams = this.teams.filter(team =>
-      team.team.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    })
   }
 
   onToggleChange(team: Team, event: any) {
@@ -82,7 +91,7 @@ export class LeagueTeamDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    const selectedTeams = this.teams
+    const selectedTeams = this.dataSource.data
       .filter(team => team.stat === 1)
       .map(team => ({ team_id: team.id, stat: team.stat, league_id: this.leagueId }));
 

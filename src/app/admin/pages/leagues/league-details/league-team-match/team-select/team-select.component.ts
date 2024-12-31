@@ -1,19 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TeamService } from '../../../../../../services/team.service';
-import { CoreService } from '../../../../../../core/core.service';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../../../../services/api.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { ChangeDetectionStrategy } from '@angular/core';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatchService } from '../../../../../../services/match.service';
 import { MatSelectModule } from '@angular/material/select';
+import { CoreService } from '../../../../../../core/core.service';
+import { ApiService } from '../../../../../../services/api.service';
+import { LeagueTeamService } from '../../../../../../services/league-team.service';
 import { ScoreService } from '../../../../../../services/score.service';
 
 @Component({
@@ -32,7 +27,6 @@ import { ScoreService } from '../../../../../../services/score.service';
   styleUrl: './team-select.component.sass'
 })
 export class TeamSelectComponent {
-
   teams: any[] = [];
   selectedImage: File | null = null;
   imagePath: string | null = null;
@@ -42,11 +36,10 @@ export class TeamSelectComponent {
 
   constructor(
     private _fb: FormBuilder, 
-    private matchService: MatchService, 
     private _dialogRef: MatDialogRef<TeamSelectComponent>,
     private _coreService: CoreService,
     private _configService: ApiService,
-    private teamService: TeamService,
+    private leagueTeamService: LeagueTeamService,
     private scoreService: ScoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -64,11 +57,13 @@ export class TeamSelectComponent {
     });
     this.teamForm.patchValue(this.data);
     this.imagePath =`${this._configService.URL_IMAGE}`;
-    this.getTeams()
+    if (this.leagueId) {
+      this.getTeams(this.leagueId)
+    }
   }
 
-  getTeams() {
-    this.teamService.getTeams().subscribe({
+  getTeams(leagueId: number) {
+    this.leagueTeamService.getLeagueTeams(leagueId).subscribe({
       next: (res) => {
         this.teams = res;
       },
@@ -113,8 +108,4 @@ export class TeamSelectComponent {
       }
     }
   }
-
-
-
-
 }
