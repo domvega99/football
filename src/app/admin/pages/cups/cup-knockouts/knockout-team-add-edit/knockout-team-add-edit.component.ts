@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../../core/core.service';
 import { ApiService } from '../../../../../services/api.service';
+import { CupTeamService } from '../../../../../services/cup-team.service';
 import { KnocoutScoreService } from '../../../../../services/knockout-score.service';
-import { TeamService } from '../../../../../services/team.service';
 
 @Component({
   selector: 'app-knockout-team-add-edit',
@@ -39,7 +39,7 @@ export class KnockoutTeamAddEditComponent {
     private dialogRef: MatDialogRef<KnockoutTeamAddEditComponent>,
     private coreService: CoreService,
     private configService: ApiService,
-    private teamService: TeamService,
+    private cupTeamService: CupTeamService,
     private knockoutScoreService: KnocoutScoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -53,18 +53,43 @@ export class KnockoutTeamAddEditComponent {
   ngOnInit(): void {
     this.teamForm.patchValue(this.data);
     this.imagePath =`${this.configService.URL_IMAGE}`;
-    this.getTeams()
+    if (this.cupId) {
+      this.getTeams(this.cupId)
+    }
   }
 
-  getTeams() {
-    this.teamService.getTeams().subscribe({
+  getTeams(cupId: number) {
+    this.cupTeamService.getCupTeams(cupId).subscribe({
       next: (res) => {
-        this.teams = res;
+        this.teams = this.groupTeamsByGroup(res);
+        console.log(this.teams);
       },
       error: (err) => {
         console.log(err);
       }
-    })
+    });
+  }
+
+  groupTeamsByGroup(data: any[]) {
+    const grouped = data.reduce((acc, curr) => {
+        const groupName = curr.cupGroup.groupName;
+        if (!acc[groupName]) {
+            acc[groupName] = {
+                cup_group: groupName,
+                teams: []
+            };
+        }
+        acc[groupName].teams.push({
+            id: curr.team.id,
+            name: curr.team.team,
+            coach: curr.team.coach,
+            place: curr.team.place,
+            file_name: curr.team.file_name
+        });
+        return acc;
+    }, {});
+
+    return Object.values(grouped);
   }
 
   onSubmit() {
