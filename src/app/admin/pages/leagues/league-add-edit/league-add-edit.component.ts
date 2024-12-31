@@ -33,6 +33,8 @@ export class LeagueAddEditComponent {
   ) {
     this.leagueForm = this._fb.group({
       title: '',
+      startYear: '',
+      endYear: '',
       status: '',
     })
   }
@@ -40,6 +42,8 @@ export class LeagueAddEditComponent {
   ngOnInit(): void {
     this.leagueForm = this._fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
+      startYear: ['', [Validators.required,]],
+      endYear: ['', [Validators.required,]],
       status: ['', [Validators.required,]],
     });
     if (this.data) {

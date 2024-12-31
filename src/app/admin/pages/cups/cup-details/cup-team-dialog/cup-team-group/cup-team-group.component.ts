@@ -51,7 +51,6 @@ export class CupTeamGroupComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.getCupGroups();
     this.getTeam(this.data.teamId)
   }
@@ -71,7 +70,6 @@ export class CupTeamGroupComponent {
     this.teamService.getTeamById(teamId).subscribe({
       next: (res) => {
         this.team = res;
-        console.log(res)
       },
       error: (err) => {
         console.log(err);

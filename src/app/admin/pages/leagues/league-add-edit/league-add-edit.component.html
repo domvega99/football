@@ -14,6 +14,20 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
+                    <mat-label>Start Year</mat-label>
+                    <input matInput placeholder="Year" formControlName="startYear" type="number">
+                    <mat-error *ngIf="leagueForm.get('startYear')?.hasError('required') && leagueForm.get('startYear')?.touched">
+                        Start year is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>End Year</mat-label>
+                    <input matInput placeholder="Year" formControlName="endYear" type="number">
+                    <mat-error *ngIf="leagueForm.get('endYear')?.hasError('required') && leagueForm.get('endYear')?.touched">
+                        End year is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status">
                         <mat-option value="Draft">Draft</mat-option>

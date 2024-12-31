@@ -1,41 +1,50 @@
+import { CommonModule } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { LeagueAddEditComponent } from './league-add-edit/league-add-edit.component';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CoreService } from '../../../core/core.service';
-import { CommonModule } from '@angular/common';
-import { ApiService } from '../../../services/api.service';
-import { LeagueService } from '../../../services/league.service';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
+import { CoreService } from '../../../core/core.service';
+import { LeagueService } from '../../../services/league.service';
+import { LeagueAddEditComponent } from './league-add-edit/league-add-edit.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink , CommonModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatSnackBarModule],
+  imports: [
+    RouterLink, 
+    CommonModule, 
+    MatButtonModule, 
+    MatDialogModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatTableModule, 
+    MatSortModule, 
+    MatPaginatorModule, 
+    MatIconModule, 
+    MatSnackBarModule
+  ],
   templateUrl: './leagues.component.html',
   styleUrl: './leagues.component.sass'
 })
 export class LeaguesComponent {
-  displayedColumns: string[] = ['title', 'created_on', 'status', 'action'];
+  displayedColumns: string[] = ['title', 'year', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
   imagePath: string | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   constructor(
     private _dialog: MatDialog, 
     private leagueService: LeagueService,
     private _coreService: CoreService,
-    private _configService: ApiService,
   ) {}
 
   ngOnInit(): void {
@@ -43,17 +52,17 @@ export class LeaguesComponent {
   }
   
   openAddEditTeamForm() {
-      const dialogRef = this._dialog.open(LeagueAddEditComponent);
-      dialogRef.afterClosed().subscribe({
-        next: (val) => {
-          if (val) {
-            this.getLeagues();
-          }
-        },
-        error: (err) => {
-          console.log(err);
+    const dialogRef = this._dialog.open(LeagueAddEditComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.getLeagues();
         }
-      })
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   getLeagues() {
@@ -72,7 +81,6 @@ export class LeaguesComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -94,16 +102,15 @@ export class LeaguesComponent {
     const dialogRef = this._dialog.open(LeagueAddEditComponent, {
       data,
     });
-
     dialogRef.afterClosed().subscribe({
-        next: (val) => {
-          if (val) {
-            this.getLeagues();
-          }
-        },
-        error: (err) => {
-          console.log(err);
+      next: (val) => {
+        if (val) {
+          this.getLeagues();
         }
-      })
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }
