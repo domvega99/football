@@ -38,6 +38,8 @@ export class CupAddEditComponent {
   ) {
     this.cupForm = this._fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
+      startYear: ['', [Validators.required,]],
+      endYear: ['', [Validators.required,]],
       status: ['', [Validators.required,]],
     });
   }

@@ -33,7 +33,7 @@ import { CupAddEditComponent } from './cup-add-edit/cup-add-edit.component';
   styleUrl: './cups.component.sass'
 })
 export class CupsComponent {
-  displayedColumns: string[] = ['title', 'created_on', 'status', 'action'];
+  displayedColumns: string[] = ['title', 'year', 'status', 'action'];
   dataSource!: MatTableDataSource<any>;
   imagePath: string | null = null;
 
