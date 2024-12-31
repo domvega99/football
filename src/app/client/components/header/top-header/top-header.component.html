@@ -1,10 +1,18 @@
 <div class="wrapper">
     <div class="container">
-        <span>CLUBS</span>
-        <div class="menu" *ngFor="let item of dataSource">
-            <div class="item">
-                <img mat-card-image [src]="imagePath + item.file_name" alt={{item.file_name}} width="30px" class="image" [routerLink]="'/clubs/' + item.slug">
-            </div>
+        <div class="title">
+            <span>CLUBS</span>
+        </div>
+        <swiper-container slides-per-view="20" style="--swiper-navigation-color: #7A8799;">
+            <swiper-slide class="menu" *ngFor="let item of dataSource">
+                <div class="item">
+                    <img mat-card-image [src]="imagePath + item.file_name" alt={{item.file_name}} width="30px" class="image"
+                        [routerLink]="'/clubs/' + item.slug">
+                </div>
+            </swiper-slide>
+        </swiper-container>
+        <div class="icon">
+            <mat-icon>chevron_right</mat-icon>
         </div>
     </div>
 </div>

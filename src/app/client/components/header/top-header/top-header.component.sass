@@ -1,22 +1,22 @@
 .wrapper
-    width: 100%
-    border-bottom: solid 1px #DDDDDD
-    padding: 0.5rem 0
     display: flex
+    align-items: center
     justify-content: center
+    padding: 0.5rem 0
     .container
         display: flex
+        justify-content: center
         align-items: center
-        gap: 30px
-        margin: 0 20px
         width: 80%
-        span
-            font-weight: 300
-            color: #7A8799
-            font-size: 12px
-            letter-spacing: 2px
-        .menu
-            display: flex
+        .title
+            margin-right: 1rem
+            span
+                font-weight: 300
+                color: #7A8799
+                font-size: 12px
+                letter-spacing: 2px
+        swiper-container
+            width: 95%
             .item
                 cursor: pointer
                 display: flex
@@ -27,7 +27,3 @@
                 .image
                     &:hover
                         width: 35px
-
-@media (max-width: 1500px) 
-    .wrapper
-        padding-left: 80px
