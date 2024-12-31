@@ -106,7 +106,7 @@ export class SidebarComponent {
       group: 'Competition' 
     },
     { 
-      label: 'Exhibition', 
+      label: 'Exhibitions', 
       icon: 'sports_score', 
       routerLink: '/admin/exhibitions', 
       roles: ['Super Admin', 'Admin'], 

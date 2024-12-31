@@ -10,7 +10,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-import { CupService } from '../../../services/cup.service';
+import { ExhibitionService } from '../../../services/exhibition.service';
 import { ExhibitionAddEditComponent } from './exhibition-add-edit/exhibition-add-edit.component';
 
 @Component({
@@ -42,11 +42,11 @@ export class ExhibitionsComponent {
 
   constructor(
     private _dialog: MatDialog, 
-    private cupService: CupService,
+    private exhibitionService: ExhibitionService,
   ) {}
 
   ngOnInit(): void {
-    this.getCups();
+    this.getExhibitions();
   }
   
   openAddExhibition() {
@@ -54,7 +54,7 @@ export class ExhibitionsComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getCups();
+          this.getExhibitions();
         }
       },
       error: (err) => {
@@ -63,8 +63,8 @@ export class ExhibitionsComponent {
     })
   }
 
-  getCups() {
-    this.cupService.getCups().subscribe({
+  getExhibitions() {
+    this.exhibitionService.getExhibitions().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -93,7 +93,7 @@ export class ExhibitionsComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getCups();
+          this.getExhibitions();
         }
       },
       error: (err) => {

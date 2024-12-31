@@ -1,15 +1,15 @@
 <div class="wrapper">
     <div mat-dialog-title class="title">Exhibition Information</div>
-    <form [formGroup]="cupForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="exhibitionForm" (ngSubmit)="onSubmit()">
         <div mat-dialog-content class="content">
             <div class="row">
                 <mat-form-field appearance="outline">
                     <mat-label>Title</mat-label>
                     <input matInput placeholder="Title" formControlName="title">
-                    <mat-error *ngIf="cupForm.get('title')?.hasError('required') && cupForm.get('title')?.touched">
+                    <mat-error *ngIf="exhibitionForm.get('title')?.hasError('required') && exhibitionForm.get('title')?.touched">
                         Exhibition title is required
                     </mat-error>
-                    <mat-error *ngIf="cupForm.get('title')?.hasError('minlength') && cupForm.get('title')?.touched">
+                    <mat-error *ngIf="exhibitionForm.get('title')?.hasError('minlength') && exhibitionForm.get('title')?.touched">
                         Exhibition title must be at least 3 characters long
                     </mat-error>
                 </mat-form-field>
@@ -21,7 +21,7 @@
                         <mat-option value="Cancelled">Cancelled</mat-option>
                         <mat-option value="Completed">Completed</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="cupForm.get('status')?.hasError('required') && cupForm.get('status')?.touched">
+                    <mat-error *ngIf="exhibitionForm.get('status')?.hasError('required') && exhibitionForm.get('status')?.touched">
                         Exhibition status is required
                     </mat-error>
                 </mat-form-field>

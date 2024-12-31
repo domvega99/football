@@ -18,6 +18,7 @@ import { ClubLocatorComponent } from './pages/club-locator/club-locator.componen
 import { CupsComponent } from './pages/cups/cups.component';
 import { CupDetailsComponent } from './pages/cups/cup-details/cup-details.component';
 import { ExhibitionsComponent } from './pages/exhibitions/exhibitions.component';
+import { ExhibitionDetailsComponent } from './pages/exhibitions/exhibition-details/exhibition-details.component';
 
 const routes: Routes = [
     {
@@ -43,6 +44,7 @@ const routes: Routes = [
           { path: 'cups', component: CupsComponent },
           { path: 'cups/:id', component: CupDetailsComponent },
           { path: 'exhibitions', component: ExhibitionsComponent },
+          { path: 'exhibition/:id', component: ExhibitionDetailsComponent },
         ]
     }
 ];

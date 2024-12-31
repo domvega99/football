@@ -26,6 +26,10 @@ export class MatchService {
     return this._http.get(environment.apiUrl+`/football/matches/cup/${id}`);
   }
 
+  getExhibitionMatches(id: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/matches/exhibition/${id}`);
+  }
+
   getKnockoutCupMatches(id: number): Observable<any> {
     return this._http.get(environment.apiUrl+`/football/matches/knockout-cup/${id}`);
   }

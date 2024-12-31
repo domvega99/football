@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
-import { CupService } from '../../../../services/cup.service';
+import { ExhibitionService } from '../../../../services/exhibition.service';
 
 @Component({
   selector: 'app-exhibition-add-edit',
@@ -27,16 +27,16 @@ import { CupService } from '../../../../services/cup.service';
 export class ExhibitionAddEditComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
-  cupForm: FormGroup;
+  exhibitionForm: FormGroup;
 
   constructor(
     private _fb: FormBuilder, 
-    private cupService: CupService, 
+    private exhibitionService: ExhibitionService, 
     private _dialogRef: MatDialogRef<ExhibitionAddEditComponent>,
     private _coreService: CoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.cupForm = this._fb.group({
+    this.exhibitionForm = this._fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       status: ['', [Validators.required,]],
     });
@@ -44,17 +44,17 @@ export class ExhibitionAddEditComponent {
 
   ngOnInit(): void {
     if (this.data) {
-      this.cupForm.patchValue(this.data);
+      this.exhibitionForm.patchValue(this.data);
     } 
   }
 
   onSubmit() {
-    if (this.cupForm.valid) {
-      this.cupForm.markAllAsTouched();
+    if (this.exhibitionForm.valid) {
+      this.exhibitionForm.markAllAsTouched();
       if (this.data) {
-        this.cupService.updateCup(this.data.id, this.cupForm.value).subscribe({
+        this.exhibitionService.updateExhibition(this.data.id, this.exhibitionForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Cup updated successfully')
+            this._coreService.openSnackBar('Exhibition updated successfully')
             this._dialogRef.close(true);
           },
           error: (err: any) => {
@@ -62,9 +62,9 @@ export class ExhibitionAddEditComponent {
           }
         })
       } else {
-        this.cupService.addCup(this.cupForm.value).subscribe({
+        this.exhibitionService.addExhibition(this.exhibitionForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Cup added successfully')
+            this._coreService.openSnackBar('Exhibition added successfully')
             this._dialogRef.close(true);
           },
           error: (err: any) => {
@@ -72,7 +72,6 @@ export class ExhibitionAddEditComponent {
           }
         })
       }
-      
     }
   }
 }
