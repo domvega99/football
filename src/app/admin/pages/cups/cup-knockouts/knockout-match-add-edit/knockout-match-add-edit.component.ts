@@ -65,7 +65,7 @@ export class KnockoutMatchAddEditComponent {
         cup_id: this.cupId
       };
       if (this.data.id) {
-        if (this.data.scores.length === 2) {
+        if (this.data.knockoutScores.length === 2) {
           this.matchService.updateMatch(this.data.id, formData).subscribe({
             next: (val: any) => {
               this.coreService.openSnackBar('Match schedule updated successfully');

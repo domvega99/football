@@ -19,7 +19,7 @@ export class MatchService {
   }
 
   getMatches(id: number): Observable<any> {
-    return this._http.get(environment.apiUrl+`/football/matches/${id}`);
+    return this._http.get(environment.apiUrl+`/football/matches/league/${id}`);
   }
 
   getCupMatches(id: number): Observable<any> {
