@@ -3,38 +3,74 @@
         <div class="header">
             <h1>Fixtures</h1>
         </div>
-        <div class="body">
-            <div *ngFor="let leagues of leagueMatches" class="fixture-container">
-                <div *ngFor="let date of leagues.matches" class="date-container">
-                    <div class="fixture-header">
-                        <h2>{{ date.match_date | date:'EEEE dd MMMM, YYYY' }}</h2>
-                        <h2>{{ leagues.title }}</h2>
-                    </div>
-                    <div *ngFor="let matches of date.matches" class="match-container">
-                        <div class="match-content">
-                            <div class="team-fixtures">
-                                <div class="team-container-a">
-                                    <div class="team-content">
-                                        {{ matches.scores[0].team.team }}
-                                    </div>
-                                    <img *ngIf="matches.scores[0].team.file_name" [src]="imagePath + matches.scores[0].team.file_name"
-                                        alt={{matches.scores[0].team.file_name}}>
-                                </div>
-                                <div class="time-container">
-                                    {{ '2000-01-01T' + matches.match_time | date:'h:mm a' }}
-                                </div>
-                                <div class="team-container-b">
-                                    <img *ngIf="matches.scores[1].team.file_name" [src]="imagePath + matches.scores[1].team.file_name"
-                                        alt={{matches.scores[1].team.file_name}}>
-                                    <div class="team-content">
-                                        {{ matches.scores[1].team.team }}
-                                    </div>
-                                </div>
+        <div class="body" *ngFor="let date of fixtureMatches">
+            <div class="match-date-container">
+                {{ date.match_date | date: 'EEEE | MMM d, y' }}
+            </div>
+            <div class="body-wrapper" *ngFor="let match of date.matches">
+                <div class="match-wrapper">
+                    <div class="match-container">
+                        <div class="team-a">
+                            <div class="team-name">
+                                {{ match.scores?.[0]?.team?.team || 
+                                match.knockoutScores?.[0]?.team?.team || 
+                                match.exhibitionScores?.[0]?.team?.team || 
+                                'Team A' }}
                             </div>
-                            <div class="location-content"><mat-icon>location_on</mat-icon>{{ matches.location }} {{ '@' }}</div>
+                            <div class="team-logo">
+                                <img *ngIf="match.scores?.[0]?.team?.file_name || 
+                                            match.knockoutScores?.[0]?.team?.file_name || 
+                                            match.exhibitionScores?.[0]?.team?.file_name" 
+                                    [src]="imagePath + (match.scores?.[0]?.team?.file_name || 
+                                                        match.knockoutScores?.[0]?.team?.file_name || 
+                                                        match.exhibitionScores?.[0]?.team?.file_name)" 
+                                    [alt]="match.scores?.[0]?.team?.team || 
+                                            match.knockoutScores?.[0]?.team?.team || 
+                                            match.exhibitionScores?.[0]?.team?.team || 
+                                            'Team A Logo'" width="40px"/>
+                            </div>
+                        </div>
+                    
+                        <div class="team-score">
+                            {{ '2000-01-01T' + match.match_time | date:'h:mm a' }}
+                        </div>
+                    
+                        <div class="team-b">
+                            <div class="team-logo">
+                                <img *ngIf="match.scores?.[1]?.team?.file_name || 
+                                            match.knockoutScores?.[1]?.team?.file_name || 
+                                            match.exhibitionScores?.[1]?.team?.file_name" 
+                                    [src]="imagePath + (match.scores?.[1]?.team?.file_name || 
+                                                        match.knockoutScores?.[1]?.team?.file_name || 
+                                                        match.exhibitionScores?.[1]?.team?.file_name)" 
+                                    [alt]="match.scores?.[1]?.team?.team || 
+                                            match.knockoutScores?.[1]?.team?.team || 
+                                            match.exhibitionScores?.[1]?.team?.team || 
+                                            'Team B Logo'" width="40px"/>
+                            </div>
+                            <div class="team-name">
+                                {{ match.scores?.[1]?.team?.team || 
+                                match.knockoutScores?.[1]?.team?.team || 
+                                match.exhibitionScores?.[1]?.team?.team || 
+                                'Team B' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-container">
+                        <div class="location-content">{{ match.location }}</div>
+                        <div class="status" *ngIf="match.status == 'Live'">
+                            <div class="circle"></div>
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="competition-container">
+                        <div class="competition-title">
+                            {{ match.league?.title || match.cup?.title || match.exhibition?.title }} | 
+                            {{ match.league ? 'League Match' : match.cup ? 'Cup Match' : match.exhibition ? 'Exhibition' : '' }}
                         </div>
                     </div>
                 </div>
+                <div class="line"></div>
             </div>
         </div>
     </div>

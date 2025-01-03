@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { LeagueService } from '../../../services/league.service';
+import { MatchService } from '../../../services/match.service';
 
 @Component({
   selector: 'app-fixtures',
@@ -20,10 +21,10 @@ import { LeagueService } from '../../../services/league.service';
 })
 export class FixturesComponent implements OnInit{
 
-  leagueMatches: any[] = [];
+  fixtureMatches: any[] = [];
   imagePath: string | null = null;
   constructor(
-    private leagueService: LeagueService,
+    private matchService: MatchService,
     private configService: ApiService,
     private _titleService: Title,
     private router: Router
@@ -32,34 +33,19 @@ export class FixturesComponent implements OnInit{
   ngOnInit(): void {
     this.setTitle('BFL - Fixtures');
     this.imagePath = `${this.configService.URL_IMAGE}`;
-    this.getLeagueTeams();
+    this.getFixtureMatches();
   }
 
-  getLeagueTeams() {
-    this.leagueService.getLeagueMatches().subscribe({
-      next: (res: any[]) => {
-        this.leagueMatches = res.map((league: any) => {
-          return {
-            ...league,
-            matches: league.matches
-              .filter((matchDay: any) => 
-                matchDay.matches.some((match: any) => match.status !== 'Completed' && match.status !== 'Live')
-              )
-              .map((matchDay: any) => {
-                return {
-                  ...matchDay,
-                  matches: matchDay.matches
-                    .filter((match: any) => match.status === 'Posted')
-                };
-              })
-          };
-        });
+  getFixtureMatches() {
+    this.matchService.getFixtureMatches(0).subscribe({
+      next: (res: any) => {
+        this.fixtureMatches = res; 
       },
-      error: (err) => {
-        console.log(err);
+      error: (err: any) => {
+        console.log(err)
       }
-    });
-  }  
+    })
+  }
 
   setTitle(newTitle: string) {
     this._titleService.setTitle(newTitle);
