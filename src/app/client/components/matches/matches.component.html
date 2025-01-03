@@ -1,4 +1,97 @@
-<div *ngFor="let leagues of leagueMatches" class="container">
+<div class="wrapper">
+    <div class="container">
+        <div class="title-wrapper">
+            <div class="title-container">
+                <div class="title">
+                    BFL MATCHES 
+                </div>
+            </div>
+        </div>
+        <div class="body" *ngFor="let date of fixtures">
+            <div class="match-date-container">
+                {{ date.match_date | date: 'EEEE | MMM d, y' | uppercase }}
+            </div>
+            <div class="match-wrapper" *ngFor="let match of date.matches">
+                <div class="competition-container">
+                    <div class="competition-title">
+                        {{ match.league?.title || match.cup?.title || match.exhibition?.title }} | 
+                        {{ match.league ? 'League Match' : match.cup ? 'Cup Match' : match.exhibition ? 'Exhibition' : '' }}
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="location-container">
+                    <div class="location-content">{{ match.location }} {{ '@' }} {{ '2000-01-01T' + match.match_time | date:'h:mm a' }}</div>
+                    <div class="status" *ngIf="match.status == 'Live'">
+                        <div class="circle"></div>
+                        LIVE
+                    </div>
+                </div>
+                <div class="match-container">
+                    <div class="team-a">
+                        <div class="team-name">
+                            {{ match.scores?.[0]?.team?.team || 
+                               match.knockoutScores?.[0]?.team?.team || 
+                               match.exhibitionScores?.[0]?.team?.team || 
+                               'Team A' }}
+                        </div>
+                        <div class="team-logo">
+                            <img *ngIf="match.scores?.[0]?.team?.file_name || 
+                                        match.knockoutScores?.[0]?.team?.file_name || 
+                                        match.exhibitionScores?.[0]?.team?.file_name" 
+                                [src]="imagePath + (match.scores?.[0]?.team?.file_name || 
+                                                    match.knockoutScores?.[0]?.team?.file_name || 
+                                                    match.exhibitionScores?.[0]?.team?.file_name)" 
+                                [alt]="match.scores?.[0]?.team?.team || 
+                                        match.knockoutScores?.[0]?.team?.team || 
+                                        match.exhibitionScores?.[0]?.team?.team || 
+                                        'Team A Logo'" width="40px"/>
+                        </div>
+                    </div>
+                
+                    <div class="team-score">
+                        {{ match.scores?.[0]?.points || 
+                           match.knockoutScores?.[0]?.points || 
+                           match.exhibitionScores?.[0]?.points || '0' }} - 
+                        {{ match.scores?.[1]?.points || 
+                           match.knockoutScores?.[1]?.points || 
+                           match.exhibitionScores?.[1]?.points || '0' }}
+                    </div>
+                
+                    <div class="team-b">
+                        <div class="team-logo">
+                            <img *ngIf="match.scores?.[1]?.team?.file_name || 
+                                        match.knockoutScores?.[1]?.team?.file_name || 
+                                        match.exhibitionScores?.[1]?.team?.file_name" 
+                                [src]="imagePath + (match.scores?.[1]?.team?.file_name || 
+                                                    match.knockoutScores?.[1]?.team?.file_name || 
+                                                    match.exhibitionScores?.[1]?.team?.file_name)" 
+                                [alt]="match.scores?.[1]?.team?.team || 
+                                        match.knockoutScores?.[1]?.team?.team || 
+                                        match.exhibitionScores?.[1]?.team?.team || 
+                                        'Team B Logo'" width="40px"/>
+                        </div>
+                        <div class="team-name">
+                            {{ match.scores?.[1]?.team?.team || 
+                               match.knockoutScores?.[1]?.team?.team || 
+                               match.exhibitionScores?.[1]?.team?.team || 
+                               'Team B' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="line"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="view-more" [routerLink]="'fixtures'" >
+                View More
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div *ngFor="let leagues of leagueMatches" class="container">
     <div class="header">
         <div class="title-container">
             <h2>{{ leagues.title }} Matches</h2>
@@ -65,4 +158,4 @@
     </div>
 </div>
 
-
+ -->
