@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
-import { LeagueService } from '../../../services/league.service';
 import { MatchService } from '../../../services/match.service';
 
 @Component({
