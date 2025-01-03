@@ -34,7 +34,7 @@ export class MatchService {
     return this._http.get(environment.apiUrl+`/football/matches/knockout-cup/${id}`);
   }
 
-  getFixtureMatches(): Observable<any> {
-    return this._http.get(environment.apiUrl+`/football/matches/fixture-matches`);
+  getFixtureMatches(limit: number): Observable<any> {
+    return this._http.get(environment.apiUrl+`/football/matches/fixture-matches?limit=${limit}`);
   }
 }

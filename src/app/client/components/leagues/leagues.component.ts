@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { LeagueService } from '../../../services/league.service';
-import { ApiService } from '../../../services/api.service';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
-
-
-
+import { ApiService } from '../../../services/api.service';
+import { LeagueService } from '../../../services/league.service';
 
 @Component({
   selector: 'app-leagues',
