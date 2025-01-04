@@ -8,9 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../../../core/core.service';
 import { ApiService } from '../../../../../../services/api.service';
-import { ScoreService } from '../../../../../../services/score.service';
-import { TeamService } from '../../../../../../services/team.service';
 import { CupTeamService } from '../../../../../../services/cup-team.service';
+import { ScoreService } from '../../../../../../services/score.service';
 
 @Component({
   selector: 'app-team-select-cup',
@@ -40,7 +39,6 @@ export class TeamSelectComponent {
     private dialogRef: MatDialogRef<TeamSelectComponent>,
     private coreService: CoreService,
     private configService: ApiService,
-    private teamService: TeamService,
     private scoreService: ScoreService,
     private cupTeamService: CupTeamService,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -60,40 +58,46 @@ export class TeamSelectComponent {
     }
   }
 
-  getTeams(cupId: number) {
+  getTeams(cupId: number): void {
     this.cupTeamService.getCupTeams(cupId).subscribe({
       next: (res) => {
         this.teams = this.groupTeamsByGroup(res);
-        console.log(this.teams);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Error fetching teams:', err);
       }
     });
   }
 
-  groupTeamsByGroup(data: any[]) {
-    const grouped = data.reduce((acc, curr) => {
-        const groupName = curr.cupGroup.groupName;
-        if (!acc[groupName]) {
-            acc[groupName] = {
-                cup_group: groupName,
-                teams: []
-            };
-        }
-        acc[groupName].teams.push({
-            id: curr.team.id,
-            name: curr.team.team,
-            coach: curr.team.coach,
-            place: curr.team.place,
-            file_name: curr.team.file_name
-        });
-        return acc;
+  groupTeamsByGroup(data: any[]): any[] {
+    const grouped = data.reduce((acc: any, curr: any) => {
+      const groupName = curr.cupGroup.groupName;
+      if (!acc[groupName]) {
+        acc[groupName] = {
+          cup_group: groupName,
+          teams: []
+        };
+      }
+      acc[groupName].teams.push({
+        id: curr.team.id,
+        name: curr.team.team,
+        coach: curr.team.coach,
+        place: curr.team.place,
+        file_name: curr.team.file_name
+      });
+      return acc;
     }, {});
 
     return Object.values(grouped);
   }
 
+  trackByGroup(index: number, group: any): string {
+    return group.cup_group; 
+  }
+
+  trackByTeam(index: number, team: any): number {
+    return team.id; 
+  }
 
   onSubmit() {
     if (this.teamForm.valid) {

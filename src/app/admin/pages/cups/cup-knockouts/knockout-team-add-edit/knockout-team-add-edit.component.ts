@@ -62,7 +62,6 @@ export class KnockoutTeamAddEditComponent {
     this.cupTeamService.getCupTeams(cupId).subscribe({
       next: (res) => {
         this.teams = this.groupTeamsByGroup(res);
-        console.log(this.teams);
       },
       error: (err) => {
         console.log(err);
@@ -90,6 +89,14 @@ export class KnockoutTeamAddEditComponent {
     }, {});
 
     return Object.values(grouped);
+  }
+
+  trackByGroup(index: number, group: any): string {
+    return group.cup_group; 
+  }
+
+  trackByTeam(index: number, team: any): number {
+    return team.id; 
   }
 
   onSubmit() {
