@@ -14,6 +14,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TeamService } from '../../../../../services/team.service';
 import { CupTeamGroupComponent } from './cup-team-group/cup-team-group.component';
+import { ApiService } from '../../../../../services/api.service';
 
 @Component({
   selector: 'app-cup-team-dialog',
@@ -37,6 +38,7 @@ import { CupTeamGroupComponent } from './cup-team-group/cup-team-group.component
 export class CupTeamDialogComponent {
   displayedColumns: string[] = ['team', 'action'];
   dataSource!: MatTableDataSource<any>;
+  imagePath: string | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,10 +47,12 @@ export class CupTeamDialogComponent {
     private teamService: TeamService,
     public dialogRef: MatDialogRef<CupTeamDialogComponent>,
     public dialog: MatDialog,
+    private _configService: ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
+    this.imagePath = `${this._configService.URL_IMAGE}`;
     this.getTeams();
   }
 
