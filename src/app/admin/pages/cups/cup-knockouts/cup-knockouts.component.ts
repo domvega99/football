@@ -106,7 +106,7 @@ export class CupKnockoutsComponent {
   }
 
   updateTeam(element: any, index: number, id: number, team_id: number) {
-    const dialogRef = this.dialog.open(TeamSelectComponent, {
+    const dialogRef = this.dialog.open(KnockoutTeamAddEditComponent, {
       data: { 
         score_id: id,
         team_id: team_id,

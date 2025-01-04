@@ -71,7 +71,6 @@ export class KnockoutScoreAddEditComponent {
     this.getTeams()
     this.getTeambyId()
     this.getPlayerScores()
-    console.log(this.data)
   }
 
   getTeams() {
