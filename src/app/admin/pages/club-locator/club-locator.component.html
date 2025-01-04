@@ -41,7 +41,9 @@
                     </ng-container>
                     <ng-container matColumnDef="facebookClub">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Facebook </th>
-                        <td mat-cell *matCellDef="let row"> {{row.facebookClub}} </td>
+                        <td mat-cell *matCellDef="let row"> 
+                            <a href={{row.facebookClub}} rel="noopener noreferrer" target="_blank">{{ row.facebookClub ? row.clubName : '' }}</a>  
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="district">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> District </th>

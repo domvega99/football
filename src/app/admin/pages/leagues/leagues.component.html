@@ -37,17 +37,13 @@
                                 <button class="view-button" mat-fab extended color="primary" [routerLink]="'/admin/leagues/' + row.id">
                                     <mat-icon>remove_red_eye</mat-icon> View
                                 </button>
-                                <!-- <button mat-icon-button color="warn" (click)="deleteTeam(row.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button> -->
                             </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4" align="center" style="padding: 20px;">No team record found.
-                        </td>
+                        <td class="mat-cell" colspan="4" align="center" style="padding: 20px;">No data record found.</td>
                     </tr>
                 </table>
             </section>
