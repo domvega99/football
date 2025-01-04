@@ -16,6 +16,7 @@
                     <div class="competition-title">
                         {{ match.league?.title || match.cup?.title || match.exhibition?.title }} | 
                         {{ match.league ? 'League Match' : match.cup ? 'Cup Match' : match.exhibition ? 'Exhibition' : '' }}
+                        {{ match.knockout ? match.knockout : '' }}
                     </div>
                 </div>
                 <div class="location-container">
