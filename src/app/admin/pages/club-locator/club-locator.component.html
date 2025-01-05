@@ -17,7 +17,11 @@
                 <table mat-table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="clubName">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Club </th>
-                        <td mat-cell *matCellDef="let row"> {{row.clubName}} </td>
+                        <td mat-cell *matCellDef="let row"> {{ row.clubName }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="team">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+                        <td mat-cell *matCellDef="let row"> {{ row.team?.team }} </td>
                     </ng-container>
                     <ng-container matColumnDef="municipality">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Municipality </th>

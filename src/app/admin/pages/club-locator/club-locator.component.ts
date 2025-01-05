@@ -32,7 +32,7 @@ import { AddEditLocatorComponent } from './add-edit-locator/add-edit-locator.com
   styleUrl: './club-locator.component.sass'
 })
 export class ClubLocatorComponent {
-  displayedColumns: string[] = ['clubName', 'municipality', 'categories', 'contact', 'phone', 'trainingGround', 'facebookClub', 'district', 'action'];
+  displayedColumns: string[] = ['clubName', 'team', 'municipality', 'categories', 'contact', 'phone', 'trainingGround', 'facebookClub', 'district', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

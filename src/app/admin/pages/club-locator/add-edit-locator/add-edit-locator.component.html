@@ -7,6 +7,17 @@
                     <mat-label>Club Name</mat-label>
                     <input matInput placeholder="Club Name" formControlName="clubName">
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="select-team">
+                    <mat-label>Select Match Club</mat-label>
+                    <mat-select formControlName="teamId">
+                        <mat-option [value]="0">None</mat-option>
+                        <mat-option *ngFor="let team of teamData" [value]="team.id">
+                            <img *ngIf="team.file_name" [src]="imagePath + team.file_name" alt={{team.file_name}}
+                                width="20px">
+                            {{ team.team }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Municipality</mat-label>
                     <input matInput placeholder="Municipality" formControlName="municipality">

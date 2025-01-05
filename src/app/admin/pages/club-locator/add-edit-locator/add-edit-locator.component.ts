@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
 import { ClubLocatorService } from '../../../../services/club-locator.service';
+import { TeamService } from '../../../../services/team.service';
 
 @Component({
   selector: 'app-add-edit-locator',
@@ -29,17 +30,20 @@ import { ClubLocatorService } from '../../../../services/club-locator.service';
 export class AddEditLocatorComponent {
   selectedImage: File | null = null;
   imagePath: string | null = null;
+  teamData: any[] | null = null;
   clubForm: FormGroup;
 
   constructor(
     private _fb: FormBuilder, 
     private _clubLocatorService: ClubLocatorService, 
+    private teamService: TeamService,
     private _dialogRef: MatDialogRef<AddEditLocatorComponent>,
     private _coreService: CoreService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.clubForm = this._fb.group({
       clubName: '',
+      teamId: 0,
       municipality: '',
       categories: '',
       contact: '',
@@ -51,9 +55,21 @@ export class AddEditLocatorComponent {
   }
 
   ngOnInit(): void {
+    this.getTeams()
     if (this.data) {
       this.clubForm.patchValue(this.data);
     } 
+  }
+
+  getTeams() {
+    this.teamService.getTeams().subscribe({
+      next: (res) => {
+        this.teamData = res
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   onSubmit() {
