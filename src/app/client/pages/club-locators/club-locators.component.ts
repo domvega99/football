@@ -31,6 +31,7 @@ import { Title } from '@angular/platform-browser';
 export class ClubLocatorsComponent {
   displayedColumns: string[] = ['clubName', 'municipality', 'categories', 'contact', 'phone', 'trainingGround', 'facebookClub', 'district'];
   dataSource!: MatTableDataSource<any>;
+  imagePath: string | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,10 +39,12 @@ export class ClubLocatorsComponent {
   constructor(
     private clubLocatorService: ClubLocatorService,
     private titleService: Title,
+    private _configService: ApiService,
   ) {}
 
   ngOnInit(): void {
     this.titleService.setTitle("BFL - Clubs");
+    this.imagePath =`${this._configService.URL_IMAGE}`;
     this.getClubLocators();
   }
 

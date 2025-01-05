@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CoreService } from '../../../../core/core.service';
 import { ClubLocatorService } from '../../../../services/club-locator.service';
 import { TeamService } from '../../../../services/team.service';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'app-add-edit-locator',
@@ -39,6 +40,7 @@ export class AddEditLocatorComponent {
     private teamService: TeamService,
     private _dialogRef: MatDialogRef<AddEditLocatorComponent>,
     private _coreService: CoreService,
+    private _configService: ApiService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.clubForm = this._fb.group({
@@ -55,7 +57,8 @@ export class AddEditLocatorComponent {
   }
 
   ngOnInit(): void {
-    this.getTeams()
+    this.getTeams();
+    this.imagePath =`${this._configService.URL_IMAGE}`;
     if (this.data) {
       this.clubForm.patchValue(this.data);
     } 
@@ -64,7 +67,7 @@ export class AddEditLocatorComponent {
   getTeams() {
     this.teamService.getTeams().subscribe({
       next: (res) => {
-        this.teamData = res
+        this.teamData = res.sort((a: any, b: any) => a.team.localeCompare(b.team));
       },
       error: (err) => {
         console.log(err);
