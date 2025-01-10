@@ -27,7 +27,7 @@
                                     [alt]="match.scores?.[0]?.team?.team || 
                                             match.knockoutScores?.[0]?.team?.team || 
                                             match.exhibitionScores?.[0]?.team?.team || 
-                                            'Team A Logo'" width="40px"/>
+                                            'Team A Logo'" width="30px"/>
                             </div>
                         </div>
                     
@@ -46,7 +46,7 @@
                                     [alt]="match.scores?.[1]?.team?.team || 
                                             match.knockoutScores?.[1]?.team?.team || 
                                             match.exhibitionScores?.[1]?.team?.team || 
-                                            'Team B Logo'" width="40px"/>
+                                            'Team B Logo'" width="30px"/>
                             </div>
                             <div class="team-name">
                                 {{ match.scores?.[1]?.team?.team || 
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="location-container">
-                        <div class="location-content">{{ match.location }}</div>
+                        <div class="location-content">{{ match.location }} {{ match.knockout ? '- ' + match.knockout : '' }}</div>
                         <div class="status" *ngIf="match.status == 'Live'">
                             <div class="circle"></div>
                             LIVE
